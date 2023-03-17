@@ -1,0 +1,17 @@
+.app-header {
+}
+
+.app-header__menu-list {
+    align-items: center;
+    display: grid;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: max-content max-content 1fr max-content;
+}
+
+.app-header__logo-wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}

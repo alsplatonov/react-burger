@@ -1,0 +1,13 @@
+.menu-item {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+}
+
+.menu-item_active {
+  cursor: pointer;
+}
+
+.HeaderItem__span-text {
+  text-align: center;
+}
+
