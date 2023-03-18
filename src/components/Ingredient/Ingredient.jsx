@@ -18,3 +18,7 @@ function Ingredient(props) {
 
 
 export default Ingredient;
+
+
+
+{/* <div className="pl-8 mt-4"> */}
