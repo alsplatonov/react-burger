@@ -1,12 +1,10 @@
-.app-header {
-}
 
-.app-header__menu-list {
+.app-header__nav-list {
+    margin: 0;
+    padding: 0;
     align-items: center;
     display: grid;
     list-style: none;
-    margin: 0;
-    padding: 0;
     grid-template-columns: max-content max-content 1fr max-content;
 }
 
