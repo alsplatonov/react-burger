@@ -1,0 +1,49 @@
+.burger-constructor {
+  box-sizing: border-box;
+  margin-top: 100px;
+  padding-left: 16px;
+}
+
+.burger-constructor__item {
+  min-width: 568px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.burger-constructor__list {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  max-height: 480px;
+  overflow-y: scroll;
+}
+
+.burger-constructor__list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.burger-constructor__list::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.burger-constructor__list::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+
+
+.burger-constructor__order {
+  margin: 40px 0 0 194px;
+  display: flex;
+  align-items: center;
+  column-gap: 40px;
+}
+
+.burger-constructor__order-price {
+  display: flex;
+  column-gap: 8px;
+}
+

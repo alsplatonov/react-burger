@@ -37,7 +37,7 @@ const BurgerIngredients = (props) => {
       </div>
       <div className={styles['burger-ingredients']}>
         <h2 className="text text_type_main-medium mt-10 mb-6">Булки</h2>
-        <ul className={styles['burger-ingredients_list']}>
+        <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsBuns.map((item) => (
             <Ingredient
               key={item._id}
@@ -48,7 +48,7 @@ const BurgerIngredients = (props) => {
           ))}
         </ul>
         <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
-        <ul className={styles['burger-ingredients_list']}>
+        <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsSauce.map((item) => (
             <Ingredient
               key={item._id}
@@ -59,7 +59,7 @@ const BurgerIngredients = (props) => {
           ))}
         </ul>
         <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
-        <ul className={styles['burger-ingredients_list']}>
+        <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsMain.map((item) => (
             <Ingredient
               key={item._id}
