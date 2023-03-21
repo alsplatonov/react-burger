@@ -5,15 +5,13 @@ const ModalOverlay = (props) => {
 
   return (
     <div className={styles['modal-overlay']} onClick={props.onCloseModal} >
-      {props.children}
     </div>
   )
 }
 
 ModalOverlay.propTypes = {
-  children: PropTypes.element.isRequired,
   onCloseModal: PropTypes.func.isRequired,
-}; 
+};
 
 export default ModalOverlay;
 

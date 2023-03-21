@@ -4,6 +4,7 @@ import styles from "./BurgerConstructor.module.css";
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 import PropTypes from "prop-types";
+import {ingredientsPropType} from '../../utils/prop-types';
 
 
 const BurgerConstructor = (props) => {
@@ -88,7 +89,7 @@ const BurgerConstructor = (props) => {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.array.isRequired,
-}
+  ingredients: PropTypes.arrayOf(ingredientsPropType).isRequired,
+};
 
 export default BurgerConstructor;
