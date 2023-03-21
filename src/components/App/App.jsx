@@ -25,7 +25,6 @@ const App = () => {
     });
   }, []);
 
-  console.log(ingredients);
   return (
     <>
       {ingredients.length !== 0 && (

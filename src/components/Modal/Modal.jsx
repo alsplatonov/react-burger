@@ -22,22 +22,34 @@ const Modal = (props) => {
     }
   }, [])
 
-
   return createPortal(
-    <ModalOverlay onCloseModal={props.onCloseModal}>
+    <>
       <div className={styles.modal}>
         <button className={`${styles['modal__close-btn']}`} onClick={props.onCloseModal}>
           <CloseIcon type="primary" />
         </button>
         {props.children}
       </div>
-    </ModalOverlay>,
-    document.getElementById("modal")
-  )
+      <ModalOverlay onCloseModal={props.onCloseModal} />
+    </>, document.getElementById("modal")
+  );
 }
+//*********второй вариант********
+//   return createPortal(
+//     <ModalOverlay onCloseModal={props.onCloseModal}>
+//       <div className={styles.modal}>
+//         <button className={`${styles['modal__close-btn']}`} onClick={props.onCloseModal}>
+//           <CloseIcon type="primary" />
+//         </button>
+//         {props.children}
+//       </div>
+//     </ModalOverlay>,
+//     document.getElementById("modal")
+//   )
+// }
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
   onCloseModal: PropTypes.func.isRequired,
-}; 
+};
 export default Modal;
