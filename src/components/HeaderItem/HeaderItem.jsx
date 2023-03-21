@@ -11,7 +11,6 @@ const HeaderItem = (props) => {
       </a>
     </li >
   );
-
 }
 
 HeaderItem.propTypes = {

@@ -5,6 +5,7 @@ import Ingredient from '../Ingredient/Ingredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import PropTypes from "prop-types";
+import {ingredientsPropType} from '../../utils/prop-types';
 
 const BurgerIngredients = (props) => {
 
@@ -100,8 +101,9 @@ const BurgerIngredients = (props) => {
   )
 }
 
+
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.array.isRequired,
-}
+  ingredients: PropTypes.arrayOf(ingredientsPropType).isRequired,
+};
 
 export default BurgerIngredients;
