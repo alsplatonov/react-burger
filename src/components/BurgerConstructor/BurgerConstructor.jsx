@@ -3,7 +3,7 @@ import { ConstructorElement, Button, DragIcon, CurrencyIcon } from "@ya.praktiku
 import styles from "./BurgerConstructor.module.css";
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
-
+import PropTypes from "prop-types";
 
 
 const BurgerConstructor = (props) => {
@@ -87,5 +87,8 @@ const BurgerConstructor = (props) => {
   )
 }
 
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.array.isRequired,
+}
 
 export default BurgerConstructor;
