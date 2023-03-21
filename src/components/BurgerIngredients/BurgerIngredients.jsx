@@ -2,10 +2,25 @@ import React, { useState } from 'react';
 import styles from "./BurgerIngredients.module.css";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient';
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 const BurgerIngredients = (props) => {
 
   const [currentMenuType, setCurrentMenuType] = useState('bun');
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [ingredient, setIngredient] = useState('');
+
+
+  const OnOpenModal = (item) => {  //при открытии
+    setIsOpenModal(true);  //указываем состояние isOpenModal = true
+    setIngredient(item);  //устанавливаем текущий ингредиент
+  }
+
+  const onCloseModal = () => {
+    setIsOpenModal(false); //указываем состояние isOpenModal = false
+  }
 
 
   const filteredIngredientsBuns = props.ingredients.filter(item => {
@@ -22,7 +37,14 @@ const BurgerIngredients = (props) => {
 
 
   return (
-    <div>
+
+    <section>
+      {isOpenModal &&
+        <Modal onCloseModal={onCloseModal}>
+          <IngredientDetails ingredient={ingredient} />
+        </Modal>
+      }
+
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
       <div className={styles.tabs}>
         <Tab value="bun" active={currentMenuType === 'bun'} onClick={setCurrentMenuType}>
@@ -44,6 +66,7 @@ const BurgerIngredients = (props) => {
               name={item.name}
               image={item.image}
               price={item.price}
+              OnOpenModal={() => OnOpenModal(item)} //открыть модальное окно, передадим анонимную стрелочную функцию
             />
           ))}
         </ul>
@@ -55,6 +78,7 @@ const BurgerIngredients = (props) => {
               name={item.name}
               image={item.image}
               price={item.price}
+              OnOpenModal={() => OnOpenModal(item)} //открыть модальное окно
             />
           ))}
         </ul>
@@ -66,11 +90,12 @@ const BurgerIngredients = (props) => {
               name={item.name}
               image={item.image}
               price={item.price}
+              OnOpenModal={() => OnOpenModal(item)}
             />
           ))}
         </ul>
       </div>
-    </div>
+    </section>
   )
 }
 

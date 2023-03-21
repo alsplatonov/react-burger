@@ -1,7 +1,7 @@
 .burger-constructor {
   box-sizing: border-box;
   margin-top: 100px;
-  padding-left: 16px;
+  padding-left: 40px;
 }
 
 .burger-constructor__item {
@@ -36,14 +36,13 @@
 
 
 .burger-constructor__order {
-  margin: 40px 0 0 194px;
   display: flex;
+  margin-left: 194px;
   align-items: center;
-  column-gap: 40px;
+  gap: 40px;
 }
 
 .burger-constructor__order-price {
   display: flex;
-  column-gap: 8px;
+  gap: 8px;
 }
-

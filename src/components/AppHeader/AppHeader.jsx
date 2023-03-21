@@ -12,7 +12,7 @@ import styles from './AppHeader.module.css';
 const AppHeader = () => {
   return (
     <header
-      className={"text text_type_main-default pt-3 pb-3"}
+      className={`${styles['app-header']} text text_type_main-default pt-3 pb-3`}
     >
       <nav>
         <ul className={`${styles['app-header__nav-list']} pt-4 pb-4`}>
