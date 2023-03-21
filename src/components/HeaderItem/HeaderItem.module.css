@@ -9,4 +9,6 @@
   flex-direction: row;
   gap: 8px;
   margin-right: 40px;
+  text-decoration: none;
+  color: #F2F2F3;
 }
