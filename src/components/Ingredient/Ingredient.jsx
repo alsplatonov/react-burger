@@ -4,7 +4,7 @@ import styles from './Ingredient.module.css';
 
 function Ingredient(props) {
   return (
-    <li className={styles.ingredient} >    
+    <li className={styles.ingredient} onClick={props.OnOpenModal}>    
       <img src={props.image} alt={props.name} />
       <Counter count={1} size="default" extraClass="m-1" />
       <div className={`${styles['ingredient-price']}`}>

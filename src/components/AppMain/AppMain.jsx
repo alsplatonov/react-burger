@@ -6,7 +6,7 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 const AppMain = (props) => {
 
   return(
-    <main className={styles.AppMain}>
+    <main className={styles['app-main']}>
       <BurgerIngredients ingredients={props.ingredients}/>
       <BurgerConstructor ingredients={props.ingredients}/>
     </main>
