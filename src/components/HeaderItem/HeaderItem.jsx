@@ -1,4 +1,5 @@
 import styles from './HeaderItem.module.css';
+import PropTypes from "prop-types";
 
 const HeaderItem = (props) => {
   return (
@@ -13,5 +14,9 @@ const HeaderItem = (props) => {
 
 }
 
+HeaderItem.propTypes = {
+  isActive: PropTypes.bool,
+  text: PropTypes.string,
+}
 
 export default HeaderItem;

@@ -4,6 +4,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import PropTypes from "prop-types";
 
 const BurgerIngredients = (props) => {
 
@@ -99,5 +100,8 @@ const BurgerIngredients = (props) => {
   )
 }
 
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.array.isRequired,
+}
 
 export default BurgerIngredients;
