@@ -1,0 +1,12 @@
+.header-item__text {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.header-item__item {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-right: 40px;
+}
