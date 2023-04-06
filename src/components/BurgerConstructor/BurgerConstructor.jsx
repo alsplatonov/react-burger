@@ -3,7 +3,7 @@ import { ConstructorElement, Button, DragIcon, CurrencyIcon } from "@ya.praktiku
 import styles from "./BurgerConstructor.module.css";
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
-import BurgerContext from '../BurgerContext';
+import BurgerContext from '../../services/contexts/BurgerContext';
 import { getOrderNumber } from '../../utils/api';
 
 
@@ -33,7 +33,7 @@ const BurgerConstructor = () => {
     filteredIngredientsWithoutBuns.forEach(item => {  // ингредиенты без булок
       price += item.price;  //добавим сумму ингедиентов
     })
-    return price.toString(); //прибавим сумму булок 
+    return price.toString();
   }
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -41,8 +41,10 @@ const BurgerConstructor = () => {
 
   const getOrderNum = async () => {
     return await getOrderNumber(getIngredientsIds())
-      .then((res) => setOrderNumber(res.order.number))
-      .catch((err) => console.err(err));
+      .then((res) =>
+        setOrderNumber(res.order.number))
+      .catch((err) =>
+        console.err(err));
   }
 
   const OnOpenModal = () => {  //при открытии

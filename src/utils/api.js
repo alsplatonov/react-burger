@@ -1,12 +1,13 @@
+import { BASE_URL } from "./constants";
 
 export const getIngredientsData = async () => {
-  return await fetch('https://norma.nomoreparties.space/api/ingredients')
+  return await fetch(`${BASE_URL}/ingredients`)
     .then((res) => checkResponse(res));
 }
 
 
 export const getOrderNumber = (ingredients) => { // POST-запрос для получения номера заказа
-  return fetch('https://norma.nomoreparties.space/api/orders', {
+  return fetch(`${BASE_URL}/orders`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
