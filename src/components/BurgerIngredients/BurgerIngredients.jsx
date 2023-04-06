@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from "./BurgerIngredients.module.css";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import PropTypes from "prop-types";
-import {ingredientsPropType} from '../../utils/prop-types';
+import BurgerContext from '../../services/contexts/BurgerContext';
 
-const BurgerIngredients = (props) => {
+const BurgerIngredients = () => {
+
+  const ingredients = useContext(BurgerContext); //вызываем список ингедиентов из контекста
 
   const [currentMenuType, setCurrentMenuType] = useState('bun');
 
@@ -15,7 +16,7 @@ const BurgerIngredients = (props) => {
   const [ingredient, setIngredient] = useState('');
 
 
-  const OnOpenModal = (item) => {  //при открытии
+  const onOpenModal = (item) => {  //при открытии
     setIsOpenModal(true);  //указываем состояние isOpenModal = true
     setIngredient(item);  //устанавливаем текущий ингредиент
   }
@@ -25,15 +26,15 @@ const BurgerIngredients = (props) => {
   }
 
 
-  const filteredIngredientsBuns = props.ingredients.filter(item => {
+  const filteredIngredientsBuns = ingredients.filter(item => {
     return item.type === "bun";
   });
 
-  const filteredIngredientsSauce = props.ingredients.filter(item => {
+  const filteredIngredientsSauce = ingredients.filter(item => {
     return item.type === "sauce";
   });
 
-  const filteredIngredientsMain = props.ingredients.filter(item => {
+  const filteredIngredientsMain = ingredients.filter(item => {
     return item.type === "main";
   });
 
@@ -68,7 +69,7 @@ const BurgerIngredients = (props) => {
               name={item.name}
               image={item.image}
               price={item.price}
-              OnOpenModal={() => OnOpenModal(item)} //открыть модальное окно, передадим анонимную стрелочную функцию
+              onOpenModal={() => onOpenModal(item)} //открыть модальное окно, передадим анонимную стрелочную функцию
             />
           ))}
         </ul>
@@ -80,7 +81,7 @@ const BurgerIngredients = (props) => {
               name={item.name}
               image={item.image}
               price={item.price}
-              OnOpenModal={() => OnOpenModal(item)} //открыть модальное окно
+              onOpenModal={() => onOpenModal(item)} //открыть модальное окно
             />
           ))}
         </ul>
@@ -92,7 +93,7 @@ const BurgerIngredients = (props) => {
               name={item.name}
               image={item.image}
               price={item.price}
-              OnOpenModal={() => OnOpenModal(item)}
+              onOpenModal={() => onOpenModal(item)}
             />
           ))}
         </ul>
@@ -102,8 +103,5 @@ const BurgerIngredients = (props) => {
 }
 
 
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientsPropType).isRequired,
-};
 
 export default BurgerIngredients;
