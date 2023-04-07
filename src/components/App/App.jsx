@@ -2,27 +2,21 @@ import AppHeader from '../AppHeader/AppHeader';
 import AppMain from '../AppMain/AppMain';
 import React, { useState, useEffect } from 'react';
 import style from './App.module.css';
-
+import { getIngredientsData } from '../../utils/api';
+import BurgerContext from '../../services/contexts/BurgerContext';
 
 const App = () => {
-
-  const getIngredientsData = async () => {
-    return await fetch('https://norma.nomoreparties.space/api/ingredients')
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
-  }
 
   const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
-    getIngredientsData().then((res) => {
-      //console.log(res.data);
-      setIngredients(res.data);
-    });
+    getIngredientsData()
+      .then((res) => {
+        setIngredients(res.data);
+      })
+      .catch((err) => {
+        console.err(err); // выводим ошибку в консоль
+      });
   }, []);
 
   return (
@@ -30,9 +24,12 @@ const App = () => {
       {ingredients.length !== 0 && (
         <div className={style.app}>
           <AppHeader />
-          <AppMain ingredients={ingredients} />
+          <BurgerContext.Provider value={ingredients}>
+            <AppMain />
+          </BurgerContext.Provider>
         </div>
-      )};
+      )
+      }
     </>
   );
 }

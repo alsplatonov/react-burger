@@ -1,32 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
-import PropTypes from "prop-types";
-import {ingredientsPropType} from '../../utils/prop-types';
+import BurgerContext from '../../services/contexts/BurgerContext';
+import { getOrderNumber } from '../../utils/api';
 
 
-const BurgerConstructor = (props) => {
+const BurgerConstructor = () => {
 
-  const filteredIngredientsBuns = props.ingredients.filter((item) => {
+  const ingredients = useContext(BurgerContext); //вызываем список ингедиентов из контекста
+
+  const filteredIngredientsBuns = ingredients.filter((item) => {
     return item.type === "bun";
   });
 
 
-  const filteredIngredientsWithoutBuns = props.ingredients.filter(item => {
+  const filteredIngredientsWithoutBuns = ingredients.filter(item => {
     return item.type !== "bun";
   });
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const getIngredientsIds = () => { //получим id ингредиентов
+    let ingredIds = [];
+    ingredients.forEach(item => {
+      ingredIds.unshift(item._id);
+    })
+    return ingredIds;
+  }
 
+  const orderPrice = () => { // сумма заказа
+    let price = filteredIngredientsBuns[0].price * 2; //сумма 2х булок
+    filteredIngredientsWithoutBuns.forEach(item => {  // ингредиенты без булок
+      price += item.price;  //добавим сумму ингедиентов
+    })
+    return price.toString();
+  }
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [orderNumber, setOrderNumber] = useState(0);
+
+  const getOrderNum = async () => {
+    return await getOrderNumber(getIngredientsIds())
+      .then((res) =>
+        setOrderNumber(res.order.number))
+      .catch((err) =>
+        console.err(err));
+  }
 
   const OnOpenModal = () => {  //при открытии
     setIsOpenModal(true);  //указываем состояние isOpenModal = true
+    getOrderNum(); //получаем номер заказа
   }
 
   const onCloseModal = () => {
     setIsOpenModal(false); //указываем состояние isOpenModal = false
+    setOrderNumber(0); //обнуляем номер заказа
   }
 
 
@@ -34,7 +62,7 @@ const BurgerConstructor = (props) => {
     <section className={`${styles['burger-constructor']}`}>
       {isOpenModal &&
         <Modal onCloseModal={onCloseModal}>
-          <OrderDetails />
+          <OrderDetails orderNumber={orderNumber} />
         </Modal>
       }
       {filteredIngredientsBuns.length > 0 && (
@@ -62,7 +90,7 @@ const BurgerConstructor = (props) => {
         ))}
       </ul>
 
-      {filteredIngredientsBuns.length >= 1 && (
+      {filteredIngredientsBuns.length > 0 && (
         <div className={`${styles['burger-constructor__item']} pl-8 mt-4`}>
           <ConstructorElement
             type="bottom"
@@ -76,7 +104,7 @@ const BurgerConstructor = (props) => {
 
       < div className={`${styles['burger-constructor__order']} mt-10`}>
         <div className={`${styles['burger-constructor__order-price']}`}>
-          <p className="text text_type_digits-medium">610</p>
+          <p className="text text_type_digits-medium">{orderPrice()}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button htmlType="button" type="primary" size="large" onClick={OnOpenModal}>
@@ -88,8 +116,5 @@ const BurgerConstructor = (props) => {
   )
 }
 
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientsPropType).isRequired,
-};
 
 export default BurgerConstructor;
