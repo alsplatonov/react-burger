@@ -5,26 +5,27 @@ import Ingredient from '../Ingredient/Ingredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 // import BurgerContext from '../../services/contexts/BurgerContext';
-import { useDispatch, useSelector } from 'react-redux';
-import { modalActions } from '../../services/modal-slice';
+import { useSelector } from 'react-redux';
 
 const BurgerIngredients = () => {
 
+  // const ingredients = useContext(BurgerContext); //вызываем список ингедиентов из контекста
   const ingredients = useSelector((state) => state.ingredients.items);
-  const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
-
-  const dispatchAction = useDispatch();
-  const onOpenModal = (item) => {
-    dispatchAction(modalActions.setItem(item));  //устанавливаем текущий ингредиент
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
-  };
-
-  const onCloseModal = () => {
-    dispatchAction(modalActions.setItem(null));  //очищаем ингредиент
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
-  };
 
   const [currentMenuType, setCurrentMenuType] = useState('bun');
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [ingredient, setIngredient] = useState('');
+
+
+  const onOpenModal = (item) => {  //при открытии
+    setIsOpenModal(true);  //указываем состояние isOpenModal = true
+    setIngredient(item);  //устанавливаем текущий ингредиент
+  }
+
+  const onCloseModal = () => {
+    setIsOpenModal(false); //указываем состояние isOpenModal = false
+  }
 
 
   const filteredIngredientsBuns = ingredients.filter(item => {
@@ -45,7 +46,7 @@ const BurgerIngredients = () => {
     <section>
       {isOpenModal &&
         <Modal onCloseModal={onCloseModal}>
-          <IngredientDetails />
+          <IngredientDetails ingredient={ingredient} />
         </Modal>
       }
 
