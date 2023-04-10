@@ -5,12 +5,12 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 import BurgerContext from '../../services/contexts/BurgerContext';
 import { getOrderNumber } from '../../utils/api';
-
+import { useSelector } from 'react-redux';
 
 const BurgerConstructor = () => {
 
-  const ingredients = useContext(BurgerContext); //вызываем список ингедиентов из контекста
-
+  // const ingredients = useContext(BurgerContext); //вызываем список ингедиентов из контекста
+  const ingredients = useSelector((state) => state.ingredients.items);
   const filteredIngredientsBuns = ingredients.filter((item) => {
     return item.type === "bun";
   });

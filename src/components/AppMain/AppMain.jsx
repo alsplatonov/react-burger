@@ -9,7 +9,7 @@ const AppMain = () => {
   return (
     <main className={styles['app-main']}>
       <BurgerIngredients />
-      <BurgerConstructor />
+      {/* <BurgerConstructor /> */}
     </main>
   );
 }

@@ -4,11 +4,13 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import BurgerContext from '../../services/contexts/BurgerContext';
+// import BurgerContext from '../../services/contexts/BurgerContext';
+import { useSelector } from 'react-redux';
 
 const BurgerIngredients = () => {
 
-  const ingredients = useContext(BurgerContext); //вызываем список ингедиентов из контекста
+  // const ingredients = useContext(BurgerContext); //вызываем список ингедиентов из контекста
+  const ingredients = useSelector((state) => state.ingredients.items);
 
   const [currentMenuType, setCurrentMenuType] = useState('bun');
 
