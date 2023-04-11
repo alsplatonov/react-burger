@@ -1,16 +1,18 @@
-import React, { useState, useContext } from 'react';
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
-import BurgerContext from '../../services/contexts/BurgerContext';
 import { getOrderNumber } from '../../utils/api';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { orderActions } from '../../services/order-slice';
+import { modalActions } from '../../services/modal-slice';
 
 const BurgerConstructor = () => {
-
-  // const ingredients = useContext(BurgerContext); //вызываем список ингедиентов из контекста
   const ingredients = useSelector((state) => state.ingredients.items);
+  const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
+  const orderNumber = useSelector((state) => state.order.orderNumber);
+  const dispatchAction = useDispatch();
+
   const filteredIngredientsBuns = ingredients.filter((item) => {
     return item.type === "bun";
   });
@@ -36,33 +38,30 @@ const BurgerConstructor = () => {
     return price.toString();
   }
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [orderNumber, setOrderNumber] = useState(0);
 
   const getOrderNum = async () => {
     return await getOrderNumber(getIngredientsIds())
       .then((res) =>
-        setOrderNumber(res.order.number))
+        dispatchAction(orderActions.setOrderNumber(res.order.number)))
       .catch((err) =>
         console.err(err));
   }
 
   const OnOpenModal = () => {  //при открытии
-    setIsOpenModal(true);  //указываем состояние isOpenModal = true
+    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
     getOrderNum(); //получаем номер заказа
   }
 
   const onCloseModal = () => {
-    setIsOpenModal(false); //указываем состояние isOpenModal = false
-    setOrderNumber(0); //обнуляем номер заказа
-  }
-
+    dispatchAction(orderActions.setOrderNumber(0));
+    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
+  };
 
   return (
     <section className={`${styles['burger-constructor']}`}>
-      {isOpenModal &&
+      {isOpenModal && orderNumber !== 0 &&
         <Modal onCloseModal={onCloseModal}>
-          <OrderDetails orderNumber={orderNumber} />
+          <OrderDetails />
         </Modal>
       }
       {filteredIngredientsBuns.length > 0 && (

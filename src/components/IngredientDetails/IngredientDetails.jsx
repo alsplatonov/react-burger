@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
 
-   const currentItem = useSelector((state) => state.modal.item);
-
+   const currentItem = useSelector((state) => state.ingredientDetails.item);
+   
   return (
     <div className={`${styles['ingredient-details']} pt-10 pb-15`}>
       <h1 className={`${styles['ingredient-details__header']} text text_type_main-large`}>Детали ингредиента</h1>

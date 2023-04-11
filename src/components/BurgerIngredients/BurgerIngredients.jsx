@@ -4,26 +4,29 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-// import BurgerContext from '../../services/contexts/BurgerContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '../../services/modal-slice';
+import { ingredientDetailsActions } from '../../services/ingredientDetails-slice';
 
 const BurgerIngredients = () => {
 
   const ingredients = useSelector((state) => state.ingredients.items);
   const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
+  const ingredientDetailsItem = useSelector((state) => state.ingredientDetails.item);
 
   const dispatchAction = useDispatch();
+
   const onOpenModal = (item) => {
-    dispatchAction(modalActions.setItem(item));  //устанавливаем текущий ингредиент
+    dispatchAction(ingredientDetailsActions.setItem(item));  //устанавливаем текущий ингредиент
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
   };
 
   const onCloseModal = () => {
-    dispatchAction(modalActions.setItem(null));  //очищаем ингредиент
+    dispatchAction(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
   };
 
+  
   const [currentMenuType, setCurrentMenuType] = useState('bun');
 
 
@@ -43,7 +46,7 @@ const BurgerIngredients = () => {
   return (
 
     <section>
-      {isOpenModal &&
+      {isOpenModal &&  ingredientDetailsItem !== null &&
         <Modal onCloseModal={onCloseModal}>
           <IngredientDetails />
         </Modal>
