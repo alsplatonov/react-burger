@@ -1,31 +1,48 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import styles from "./BurgerIngredients.module.css";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-// import BurgerContext from '../../services/contexts/BurgerContext';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { modalActions } from '../../services/modal-slice';
+import { ingredientDetailsActions } from '../../services/ingredientDetails-slice';
 
 const BurgerIngredients = () => {
 
-  // const ingredients = useContext(BurgerContext); //вызываем список ингедиентов из контекста
   const ingredients = useSelector((state) => state.ingredients.items);
+  const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
+  const ingredientDetailsItem = useSelector((state) => state.ingredientDetails.item);
 
-  const [currentMenuType, setCurrentMenuType] = useState('bun');
+  const dispatchAction = useDispatch();
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [ingredient, setIngredient] = useState('');
-
-
-  const onOpenModal = (item) => {  //при открытии
-    setIsOpenModal(true);  //указываем состояние isOpenModal = true
-    setIngredient(item);  //устанавливаем текущий ингредиент
-  }
+  const onOpenModal = (item) => {
+    dispatchAction(ingredientDetailsActions.setItem(item));  //устанавливаем текущий ингредиент
+    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
+  };
 
   const onCloseModal = () => {
-    setIsOpenModal(false); //указываем состояние isOpenModal = false
-  }
+    dispatchAction(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
+    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
+  };
+
+  
+  const [currentMenuType, setCurrentMenuType] = useState('bun');
+  const tabsRef = useRef(null);
+
+  // const Tabs = {
+  //   bun: { id: "bun", title: "Булки", data: bunsData },
+  //   sauce: { id: "sauce", title: "Соусы", data: sauceData },
+  //   main: { id: "main", title: "Начинки", data: flavoursData },
+  // };
+
+
+
+
+
+
+
+
 
 
   const filteredIngredientsBuns = ingredients.filter(item => {
@@ -44,14 +61,14 @@ const BurgerIngredients = () => {
   return (
 
     <section>
-      {isOpenModal &&
+      {isOpenModal &&  ingredientDetailsItem !== null &&
         <Modal onCloseModal={onCloseModal}>
-          <IngredientDetails ingredient={ingredient} />
+          <IngredientDetails />
         </Modal>
       }
 
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
-      <div className={styles.tabs}>
+      <div className={styles.tabs} >
         <Tab value="bun" active={currentMenuType === 'bun'} onClick={setCurrentMenuType}>
           Булки
         </Tab>

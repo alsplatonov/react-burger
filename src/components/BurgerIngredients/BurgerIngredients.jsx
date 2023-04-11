@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import styles from "./BurgerIngredients.module.css";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient';
@@ -26,8 +26,35 @@ const BurgerIngredients = () => {
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
   };
 
-  
+
   const [currentMenuType, setCurrentMenuType] = useState('bun');
+  // const tabsRef = useRef(null);
+
+  // const handleTabClick = (menuType) => {
+  //   setCurrentMenuType(menuType);
+  // };
+
+  // const scrollToActiveTab = () => {
+  //   const tabs = tabsRef.current.children;
+  //   let minDistance = Number.MAX_VALUE;
+  //   let activeTab = null;
+  //   for (let i = 0; i < tabs.length; i++) {
+  //     const tab = tabs[i];
+  //     const rect = tab.getBoundingClientRect();
+  //     const distance = Math.sqrt(Math.pow(rect.left, 2) + Math.pow(rect.top, 2));
+  //     if (distance < minDistance) {
+  //       minDistance = distance;
+  //       activeTab = tab;
+  //     }
+  //   }
+  //   activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // };
+
+  // useEffect(() => {
+  //   scrollToActiveTab();
+  // }, [currentMenuType]);
+
+
 
 
   const filteredIngredientsBuns = ingredients.filter(item => {
@@ -46,14 +73,14 @@ const BurgerIngredients = () => {
   return (
 
     <section>
-      {isOpenModal &&  ingredientDetailsItem !== null &&
+      {isOpenModal && ingredientDetailsItem !== null &&
         <Modal onCloseModal={onCloseModal}>
           <IngredientDetails />
         </Modal>
       }
 
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
-      <div className={styles.tabs}>
+      <div className={styles.tabs} >
         <Tab value="bun" active={currentMenuType === 'bun'} onClick={setCurrentMenuType}>
           Булки
         </Tab>
