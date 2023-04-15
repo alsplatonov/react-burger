@@ -9,7 +9,7 @@ const store = configureStore({
   reducer: {
 
     ingredients: burgerIngredientsSlice.reducer,
-    burgerConstructor: constructorSlice.reducer,
+    burgerCart: constructorSlice.reducer,
     modal: modalSlice.reducer,
     order: orderSlice.reducer,
     ingredientDetails: ingredientDetailsSlice.reducer,

@@ -2,10 +2,33 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import styles from './Ingredient.module.css';
 import PropTypes from "prop-types";
 
+import { useDrag } from "react-dnd";
+
 
 const Ingredient = (props) => {
+
+  // const ingredient = {
+  //   key : props.key,
+  //   name :         props.name,
+  //   image :         props.image,
+  //   price :         props.price,
+  // }
+
+  const ingredient = props;
+ 
+  
+
+  const [{isDrag}, dragRef] = useDrag({
+    type: "ingredient",
+    item: ingredient,
+    collect: monitor => ({
+        isDrag: monitor.isDragging()
+    })
+  });
+
+
   return (
-    <li className={styles.ingredient} onClick={props.onOpenModal}>
+    <li ref={dragRef} className={styles.ingredient} onClick={props.onOpenModal} style={ !isDrag ? {opacity: "1"} : {opacity: "0.4", cursor: "grab"}}>
       <img src={props.image} alt={props.name} />
       <Counter count={1} size="default" extraClass="m-1" />
       <div className={`${styles['ingredient-price']}`}>

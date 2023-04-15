@@ -1,32 +1,8 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
-import styles from "./BurgerIngredients.module.css";
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import Ingredient from '../Ingredient/Ingredient';
-import Modal from '../Modal/Modal';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { useDispatch, useSelector } from 'react-redux';
-import { modalActions } from '../../services/modal-slice';
-import { ingredientDetailsActions } from '../../services/ingredientDetails-slice';
-
 const BurgerIngredients = () => {
-
   const ingredients = useSelector((state) => state.ingredients.items);
   const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
   const ingredientDetailsItem = useSelector((state) => state.ingredientDetails.item);
-
   const dispatchAction = useDispatch();
-
-  const onOpenModal = (item) => {
-    dispatchAction(ingredientDetailsActions.setItem(item));  //устанавливаем текущий ингредиент
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
-  };
-
-  const onCloseModal = () => {
-    dispatchAction(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
-  };
-
-
   const [currentMenuType, setCurrentMenuType] = useState('bun');
 
   useEffect(() => {
@@ -47,28 +23,12 @@ const BurgerIngredients = () => {
     setCurrentMenuType(tabs[activeHeaderIndex].getAttribute('value'));
   };
 
-  const filteredIngredientsBuns = ingredients.filter(item => {
-    return item.type === "bun";
-  });
-
-  const filteredIngredientsSauce = ingredients.filter(item => {
-    return item.type === "sauce";
-  });
-
-  const filteredIngredientsMain = ingredients.filter(item => {
-    return item.type === "main";
-  });
-
+  const filteredIngredientsBuns = ingredients.filter((item) => item.type === 'bun');
+  const filteredIngredientsSauce = ingredients.filter((item) => item.type === 'sauce');
+  const filteredIngredientsMain = ingredients.filter((item) => item.type === 'main');
 
   return (
-
     <section>
-      {isOpenModal && ingredientDetailsItem !== null &&
-        <Modal onCloseModal={onCloseModal}>
-          <IngredientDetails />
-        </Modal>
-      }
-
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
       <div className={styles.tabs}>
         <Tab value="bun" active={currentMenuType === 'bun'} onClick={() => setCurrentMenuType('bun')}>
@@ -87,11 +47,10 @@ const BurgerIngredients = () => {
           {filteredIngredientsBuns.map((item) => (
             <Ingredient
               key={item._id}
-              type={item.type}
               name={item.name}
               image={item.image}
               price={item.price}
-              onOpenModal={() => onOpenModal(item)} //открыть модальное окно, передадим анонимную стрелочную функцию
+              onOpenModal={() => onOpenModal(item)}
             />
           ))}
         </ul>
@@ -100,11 +59,10 @@ const BurgerIngredients = () => {
           {filteredIngredientsSauce.map((item) => (
             <Ingredient
               key={item._id}
-              type={item.type}
               name={item.name}
               image={item.image}
               price={item.price}
-              onOpenModal={() => onOpenModal(item)} //открыть модальное окно
+              onOpenModal={() => onOpenModal(item)}
             />
           ))}
         </ul>
@@ -113,7 +71,6 @@ const BurgerIngredients = () => {
           {filteredIngredientsMain.map((item) => (
             <Ingredient
               key={item._id}
-              type={item.type}
               name={item.name}
               image={item.image}
               price={item.price}
@@ -123,9 +80,7 @@ const BurgerIngredients = () => {
         </ul>
       </div>
     </section>
-  )
-}
-
-
+  );
+};
 
 export default BurgerIngredients;
