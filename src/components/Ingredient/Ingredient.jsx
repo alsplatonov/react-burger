@@ -15,7 +15,7 @@ const Ingredient = (props) => {
   // }
 
   const ingredient = props;
- 
+ console.log(ingredient);
   
 
   const [{isDrag}, dragRef] = useDrag({

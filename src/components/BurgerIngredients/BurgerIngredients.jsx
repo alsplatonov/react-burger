@@ -7,6 +7,7 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '../../services/modal-slice';
 import { ingredientDetailsActions } from '../../services/ingredientDetails-slice';
+import { v4 as uuidv4 } from 'uuid';
 
 const BurgerIngredients = () => {
 
@@ -35,8 +36,8 @@ const BurgerIngredients = () => {
   }, []);
 
   const handleScroll = () => {
-    const headers = document.querySelectorAll(`.${ styles['burger-ingredients']} h2`);
-    const tabs = document.querySelectorAll(`.${ styles.tabs } button`);
+    const headers = document.querySelectorAll(`.${styles['burger-ingredients']} h2`);
+    const tabs = document.querySelectorAll(`.${styles.tabs} button`);
     let activeHeaderIndex = 0;
     headers.forEach((header, index) => {
       if (header.getBoundingClientRect().top < 100) {
@@ -86,7 +87,8 @@ const BurgerIngredients = () => {
         <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsBuns.map((item) => (
             <Ingredient
-              key={item._id}
+              key={uuidv4()}
+              _id={item._id}
               type={item.type}
               name={item.name}
               image={item.image}
@@ -99,7 +101,8 @@ const BurgerIngredients = () => {
         <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsSauce.map((item) => (
             <Ingredient
-              key={item._id}
+              key={uuidv4()}
+              _id={item._id}
               type={item.type}
               name={item.name}
               image={item.image}
@@ -112,7 +115,8 @@ const BurgerIngredients = () => {
         <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsMain.map((item) => (
             <Ingredient
-              key={item._id}
+              key={uuidv4()}
+              _id={item._id}
               type={item.type}
               name={item.name}
               image={item.image}

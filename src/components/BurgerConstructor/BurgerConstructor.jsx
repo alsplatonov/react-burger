@@ -92,22 +92,22 @@ const BurgerConstructor = () => {
     return ingredIds;
   }
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   dispatchAction(burgerConstructorActions.addItem({
+    dispatchAction(burgerConstructorActions.addItem({
 
-  //     _id: Buns[0]._id,
-  //     name: Buns[0].name,
-  //     type: Buns[0].type,
-  //     proteins: Buns[0].proteins,
-  //     fat: Buns[0].fat,
-  //     carbohydrates: Buns[0].carbohydrates,
-  //     calories: Buns[0].calories,
-  //     price: Buns[0].price,
-  //     image: Buns[0].image,
-  //     uuidv4: uuidv4(),
-  //   }));
-  // }, []);
+      _id: Buns[0]._id,
+      name: Buns[0].name,
+      type: Buns[0].type,
+      proteins: Buns[0].proteins,
+      fat: Buns[0].fat,
+      carbohydrates: Buns[0].carbohydrates,
+      calories: Buns[0].calories,
+      price: Buns[0].price,
+      image: Buns[0].image,
+      uuidv4: uuidv4(),
+    }));
+  }, []);
 
 
 
@@ -137,7 +137,7 @@ const BurgerConstructor = () => {
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
   };
 
-  console.log(buns.name);
+  console.log(ingredients);
   return (
     <section className={`${styles['burger-constructor']}`}>
       {isOpenModal && orderNumber !== 0 &&
@@ -149,7 +149,7 @@ const BurgerConstructor = () => {
       <div ref={dropTarget} style={isHover ? { opacity: "0.5" } : { opacity: "1" }}>
         {isCartContentChanged && (
           <>
-            <div className={`${styles['burger-constructor__item']} pl-8 mb-4`} key={buns._id} >
+            <div className={`${styles['burger-constructor__item']} pl-8 mb-4`} >
               <ConstructorElement
                 type="top"
                 isLocked={true}
@@ -162,7 +162,7 @@ const BurgerConstructor = () => {
 
             <ul className={`${styles['burger-constructor__list']}`}>
               {filteredIngredientsWithoutBuns.map((item) => (
-                <li className={`${styles['burger-constructor__item']}`} key={item._id}  >
+                <li className={`${styles['burger-constructor__item']}`} key={uuidv4()}  >
                   <DragIcon type="primary" />
                   <ConstructorElement
                     text={item.name}
@@ -174,7 +174,7 @@ const BurgerConstructor = () => {
             </ul>
 
 
-            <div className={`${styles['burger-constructor__item']} pl-8 mt-4`} key={buns._id} >
+            <div className={`${styles['burger-constructor__item']} pl-8 mt-4`}  >
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
@@ -186,13 +186,29 @@ const BurgerConstructor = () => {
           </>
 
         )}
-
-        {!isCartContentChanged && (
-          <h2 className={`${styles['burger-constructor__note']} pl-30 pb-30`}
-          >
-            Перетаскивайте сюда ингредиенты
-          </h2>
-        )}
+        {/* 
+        {!isCartContentChanged && ( //булки по-умолчанию
+           <>
+           <div className={`${styles['burger-constructor__item']} pl-8 mb-4`} >
+             <ConstructorElement
+               type="top"
+               isLocked={true}
+               text={Buns[0].name + '\n(верх)'}
+               price={Buns[0].price}
+               thumbnail={Buns[0].image}
+             />
+           </div>
+           <div className={`${styles['burger-constructor__item']} pl-8 mt-4`}  >
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={Buns[0].name + '\n(низ)'}
+                price={Buns[0].price}
+                thumbnail={Buns[0].image}
+              />
+            </div>
+          </>
+        )} */}
       </div>
 
 
