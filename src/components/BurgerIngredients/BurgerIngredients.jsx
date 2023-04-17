@@ -7,7 +7,7 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '../../services/modal-slice';
 import { ingredientDetailsActions } from '../../services/ingredientDetails-slice';
-import { v4 as uuidv4 } from 'uuid';
+
 
 const BurgerIngredients = () => {
 
@@ -87,7 +87,7 @@ const BurgerIngredients = () => {
         <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsBuns.map((item) => (
             <Ingredient
-              key={uuidv4()}
+              key={item._id}
               _id={item._id}
               type={item.type}
               name={item.name}
@@ -101,7 +101,7 @@ const BurgerIngredients = () => {
         <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsSauce.map((item) => (
             <Ingredient
-              key={uuidv4()}
+              key={item._id}
               _id={item._id}
               type={item.type}
               name={item.name}
@@ -115,7 +115,7 @@ const BurgerIngredients = () => {
         <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsMain.map((item) => (
             <Ingredient
-              key={uuidv4()}
+              key={item._id}
               _id={item._id}
               type={item.type}
               name={item.name}

@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
   items: [],
   bun: [],
-  counter: 0,
+  index: 0,
   isCartContentChanged: false,
-  // uuidv4: uuidv4,
 };
 
 const constructorSlice = createSlice({
@@ -16,10 +15,11 @@ const constructorSlice = createSlice({
     addItem(state, action) {
       const newItem = action.payload;
       state.isCartContentChanged = true;
+      state.index++;
       if (newItem.type !== 'bun') {
         const existingItem = state.items.find((item) => item._id === newItem._id);
-        state.counter++;
-        
+
+
         if (!existingItem) {
           state.items.push({
             _id: newItem._id,
@@ -31,9 +31,9 @@ const constructorSlice = createSlice({
             calories: newItem.calories,
             price: newItem.price,
             image: newItem.image,
-            quantity: 1,
-            number: 1,
-            uuidv4: newItem.uuidv4,
+            index: state.index,
+            counter: 1,
+            key: uuidv4(),
           });
         } else {
           state.items.push({
@@ -46,14 +46,14 @@ const constructorSlice = createSlice({
             calories: newItem.calories,
             price: newItem.price,
             image: newItem.image,
-            quantity: existingItem.quantity++,
-            number: existingItem.number++,
-            uuidv4: newItem.uuidv4,
+            index: state.index,
+            counter: existingItem.counter++,
+            key: uuidv4(),
           })
         }
       } else {
         state.bun = {
-        
+
           _id: newItem._id,
           name: newItem.name,
           type: newItem.type,
@@ -62,35 +62,24 @@ const constructorSlice = createSlice({
           carbohydrates: newItem.carbohydrates,
           calories: newItem.calories,
           price: newItem.price,
-          image: newItem.image,     
-          uuidv4: newItem.uuidv4,
+          image: newItem.image,
+          counter: 1,
         }
       }
-
     },
     removeItem(state, action) {
-      const number = action.payload;
-      const existingItem = state.items.find((item) => item.number === number);
-      state.counter--;
+      const newItem = action.payload;
+      const existingItem = state.items.find((item) => item._id === newItem._id);
       state.isCartContentChanged = true;
-      if (existingItem.quantity === 1) {
-        state.items = state.items.filter((item) => item.number !== number);
-      } else {
-        existingItem.quantity--;
-
-      }
+      state.items = state.items.filter(item => item.key !== newItem.key);
+      existingItem.counter--;
     },
     updateCart(state, action) {
       state.items = action.payload.items;
-
     },
   },
 });
 
-
-
 export const burgerConstructorActions = constructorSlice.actions;
-
-
 
 export default constructorSlice;
