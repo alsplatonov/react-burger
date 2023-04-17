@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 const OrderDetails = () => {
 
   const orderNumber = useSelector((state) => state.order.orderNumber);
+  console.log(orderNumber);
   return (
     <div className={`${styles['order-details']} pt-30 pb-30 pr-25 pl-25`}>
       <p className="text text_type_digits-large">{orderNumber}</p>

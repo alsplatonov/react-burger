@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 const Ingredient = (props) => {
 
   const ingredient = props;
-  // console.log(props);
 
   const bun = useSelector((state) => state.burgerCart.bun);
   console.log(props.type);
@@ -17,8 +16,6 @@ const Ingredient = (props) => {
   const burgerIngredients = ingredients.filter(item => {
     return item._id === props._id;
   });
-
-
 
   function compare(a, b) {
     if (a.counter < b.counter) {
@@ -41,7 +38,6 @@ const Ingredient = (props) => {
     })
   });
 
-
   return (
     <li ref={dragRef} className={styles.ingredient} onClick={props.onOpenModal} style={!isDrag ? { opacity: "1" } : { opacity: "0.4", cursor: "grab" }}>
       <img src={props.image} alt={props.name} />
@@ -56,6 +52,7 @@ const Ingredient = (props) => {
     </li>
   );
 }
+
 Ingredient.propTypes = {
   price: PropTypes.number,
   name: PropTypes.string,

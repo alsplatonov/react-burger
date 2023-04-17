@@ -30,23 +30,23 @@ const BurgerIngredients = () => {
 
   const [currentMenuType, setCurrentMenuType] = useState('bun');
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => window.removeEventListener('scroll', handleScroll);
+  // }, []);
 
-  const handleScroll = () => {
-    const headers = document.querySelectorAll(`.${styles['burger-ingredients']} h2`);
-    const tabs = document.querySelectorAll(`.${styles.tabs} button`);
-    let activeHeaderIndex = 0;
-    headers.forEach((header, index) => {
-      if (header.getBoundingClientRect().top < 100) {
-        activeHeaderIndex = index;
-      }
-    });
+  // const handleScroll = () => {
+  //   const headers = document.querySelectorAll(`.${styles['burger-ingredients']} h2`);
+  //   const tabs = document.querySelectorAll(`.${styles.tabs} button`);
+  //   let activeHeaderIndex = 0;
+  //   headers.forEach((header, index) => {
+  //     if (header.getBoundingClientRect().top < 100) {
+  //       activeHeaderIndex = index;
+  //     }
+  //   });
 
-    setCurrentMenuType(tabs[activeHeaderIndex].getAttribute('value'));
-  };
+  //   setCurrentMenuType(tabs[activeHeaderIndex].getAttribute('value'));
+  // };
 
   const filteredIngredientsBuns = ingredients.filter(item => {
     return item.type === "bun";
