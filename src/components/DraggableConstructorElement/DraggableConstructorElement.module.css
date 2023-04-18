@@ -1,0 +1,7 @@
+.draggable-constructor-element__item {
+  min-width: 568px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
