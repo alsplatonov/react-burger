@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 const initialState = {
   items: [],
   bun: [],
-  index: 0,
+  // index: 0,
   isCartContentChanged: false,
 };
 
@@ -18,8 +18,6 @@ const constructorSlice = createSlice({
       state.index++;
       if (newItem.type !== 'bun') {
         const existingItem = state.items.find((item) => item._id === newItem._id);
-
-
         if (!existingItem) {
           state.items.push({
             _id: newItem._id,
@@ -53,7 +51,6 @@ const constructorSlice = createSlice({
         }
       } else {
         state.bun = {
-
           _id: newItem._id,
           name: newItem.name,
           type: newItem.type,
@@ -76,6 +73,14 @@ const constructorSlice = createSlice({
     },
     updateCart(state, action) {
       state.items = action.payload.items;
+    },
+
+    moveItem(state, action) {
+      const dragIndex = action.payload.dragIndex;
+      const hoverIndex = action.payload.hoverIndex;
+      const dragIngredient = action.payload.dragIngredient;
+      state.items.splice(dragIndex, 1);
+      state.items.splice(hoverIndex, 0, dragIngredient);
     },
   },
 });

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getOrderNumber } from '../utils/api';
+import { getOrderNumber } from '../../utils/api';
 
 const initialState = {
   orderNumber: 0,

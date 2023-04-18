@@ -3,7 +3,7 @@ import AppMain from '../AppMain/AppMain';
 import { useEffect } from 'react';
 import style from './App.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { burgerIngredientsActions } from '../../services/ingredients-slice';
+import { burgerIngredientsActions } from '../../services/actions/ingredients-slice';
 
 const App = () => {
 

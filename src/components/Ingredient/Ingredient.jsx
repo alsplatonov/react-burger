@@ -8,11 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 const Ingredient = (props) => {
 
   const ingredient = props;
-
-  const bun = useSelector((state) => state.burgerCart.bun);
-  console.log(props.type);
   const ingredients = useSelector((state) => state.burgerCart.items);
-
   const burgerIngredients = ingredients.filter(item => {
     return item._id === props._id;
   });
@@ -30,16 +26,16 @@ const Ingredient = (props) => {
   burgerIngredients.sort(compare);
   let index = burgerIngredients.length - 1;
 
-  const [{ isDrag }, dragRef] = useDrag({
+  const [{ isDragging }, dragRef] = useDrag({
     type: "ingredient",
     item: ingredient,
     collect: monitor => ({
-      isDrag: monitor.isDragging()
+      isDragging: monitor.isDragging()
     })
   });
 
   return (
-    <li ref={dragRef} className={styles.ingredient} onClick={props.onOpenModal} style={!isDrag ? { opacity: "1" } : { opacity: "0.4", cursor: "grab" }}>
+    <li ref={dragRef} className={styles.ingredient} onClick={props.onOpenModal} style={!isDragging ? { opacity: "1" } : { opacity: "0.4", cursor: "grab" }}>
       <img src={props.image} alt={props.name} />
       {burgerIngredients.length > 0 && (
         <Counter count={burgerIngredients[index].counter} size="default" extraClass="m-1" />

@@ -5,8 +5,8 @@ import Ingredient from '../Ingredient/Ingredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalActions } from '../../services/modal-slice';
-import { ingredientDetailsActions } from '../../services/ingredientDetails-slice';
+import { modalActions } from '../../services/actions/modal-slice';
+import { ingredientDetailsActions } from '../../services/actions/ingredientDetails-slice';
 
 
 const BurgerIngredients = () => {

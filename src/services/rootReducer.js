@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import burgerIngredientsSlice from './ingredients-slice';
-import constructorSlice from './burgerConstructor-slice';
-import modalSlice from './modal-slice';
-import orderSlice from './order-slice';
-import ingredientDetailsSlice from './ingredientDetails-slice';
+
+import burgerIngredientsSlice from './actions/ingredients-slice';
+import constructorSlice from './actions/burgerConstructor-slice';
+import modalSlice from './actions/modal-slice';
+import orderSlice from './actions/order-slice';
+import ingredientDetailsSlice from './actions/ingredientDetails-slice';
 
 const store = configureStore({
   reducer: {
