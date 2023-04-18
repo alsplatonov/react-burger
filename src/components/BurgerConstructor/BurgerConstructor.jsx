@@ -8,9 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { orderActions } from '../../services/actions/order-slice';
 import { modalActions } from '../../services/actions/modal-slice';
 import { burgerConstructorActions } from "../../services/actions/burgerConstructor-slice";
-
 import { useDrag, useDrop } from "react-dnd";
-import { v4 as uuidv4 } from 'uuid';
+
 
 const BurgerConstructor = () => {
   const dispatchAction = useDispatch();
@@ -87,66 +86,6 @@ const BurgerConstructor = () => {
   };
 
 
-
-
-  // const [draggingIndex, setDraggingIndex] = useState(null);
-
-  // const handleDragStart = (index) => {
-  //   setDraggingIndex(index);
-  // };
-
-  // const handleDragEnd = () => {
-  //   setDraggingIndex(null);
-  // };
-
-  // const moveIngredient = (dragIndex, hoverIndex) => {
-  //   const newIngredients = [...ingredients];
-  //   const draggedIngredient = newIngredients[dragIndex];
-  //   newIngredients.splice(dragIndex, 1);
-  //   newIngredients.splice(hoverIndex, 0, draggedIngredient);
-
-  //   // Обновляем индексы перемещенных элементов
-  //   const updatedIngredients = newIngredients.map((item, index) => {
-  //     return { ...item, index };
-  //   });
-
-  //   dispatchAction(burgerConstructorActions.updateCart(updatedIngredients));
-  // };
-
-  // const [, drop] = useDrop({
-  //   accept: "constructorElement",
-  //   hover: (item, monitor) => {
-  //     const dragIndex = item.index;
-  //     const hoverIndex = ingredients.findIndex((ingredient) => ingredient.key === item.key);
-
-  //     // Если элемент перемещается на свое старое место, то ничего не делаем
-  //     if (dragIndex === hoverIndex) {
-  //       return;
-  //     }
-
-  //     // Определяем, находится ли элемент выше или ниже текущей позиции
-  //     const hoverMiddleY = monitor.getClientOffset().y;
-  //     const hoverTarget = monitor.getTargetIds().find((id) => id.startsWith("constructor-"));
-  //     const hoverTargetElement = document.getElementById(hoverTarget);
-  //     const hoverTargetBoundingRect = hoverTargetElement.getBoundingClientRect();
-  //     const hoverIndexRelativeToDrag = hoverIndex > dragIndex ? hoverIndex - 1 : hoverIndex;
-  //     const isAbove = hoverMiddleY < hoverTargetBoundingRect.top + hoverTargetBoundingRect.height / 2;
-
-  //     // Если элемент перемещается выше, то его позиция должна быть на 1 меньше
-  //     if (isAbove) {
-  //       moveIngredient(dragIndex, hoverIndexRelativeToDrag);
-  //       item.index = hoverIndex - 1;
-  //     }
-
-  //     // Если элемент перемещается ниже, то его позиция должна быть на 1 больше
-  //     if (!isAbove) {
-  //       moveIngredient(dragIndex, hoverIndexRelativeToDrag + 1);
-  //       item.index = hoverIndex;
-  //     }
-  //   },
-  // });
-
-
   return (
     <section className={`${styles['burger-constructor']}`} >
       {isOpenModal && orderNumber !== 0 &&
@@ -172,8 +111,6 @@ const BurgerConstructor = () => {
               <SortableConstructor />
             </ul>
 
-
-
             <div className={`${styles['burger-constructor__item']} pl-8 mt-4`}  >
               <ConstructorElement
                 type="bottom"
@@ -187,7 +124,6 @@ const BurgerConstructor = () => {
         )}
       </div>
 
-
       < div className={`${styles['burger-constructor__order']} mt-10`}>
         <div className={`${styles['burger-constructor__order-price']}`}>
           <p className="text text_type_digits-medium">{orderPrice}</p>
@@ -197,10 +133,8 @@ const BurgerConstructor = () => {
           Оформить заказ
         </Button>
       </div>
-
     </section >
   )
-
 }
 
 

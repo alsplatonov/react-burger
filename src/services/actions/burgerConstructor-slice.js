@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 const initialState = {
   items: [],
   bun: [],
-  // index: 0,
   isCartContentChanged: false,
 };
 
@@ -29,7 +28,6 @@ const constructorSlice = createSlice({
             calories: newItem.calories,
             price: newItem.price,
             image: newItem.image,
-            index: state.index,
             counter: 1,
             key: uuidv4(),
           });
@@ -44,7 +42,6 @@ const constructorSlice = createSlice({
             calories: newItem.calories,
             price: newItem.price,
             image: newItem.image,
-            index: state.index,
             counter: existingItem.counter++,
             key: uuidv4(),
           })

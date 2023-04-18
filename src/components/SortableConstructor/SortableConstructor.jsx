@@ -11,7 +11,6 @@ const SortableConstructor = () => {
     dispatchAction(burgerConstructorActions.moveItem({ dragIndex, hoverIndex, dragIngredient }));
   };
 
-
   return (
     <>
       {ingredients.map((ingredient, index) => (
