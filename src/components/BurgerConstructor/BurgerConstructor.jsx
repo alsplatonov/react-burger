@@ -72,7 +72,6 @@ const BurgerConstructor = () => {
       price += item.price;
     })
     dispatchAction(orderActions.setOrderPrice(price));
-    console.log(totalBurgerIngredients);
   },
     [totalBurgerIngredients]
   );
