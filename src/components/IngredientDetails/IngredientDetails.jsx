@@ -1,5 +1,4 @@
 import styles from "./IngredientDetails.module.css";
-import PropTypes from "prop-types";
 import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
@@ -33,9 +32,6 @@ const IngredientDetails = () => {
   )
 }
 
-IngredientDetails.propTypes = {
-  ingredient: PropTypes.object,
-};
 
 
 export default IngredientDetails;

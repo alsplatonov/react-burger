@@ -21,6 +21,10 @@ const orderSlice = createSlice({
     setOrderPrice(state, action) {
       state.orderPrice = action.payload;
     },
+    setOrderNumber(state, action) {
+      state.orderNumber = action.payload;
+    },
+
   },
   extraReducers: (builder) => {
     builder
@@ -28,6 +32,7 @@ const orderSlice = createSlice({
         state.orderNumber = action.payload;
       })
       .addCase(fetchOrderNumber.rejected, (state, action) => {
+        state.orderNumber = 0;
         console.error(action.error.message);
       });
   },

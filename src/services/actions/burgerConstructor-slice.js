@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
+
 
 const initialState = {
   items: [],
@@ -29,7 +29,8 @@ const constructorSlice = createSlice({
             price: newItem.price,
             image: newItem.image,
             counter: 1,
-            key: uuidv4(),
+            key: newItem.key,
+            
           });
         } else {
           state.items.push({
@@ -43,7 +44,7 @@ const constructorSlice = createSlice({
             price: newItem.price,
             image: newItem.image,
             counter: existingItem.counter++,
-            key: uuidv4(),
+            key: newItem.key,
           })
         }
       } else {

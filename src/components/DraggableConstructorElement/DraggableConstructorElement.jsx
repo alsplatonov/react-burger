@@ -4,7 +4,7 @@ import styles from "./DraggableConstructorElement.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from 'react-redux';
 import { burgerConstructorActions } from "../../services/actions/burgerConstructor-slice";
-
+import PropTypes from "prop-types";
 
 const DraggableConstructorElement = (props) => {
 
@@ -65,6 +65,10 @@ const DraggableConstructorElement = (props) => {
 };
 
 
-
+DraggableConstructorElement.propTypes = {
+  ingredient: PropTypes.object.isRequired,
+  index: PropTypes.number,
+  moveIngredient: PropTypes.func.isRequired,
+}
 
 export default DraggableConstructorElement;

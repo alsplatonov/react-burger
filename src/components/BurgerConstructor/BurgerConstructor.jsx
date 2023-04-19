@@ -9,28 +9,37 @@ import { orderActions } from '../../services/actions/order-slice';
 import { modalActions } from '../../services/actions/modal-slice';
 import { burgerConstructorActions } from "../../services/actions/burgerConstructor-slice";
 import { useDrag, useDrop } from "react-dnd";
-
+import { v4 as uuidv4 } from 'uuid';
 
 const BurgerConstructor = () => {
   const dispatchAction = useDispatch();
-  const defaultBun = useSelector((state) => state.ingredients.items);
+  const defaultBuns = useSelector((state) => state.ingredients.items);
+  const defaultBun = defaultBuns.filter(item => {
+    return item.type === "bun";
+  });
   const ingredients = useSelector((state) => state.burgerCart.items);
   const isCartContentChanged = useSelector((state) => state.burgerCart.isCartContentChanged);
   const buns = useSelector((state) => state.burgerCart.bun);
   const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
   const orderNumber = useSelector((state) => state.order.orderNumber);
   const orderPrice = useSelector((state) => state.order.orderPrice);
-  const Buns = defaultBun.filter(item => {
-    return item.type === "bun";
-  });
 
   const totalBurgerIngredients = (ingredients.concat(buns).concat(buns)); //добавим обе булки к общему массиву ингредиентов 
 
+
   useEffect(() => {  //булки по-умолчанию
-    dispatchAction(burgerConstructorActions.addItem(Buns[0]));
+    dispatchAction(burgerConstructorActions.addItem(
+      {
+        _id: defaultBun[0]._id,
+        name: defaultBun[0].name,
+        type: defaultBun[0].type,
+        price: defaultBun[0].price,
+        image: defaultBun[0].image,
+        key: uuidv4(),
+      }));
   }, []);
 
-  const [{ isHover }, dropTarget] = useDrop({ //перремещение ингредиентов из списка ингредиентов
+  const [{ isHover }, dropTarget] = useDrop({ //перемещение ингредиентов из списка ингредиентов
     accept: "ingredient",
     drop(item) {
       onDropHandler(item);
@@ -44,14 +53,10 @@ const BurgerConstructor = () => {
       type: item.type,
       price: item.price,
       image: item.image,
+      key: uuidv4(),
     }));
-    console.log(totalBurgerIngredients);
   };
 
-
-  // const filteredIngredientsWithoutBuns = ingredients.filter(item => {
-  //   return item.type !== "bun";
-  // });
 
   const getIngredientsIds = () => { //получим id ингредиентов
     let ingredIds = [];
@@ -79,12 +84,8 @@ const BurgerConstructor = () => {
 
   const onCloseModal = () => {
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
+    dispatchAction(orderActions.setOrderNumber(0));
   };
-
-  const removeIngredient = (cartId, key) => {
-    dispatchAction(burgerConstructorActions.removeItem(cartId, key));
-  };
-
 
   return (
     <section className={`${styles['burger-constructor']}`} >
