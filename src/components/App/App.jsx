@@ -4,7 +4,10 @@ import { useEffect } from 'react';
 import style from './App.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { burgerIngredientsActions } from '../../services/actions/ingredients-slice';
-import ResetPassword from '../../pages/ResetPassword';
+import ResetPassword from '../../pages/ResetPassword/ResetPassword';
+import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
+import Register from '../../pages/Register/Register';
+import Login from '../../pages/Login/Login';
 
 const App = () => {
 
@@ -17,7 +20,7 @@ const App = () => {
   const ingredients = useSelector((state) => state.ingredients.items);
 
   return (
-<ResetPassword />
+<Login />
     // <>
     //   {ingredients.length !== 0 && (
     //     <div className={style.app}>

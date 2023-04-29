@@ -1,0 +1,16 @@
+.Login__form {
+  width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 180px; 
+  align-self: center;
+  align-items: center;
+}
+
+.Login__button {
+  width: 128px;
+  height: 56px;
+  margin: 0 auto;
+}
+
