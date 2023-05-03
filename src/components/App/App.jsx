@@ -8,6 +8,8 @@ import ResetPassword from '../../pages/ResetPassword/ResetPassword';
 import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
 import Register from '../../pages/Register/Register';
 import Login from '../../pages/Login/Login';
+import { Routes, Route } from "react-router";
+import HeaderWrapper from '../HeaderWrapper/HeaderWrapper';
 
 const App = () => {
 
@@ -17,18 +19,19 @@ const App = () => {
     dispatchAction(burgerIngredientsActions.fetchIngredientsData());
   }, []);
 
-  const ingredients = useSelector((state) => state.ingredients.items);
 
   return (
-<Login />
-    // <>
-    //   {ingredients.length !== 0 && (
-    //     <div className={style.app}>
-    //       <AppHeader />
-    //       <AppMain />
-    //     </div>
-    //   )}
-    // </>
+    <>
+        <Routes>
+          <Route path="/" element={<HeaderWrapper />}>
+            <Route index element={<AppMain />} />
+          </Route>
+          <Route path="forgotpassword" element={<ForgotPassword />}/>
+          <Route path="login" element={<Login />}/>
+          <Route path="register" element={<Register />}/>
+          <Route path="resetpassword" element={<ResetPassword />}/>
+        </Routes>
+    </>
   );
 }
 

@@ -10,6 +10,7 @@ import { ingredientDetailsActions } from '../../services/actions/ingredientDetai
 
 
 const BurgerIngredients = () => {
+ 
 
   const ingredients = useSelector((state) => state.ingredients.items);
   const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
@@ -30,8 +31,7 @@ const BurgerIngredients = () => {
   const filteredIngredientsBuns = ingredients.filter((item) => item.type === 'bun');
   const filteredIngredientsSauce = ingredients.filter((item) => item.type === 'sauce');
   const filteredIngredientsMain = ingredients.filter((item) => item.type === 'main');
-
-
+ 
   const containerRef = useRef(document.querySelector('#customScroll')); // ссылка на элемент контейнера
 
   const [currentMenuType, setCurrentMenuType] = useState("bun"); // состояние активного переключателя на вкладке
