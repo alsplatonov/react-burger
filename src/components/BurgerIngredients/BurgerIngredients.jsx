@@ -57,12 +57,18 @@ const BurgerIngredients = () => {
     }
   };
 
+
   useEffect(() => {
-    // добавляем обработчик события "scroll" на элемент контейнера
-    containerRef.current.addEventListener("scroll", setCurrentMenuTypeByScroll);
-    return () =>
-      containerRef.current.removeEventListener("scroll", setCurrentMenuTypeByScroll);
+    const container = containerRef.current;
+    if (container) {
+      // добавляем обработчик события "scroll" на элемент контейнера
+      container.addEventListener("scroll", setCurrentMenuTypeByScroll);
+      return () => {
+        container.removeEventListener("scroll", setCurrentMenuTypeByScroll);
+      };
+    }
   }, []);
+  
 
   return (
     <section>

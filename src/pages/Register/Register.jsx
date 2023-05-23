@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   PasswordInput,
   Input,
@@ -5,8 +6,19 @@ import {
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Register.module.css";
+import { useNavigate } from "react-router";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [values, setValues] = useState({});
+
+  const onChange = (event) => {
+    
+  };
+
+  const openLoginPage = () => {
+    navigate("/login");
+  }
 
   return (
     <>
@@ -15,13 +27,13 @@ const Register = () => {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          // onChange={onChange}
-          value={""}
+          onChange={onChange}
+          value={values.name || ""}
           name={"name"}
           extraClass="mb-6"
         />
         <EmailInput
-          // onChange={onChange}
+          onChange={onChange}
           value={""}
           type={"email"}
           name={"email"}
@@ -30,7 +42,7 @@ const Register = () => {
           extraClass="mb-6"
         />
         <PasswordInput
-          // onChange={onChange}
+          onChange={onChange}
           value={""}
           type={"password"}
           name={"password"}
@@ -49,6 +61,7 @@ const Register = () => {
             type="secondary"
             size="medium"
             extraClass="pr-2 pl-2"
+            onClick={openLoginPage}
           >
             Войти
           </Button>

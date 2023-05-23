@@ -17,13 +17,13 @@ const AppHeader = () => {
       <nav>
         <ul className={`${styles['app-header__nav-list']} pt-4 pb-4`}>
           <HeaderItem
-            isActive={true}
+            // isActive={true}
             text="Конструктор"
           >
             <BurgerIcon />
           </HeaderItem>
           <HeaderItem
-            isActive={false}
+            // isActive={false}
             text="Лента заказов"
           >
             <ListIcon type="secondary" />
@@ -32,7 +32,7 @@ const AppHeader = () => {
             <Logo />
           </li>
           <HeaderItem
-            isActive={false}
+            // isActive={false}
             text="Личный кабинет"
           >
             <ProfileIcon type="secondary" />
