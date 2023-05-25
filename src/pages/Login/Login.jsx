@@ -5,8 +5,18 @@ import {
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Login.module.css";
+import { useNavigate } from "react-router";
 
   const Login = () => {
+    const navigate = useNavigate();
+
+    const openRegisterPage = () => {
+      navigate("/register");
+    }
+    const openForgotPasswordPage = () => {
+      navigate("/forgotpassword");
+    }
+  
   
   return (
     <form className={`${styles['Login__form']} `} >
@@ -38,6 +48,7 @@ import styles from "./Login.module.css";
           type="secondary"
           size="medium"
           extraClass="pr-1 pl-2 pb-2"
+          onClick={openRegisterPage}
         >
           Зарегистрироваться
         </Button>
@@ -48,6 +59,7 @@ import styles from "./Login.module.css";
           type="secondary"
           size="medium"
           extraClass="pt-2 pr-1 pl-2"
+          onClick={openForgotPasswordPage}
         >
           Восстановить пароль
         </Button>

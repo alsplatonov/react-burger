@@ -1,11 +1,17 @@
 import {
   Button,
-  EmailInput 
+  EmailInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ForgotPassword.module.css";
+import { useNavigate } from "react-router";
 
+const ForgotPassword = () => {
 
- const ForgotPassword = () => {
+  const navigate = useNavigate();
+
+  const openLoginPage = () => {
+    navigate("/login");
+  }
 
   return (
     <form className={`${styles['ForgotPassword__form']} `} >
@@ -23,7 +29,7 @@ import styles from "./ForgotPassword.module.css";
         type="primary"
         size="large"
         extraClass={`${styles['ForgotPassword__button']} pt-4`} >
-      
+
         Восстановить
       </Button>
       <p className="text text_type_main-default text_color_inactive mt-20"> Вспомнили пароль?
@@ -32,6 +38,7 @@ import styles from "./ForgotPassword.module.css";
           type="secondary"
           size="medium"
           extraClass="pr-1 pl-2"
+          onClick={openLoginPage}
         >
           Войти
         </Button>

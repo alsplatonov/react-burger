@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { burgerIngredientsActions } from './services/actions/ingredients-slice';
 
-// store.dispatch(burgerIngredientsActions.fetchIngredientsData());
+
 const root = ReactDOM.createRoot(
   
   document.getElementById('root')
