@@ -10,6 +10,7 @@ import Register from '../../pages/Register/Register';
 import Login from '../../pages/Login/Login';
 import { Routes, Route } from "react-router";
 import HeaderWrapper from '../HeaderWrapper/HeaderWrapper';
+import Profile from '../../pages/Profile/Profile';
 
 const App = () => {
 
@@ -22,15 +23,17 @@ const App = () => {
 
   return (
     <>
-        <Routes>
-          <Route path="/" element={<HeaderWrapper />}>
-            <Route index element={<AppMain />} />
-          </Route>
-          <Route path="forgotpassword" element={<ForgotPassword />}/>
-          <Route path="login" element={<Login />}/>
-          <Route path="register" element={<Register />}/>
-          <Route path="resetpassword" element={<ResetPassword />}/>
-        </Routes>
+      <Routes>
+        <Route path="/" element={<HeaderWrapper />}>
+          <Route index element={<AppMain />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="reset-password" element={<ResetPassword />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+
+      </Routes>
     </>
   );
 }

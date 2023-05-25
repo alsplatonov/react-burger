@@ -1,4 +1,4 @@
-.Login__form {
+.login__form {
   width: 480px;
   margin: 0 auto;
   display: flex;
@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-.Login__button {
+.login__button {
   width: 128px;
   height: 56px;
   margin: 0 auto;

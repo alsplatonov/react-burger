@@ -13,13 +13,14 @@ import { useNavigate } from "react-router";
     const openRegisterPage = () => {
       navigate("/register");
     }
+
     const openForgotPasswordPage = () => {
       navigate("/forgotpassword");
     }
   
   
   return (
-    <form className={`${styles['Login__form']} `} >
+    <form className={`${styles['login__form']} `} >
       <h1 className="text text_type_main-medium">Вход</h1>
       <EmailInput
         // onChange={onChange}
@@ -39,7 +40,7 @@ import { useNavigate } from "react-router";
         htmlType="submit"
         type="primary"
         size="large"
-        extraClass={`${styles['Login__button']} pt-4`} >
+        extraClass={`${styles['login__button']} pt-4`} >
         Войти
       </Button>
       <p className="text text_type_main-default text_color_inactive mt-20">Вы - новый пользователь?

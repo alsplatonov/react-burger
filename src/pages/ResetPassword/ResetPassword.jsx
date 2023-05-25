@@ -4,26 +4,43 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ResetPassword.module.css";
-
+import { useNavigate } from "react-router";
 
 const ResetPassword = () => {
 
+  const navigate = useNavigate();
+
+  const [password, setPassword] = useState("");
+  const [confirmCode, setConfirmCode] = useState("");
+
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const onChangeConfirmCode = (event) => {
+    setConfirmCode(event.target.value);
+  };
+
+  const openLoginPage = () => {
+    navigate("/login");
+  }
+
   return (
-    <form className={`${styles['ResetPassword__form']} `} >
+    <form className={`${styles['resetPassword__form']} `} >
       <h1 className="text text_type_main-medium">Восстановление пароля</h1>
       <PasswordInput
         placeholder={"Введите новый пароль"}
-        // onChange={onChange}
-        value={""}
+        onChange={onChangePassword}
+        value={password}
         name={"password"}
         extraClass="mt-6"
       />
       <Input
         type={"text"}
         placeholder={"Введите код из письма"}
-        // onChange={onChange}
-        value={""}
-        name={"lettercode"}
+        onChange={onChangeConfirmCode}
+        value={confirmCode}
+        name={"confirmCode"}
         error={false}
         extraClass="mb-6 mt-6"
       />
@@ -42,6 +59,7 @@ const ResetPassword = () => {
           type="secondary"
           size="medium"
           extraClass="pr-1 pl-2"
+          onClick={openLoginPage}
         >
           Войти
         </Button>

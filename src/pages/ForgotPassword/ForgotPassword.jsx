@@ -3,22 +3,42 @@ import {
   EmailInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ForgotPassword.module.css";
-import { useNavigate } from "react-router";
+import { useNavigate} from "react-router";
+import { resetPassword } from "../../utils/api";
+import { useState } from "react";
 
 const ForgotPassword = () => {
 
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+ 
+
+  const onChangeForm = (event) => {
+    const { value, name } = event.target;
+    setEmail(value); 
+  };
+  
+  const onFormSubmit = (event) => {
+    event.preventDefault();
+    resetPassword(email)
+      .then((res) => {    
+          navigate("/reset-password"); 
+      })
+      .catch((err) => {
+        console.err(err);
+      });
+  };
 
   const openLoginPage = () => {
     navigate("/login");
   }
 
   return (
-    <form className={`${styles['ForgotPassword__form']} `} >
+    <form className={`${styles['forgotPassword__form']} `} onSubmit={onFormSubmit}>
       <h1 className="text text_type_main-medium mb-6">Восстановление пароля</h1>
       <EmailInput
-        // onChange={onChange}
-        value={""}
+        onChange={onChangeForm}
+        value={email}
         name={"email"}
         placeholder="Укажите e-mail"
         isIcon={false}
@@ -28,8 +48,9 @@ const ForgotPassword = () => {
         htmlType="submit"
         type="primary"
         size="large"
-        extraClass={`${styles['ForgotPassword__button']} pt-4`} >
-
+        extraClass={`${styles['forgotPassword__button']} pt-4`}
+        // onClick={openLoginPage}
+      >
         Восстановить
       </Button>
       <p className="text text_type_main-default text_color_inactive mt-20"> Вспомнили пароль?

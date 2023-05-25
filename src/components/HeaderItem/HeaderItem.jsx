@@ -19,12 +19,12 @@ const HeaderItem = (props) => {
   const getUrlByHeaderProp = () => {
     switch (props.text) {
       case "Конструктор":
-        return '/register';
+        return '/';
       case "Лента заказов":
         return '/register';
       case "orange":
       case "Личный кабинет":
-        return '/';
+        return '/profile';
       default:
         return '/';
     }

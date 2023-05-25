@@ -22,7 +22,7 @@ const Register = () => {
 
   return (
     <>
-      <form className={`${styles['Register__form']} `} >
+      <form className={`${styles['register__form']} `} >
         <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
         <Input
           type={"text"}
@@ -52,7 +52,7 @@ const Register = () => {
           htmlType="submit"
           type="primary"
           size="large"
-          extraClass={`${styles['Reset__button']}`} >
+          extraClass={`${styles['reset__button']}`} >
           Зарегистрироваться
         </Button>
         <p className="text text_type_main-default text_color_inactive mt-20">Уже зарегистрированы?       

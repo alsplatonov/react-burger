@@ -17,6 +17,19 @@ export const getOrderNumber = (ingredients) => { // POST-запрос для п�
     .then((res) => checkResponse(res));
 }
 
+export const resetPassword = (email) => {
+  return fetch(`${BASE_URL}/password-reset`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+    }),
+  })
+  .then((res) => checkResponse(res));
+}
+
 
 const checkResponse = (res) => {
   if (res.ok) {
