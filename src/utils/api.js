@@ -1,4 +1,5 @@
 import { BASE_URL } from "./constants";
+import { getCookie } from "./cookie";
 
 export const getIngredientsData = async () => {
   return await fetch(`${BASE_URL}/ingredients`)
@@ -29,6 +30,59 @@ export const resetPassword = (email) => {
   })
   .then((res) => checkResponse(res));
 }
+
+export const registerUser = (credentials) => {
+  return fetch(`${BASE_URL}/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: credentials.name,
+      email: credentials.email,
+      password: credentials.password,
+    }),
+  });
+};
+
+export const loginUser = (credentials) => {
+  return fetch(`${BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: credentials.email,
+      password: credentials.password,
+    }),
+  });
+};
+
+export const logoutUser = () => {
+  return fetch(`${BASE_URL}/auth/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      token: getCookie("refreshToken"),
+    }),
+  });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 const checkResponse = (res) => {

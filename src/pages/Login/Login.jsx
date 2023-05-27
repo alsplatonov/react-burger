@@ -15,7 +15,7 @@ import { useNavigate } from "react-router";
     }
 
     const openForgotPasswordPage = () => {
-      navigate("/forgotpassword");
+      navigate("/forgot-password");
     }
   
   

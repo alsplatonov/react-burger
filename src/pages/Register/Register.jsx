@@ -7,14 +7,37 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Register.module.css";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { userSliceActions } from "../../services/actions/userSlice";
+
 
 const Register = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({});
+  const dispatchAction = useDispatch();
 
-  const onChange = (event) => {
-    
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const onChangeName = (event) => {
+    setName(event.target.value);
   };
+  const onChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+
+  const onSubmitForm = (event) => {
+    event.preventDefault();
+    dispatchAction(userSliceActions.registerUserAsync({name, email, password}));
+    navigate("/");
+  };
+
 
   const openLoginPage = () => {
     navigate("/login");
@@ -22,19 +45,19 @@ const Register = () => {
 
   return (
     <>
-      <form className={`${styles['register__form']} `} >
+      <form className={`${styles['register__form']} `} onSubmit={onSubmitForm}>
         <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
         <Input
           type={"text"}
           placeholder={"Имя"}
-          onChange={onChange}
-          value={values.name || ""}
+          onChange={onChangeName}
+          value={name || ""}
           name={"name"}
           extraClass="mb-6"
         />
         <EmailInput
-          onChange={onChange}
-          value={""}
+          onChange={onChangeEmail}
+          value={email || ""}
           type={"email"}
           name={"email"}
           placeholder="E-mail"
@@ -42,8 +65,8 @@ const Register = () => {
           extraClass="mb-6"
         />
         <PasswordInput
-          onChange={onChange}
-          value={""}
+          onChange={onChangePassword}
+          value={password || ""}
           type={"password"}
           name={"password"}
           extraClass="mb-6"
