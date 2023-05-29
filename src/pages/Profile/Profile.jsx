@@ -8,8 +8,19 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { userSliceActions } from "../../services/actions/userSlice";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const dispatchAction = useDispatch();
+
+  const onLogoutUser = () => {
+    dispatchAction(userSliceActions.logoutUserAsync());
+    navigate("/login");
+  };
+
 
 
   return (
@@ -26,7 +37,7 @@ const Profile = () => {
           </li>
           <li className={`${styles['profile-linkItem']}`}>
             <NavLink
-              to="ordershistory"
+              to="orders-history"
               className={`${styles['profile-linkStyle']}`}
             >
               <span className="text text_type_main-medium">
@@ -39,6 +50,7 @@ const Profile = () => {
               htmlType="button"
               type="secondary"
               className={`${styles['profile-logOut-button']}`}
+              onClick={onLogoutUser}
             >
               <span className="text text_type_main-medium">Выход</span>
             </Button>
