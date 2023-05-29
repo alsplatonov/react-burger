@@ -6,9 +6,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { userSliceActions } from "../../services/actions/userSlice";
 
   const Login = () => {
     const navigate = useNavigate();
+    const dispatchAction = useDispatch();
 
     const openRegisterPage = () => {
       navigate("/register");
@@ -18,21 +22,37 @@ import { useNavigate } from "react-router";
       navigate("/forgot-password");
     }
   
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const onChangeEmail = (event) => {
+      setEmail(event.target.value);
+    };
+    const onChangePassword = (event) => {
+      setPassword(event.target.value);
+    };
+
+    const onSubmitForm = (event) => {
+      event.preventDefault();
+      dispatchAction(userSliceActions.loginUserAsync({email, password}));
+      navigate("/");
+    };
+  
   
   return (
-    <form className={`${styles['login__form']} `} >
+    <form className={`${styles['login__form']} `} onSubmit={onSubmitForm}>
       <h1 className="text text_type_main-medium">Вход</h1>
       <EmailInput
-        // onChange={onChange}
-        value={""}
+        onChange={onChangeEmail}
+        value={email || ""}
         name={"email"}
         placeholder="E-mail"
         isIcon={false}
         extraClass="mt-6"
       />
       <PasswordInput
-        // onChange={onChange}
-        value={""}
+        onChange={onChangePassword}
+        value={password || ""}
         name={"password"}
         extraClass="mb-6 mt-6"
       />

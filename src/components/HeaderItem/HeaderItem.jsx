@@ -29,7 +29,7 @@ const HeaderItem = (props) => {
         return '/';
     }
   }
-
+  console.log(props.text);
   return (
     <li className={`text text_type_main-default`}
     >
@@ -37,7 +37,7 @@ const HeaderItem = (props) => {
         `${styles['header-item__item']} ${styles['header-item__text']} text_color_inactive`} */}
       <NavLink className={(navData) => navData.isActive ? `${styles['header-item__item']} ` : ''}
 
-        to= {getUrlByHeaderProp()}
+        to={getUrlByHeaderProp()}
       >
         <p className={`${styles['header-item__text']} text_color_active`}>{props.text}</p>
         {/* {props.text} */}

@@ -11,6 +11,8 @@ import Login from '../../pages/Login/Login';
 import { Routes, Route } from "react-router";
 import HeaderWrapper from '../HeaderWrapper/HeaderWrapper';
 import Profile from '../../pages/Profile/Profile';
+import ProtectedRoute from '../protectedRoute';
+import NotFound from '../../pages/NotFound/NotFound';
 
 const App = () => {
 
@@ -30,9 +32,14 @@ const App = () => {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="reset-password" element={<ResetPassword />} />
-          <Route path="profile" element={<Profile />} />
-        </Route>
-
+          {/* <Route path="profile" element={<Profile />} /> */}
+          {/* <Route path="profile" element={<Profile />} /> */}
+          {/* <Route path="profile" element={<ProtectedRoute element={<Profile />}/>} /> */}
+          <Route path="profile" element={<ProtectedRoute element={<Profile />} />} />
+          
+           {/* <Route path="profile" element={<ProtectedRoute />} /> */}
+           <Route path="/*" element={<NotFound />} />
+           </Route>
       </Routes>
     </>
   );
