@@ -32,7 +32,7 @@ export const resetPassword = (email) => {
 }
 
 export const setNewPassword = (password, code) => {
-  return fetch(`${BASE_URL}/password-reset`, {
+  return fetch(`${BASE_URL}/password-reset/reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

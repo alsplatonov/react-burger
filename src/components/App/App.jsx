@@ -36,7 +36,7 @@ const App = () => {
           <Route path="login" element={<ProtectedRoute accessIsLogged={false} element={<Login />} />} />
           <Route path="register" element={<ProtectedRoute accessIsLogged={false} element={<Register />} />} />
           <Route path="reset-password" element={<ProtectedRoute accessIsLogged={false} element={<ResetPassword />} />} />
-          <Route path="profile/*"  element={<ProtectedRoute accessIsLogged={true} element={<Profile />} />} />
+          <Route path="profile/*" element={<ProtectedRoute accessIsLogged={true} element={<Profile />} />} />
           {/* <Route path="profile/*"  element={<Profile />} /> */}
 
           <Route path="/*" element={<NotFound />} />

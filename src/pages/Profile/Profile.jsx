@@ -21,7 +21,7 @@ const Profile = () => {
 
   const onLogoutUser = () => {
     dispatchAction(userSliceActions.logoutUserAsync());
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   const user = useSelector((store) => store.userActions.userInfo);
@@ -29,6 +29,7 @@ const Profile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showHiddenButtons, setshowHiddenButtons] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -42,20 +43,24 @@ const Profile = () => {
 
   const onChangeName = (event) => {
     setName(event.target.value);
+    setshowHiddenButtons(true);
   };
 
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
+    setshowHiddenButtons(true);
   };
 
   const onChangePassword = (event) => {
     setPassword(event.target.value);
+    setshowHiddenButtons(true);
   };
 
   const cancelChanges = () => {
     setName(user.user.name);
     setEmail(user.user.email);
     setPassword(user.user.password);
+    setshowHiddenButtons(false);
   };
 
   const onSubmitForm = (event) => {
@@ -129,20 +134,22 @@ const Profile = () => {
           extraClass="mb-6"
           icon="EditIcon"
         />
-        <div className={`${styles['profile-submit-button']}`}>
-          <Button
-            htmlType="button"
-            type="secondary"
-            size="medium"
-            extraClass="pr-5"
-            onClick={cancelChanges}
-          >
-            Отмена
-          </Button>
-          <Button htmlType="submit" type="primary" size="medium">
-            Сохранить
-          </Button>
-        </div>
+        {showHiddenButtons && (
+          <div className={`${styles['profile-submit-button']}`}>
+            <Button
+              htmlType="button"
+              type="secondary"
+              size="medium"
+              extraClass="pr-5"
+              onClick={cancelChanges}
+            >
+              Отмена
+            </Button>
+            <Button htmlType="submit" type="primary" size="medium">
+              Сохранить
+            </Button>
+          </div>)}
+
       </form>
     </div>
   );

@@ -9,15 +9,24 @@ import { userSliceActions } from "../services/actions/userSlice";
 
 export const ProtectedRoute = ({ accessIsLogged, element }) => {
 
-  const user = useSelector((store) => store.userActions.userInfo);
-  const isLogged = useSelector((store) => store.userActions.isLogged);
+  
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
   const dispatchAction = useDispatch();
+
+
+  useEffect(() => {
+    dispatchAction(userSliceActions.getUserDataAsync());
+  }, []);
+
+  const user = useSelector((store) => store.userActions.userInfo);
+  const isLogged = useSelector((store) => store.userActions.isLogged);
+
   console.log(from);
   console.log(accessIsLogged);
   console.log(isLogged);
+
 
   // console.log("куки = " + getCookie("accessToken"));
   // useEffect(() => {
@@ -79,9 +88,43 @@ export const ProtectedRoute = ({ accessIsLogged, element }) => {
   //   // }, [user, accessIsLogged, navigate, location]);
   // }, []);
 
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // useEffect(() => {
+  //   // dispatchAction(userSliceActions.getUserDataAsync());
+  //   if (isLogged && !accessIsLogged) {
+  //     navigate("/");
+  //   }
+
+  //   if (!isLogged && accessIsLogged) {
+  //     navigate("/login", { state: { from: location }, replace: true });
+  //   }
+  //   // }, [user, accessIsLogged, navigate, location]);
+  // }, []);
+
+
+  // return element;
+
+
+
+
   useEffect(() => {
-    // dispatchAction(userSliceActions.getUserDataAsync());
     if (isLogged && !accessIsLogged) {
       navigate("/");
     }
@@ -89,21 +132,11 @@ export const ProtectedRoute = ({ accessIsLogged, element }) => {
     if (!isLogged && accessIsLogged) {
       navigate("/login", { state: { from: location }, replace: true });
     }
-    // }, [user, accessIsLogged, navigate, location]);
+
   }, []);
 
+  return isLogged || !accessIsLogged ? element : <Navigate to="/login" />;
 
-  return element;
 };
 
-// useEffect(() => {
-//   if (!user) {
-//     navigate("/login", { state: { from: location }, replace: true });
-//   } else if (user) {
-//     navigate("/", { state: { from: location }, replace: true });
-//   }
-// }, [user, accessIsLogged, navigate, location]);
-
-// return element;
-// };
 export default ProtectedRoute;
