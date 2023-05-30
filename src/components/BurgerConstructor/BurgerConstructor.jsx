@@ -1,5 +1,6 @@
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useEffect } from 'react';
+import { useNavigate } from "react-router";
 import styles from "./BurgerConstructor.module.css";
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
@@ -12,6 +13,8 @@ import { useDrag, useDrop } from "react-dnd";
 import { v4 as uuidv4 } from 'uuid';
 
 const BurgerConstructor = () => {
+  const isLogged = useSelector((store) => store.userActions.isLogged);
+  const navigate = useNavigate();
   const dispatchAction = useDispatch();
   const defaultBuns = useSelector((state) => state.ingredients.items);
   const defaultBun = defaultBuns.filter(item => {
@@ -77,8 +80,13 @@ const BurgerConstructor = () => {
   );
 
   const OnOpenModal = () => {  //при открытии
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
-    dispatchAction(orderActions.fetchOrderNumber(getIngredientsIds())); //сохранить номе заказа в хранилище
+    if (isLogged) {
+      dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
+      dispatchAction(orderActions.fetchOrderNumber(getIngredientsIds())); //сохранить номе заказа в хранилище
+    } else {
+      navigate("/login");
+    }
+
   }
 
   const onCloseModal = () => {
