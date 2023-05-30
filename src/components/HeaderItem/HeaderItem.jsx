@@ -21,7 +21,7 @@ const HeaderItem = (props) => {
       case "Конструктор":
         return '/';
       case "Лента заказов":
-        return '/'; //временно так
+        return '/register'; //временно так
       case "Личный кабинет":
         return '/profile';
       default:
@@ -32,14 +32,11 @@ const HeaderItem = (props) => {
   return (
     <li className={`text text_type_main-default`}
     >
-      {/* <NavLink className={(navData) => navData.isActive ? `${styles['header-item__item']} ${styles['header-item__text']}` :
-        `${styles['header-item__item']} ${styles['header-item__text']} text_color_inactive`} */}
-      <NavLink className={(navData) => navData.isActive ? `${styles['header-item__item']} ` : ''}
-
+      <NavLink className={(navData) => navData.isActive ? `${styles['header-item__item']} ${styles['header-item__item_active']}` : `${styles['header-item__item']} `}
         to={getUrlByHeaderProp()}
       >
+        {props.children}
         <p className={`${styles['header-item__text']} text_color_active`}>{props.text}</p>
-        {/* {props.text} */}
       </NavLink>
     </li >
   );

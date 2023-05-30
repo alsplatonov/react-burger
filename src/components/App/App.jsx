@@ -28,18 +28,19 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HeaderWrapper />}>
           <Route index element={<AppMain />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
+          {/* <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="reset-password" element={<ResetPassword />} />
-          {/* <Route path="profile" element={<Profile />} /> */}
-          {/* <Route path="profile" element={<Profile />} /> */}
-          {/* <Route path="profile" element={<ProtectedRoute element={<Profile />}/>} /> */}
-          <Route path="profile" element={<ProtectedRoute element={<Profile />} />} />
-          
-           {/* <Route path="profile" element={<ProtectedRoute />} /> */}
-           <Route path="/*" element={<NotFound />} />
-           </Route>
+          <Route path="reset-password" element={<ResetPassword />} /> */}
+          <Route path="forgot-password" element={<ProtectedRoute accessIsLogged={false} element={<ForgotPassword />} />} />
+          <Route path="login" element={<ProtectedRoute accessIsLogged={false} element={<Login />} />} />
+          <Route path="register" element={<ProtectedRoute accessIsLogged={false} element={<Register />} />} />
+          <Route path="reset-password" element={<ProtectedRoute accessIsLogged={false} element={<ResetPassword />} />} />
+          <Route path="profile/*"  element={<ProtectedRoute accessIsLogged={true} element={<Profile />} />} />
+          {/* <Route path="profile/*"  element={<Profile />} /> */}
+
+          <Route path="/*" element={<NotFound />} />
+        </Route>
       </Routes>
     </>
   );

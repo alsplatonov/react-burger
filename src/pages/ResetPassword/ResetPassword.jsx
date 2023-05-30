@@ -6,6 +6,7 @@ import {
 import styles from "./ResetPassword.module.css";
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import { setNewPassword } from "../../utils/api";
 
 const ResetPassword = () => {
 
@@ -26,8 +27,15 @@ const ResetPassword = () => {
     navigate("/login");
   }
 
+  const onSubmitForm = (event) => {
+    event.preventDefault();
+    setNewPassword(password, confirmCode);
+    navigate("/login");
+  };
+
+
   return (
-    <form className={`${styles['resetPassword__form']} `} >
+    <form className={`${styles['resetPassword__form']} `} onSubmit={onSubmitForm}>
       <h1 className="text text_type_main-medium">Восстановление пароля</h1>
       <PasswordInput
         placeholder={"Введите новый пароль"}

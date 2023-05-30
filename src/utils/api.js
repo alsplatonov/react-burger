@@ -31,6 +31,21 @@ export const resetPassword = (email) => {
   .then((res) => checkResponse(res));
 }
 
+export const setNewPassword = (password, code) => {
+  return fetch(`${BASE_URL}/password-reset`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      password: password,
+      token: code,
+    }),
+  })
+  .then((res) => checkResponse(res));
+}
+
+
 export const registerUser = (credentials) => {
   return fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
@@ -70,8 +85,43 @@ export const logoutUser = () => {
   });
 };
 
+export const getUserData = () => {
+  return fetch(`${BASE_URL}/auth/user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + getCookie("accessToken"),
+    },
+  });
+}
+
+export const updateToken = (token) => {
+  return fetch(`${BASE_URL}/auth/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      token: token,
+    }),
+  });
+}
 
 
+export function updateUserData(credentials) {
+  return fetch(`${BASE_URL}/auth/user`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + getCookie("accessToken"),
+    },
+    body: JSON.stringify({
+      name: credentials.name,
+      email: credentials.email,
+      password: credentials.password,
+    }),
+  });
+}
 
 
 

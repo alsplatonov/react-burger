@@ -9,11 +9,13 @@ import styles from "./Register.module.css";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { userSliceActions } from "../../services/actions/userSlice";
+import { getCookie } from "../../utils/cookie";
 
 
 const Register = () => {
+
+
   const navigate = useNavigate();
-  const [values, setValues] = useState({});
   const dispatchAction = useDispatch();
 
   const [name, setName] = useState("");

@@ -23,9 +23,10 @@
   color: #8585ad;
   cursor: pointer;
   text-decoration: none;
+  background: transparent;
 }
 
-.profile-link_active {
+.profile-linkItem_active {
   color: #f2f2f3;
 }
 
@@ -47,3 +48,7 @@
   align-items: center;
 }
 
+.profile-submit-button {
+  display: flex;
+  width: 480px;
+}

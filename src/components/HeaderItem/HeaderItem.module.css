@@ -10,5 +10,9 @@
   gap: 8px;
   margin-right: 40px;
   text-decoration: none;
+  color: #8585ad;
+}
+
+.header-item__item_active {
   color: #F2F2F3;
 }
