@@ -63,9 +63,30 @@ export const logoutUserAsync = createAsyncThunk(
   'user/logout',
   async () => {
     logoutUser(); // Удаление cookie на клиентской стороне
+    deleteCookie("accessToken");
+    deleteCookie("refreshToken");
     return null; // Возвращаем null, так как нет данных для обновления состояния
   }
 );
+
+const updateUserToken = async (token) => {
+  try {
+    const res = await updateToken(token);
+    if (res.accessToken) {
+      setCookie("accessToken", res.accessToken.replace("Bearer ", ""));
+    }
+    setCookie("refreshToken", res.refreshToken);
+    const response = await getUserData(); // заново пытаемся получить пользовательские данные
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      console.log('Ошибка получения данных пользователя2');
+    }
+  } catch (error) {
+    console.log('Ошибка при обновлении токена:', error);
+  }
+};
 
 export const getUserDataAsync = createAsyncThunk(
   'user/getUserData',
@@ -78,24 +99,17 @@ export const getUserDataAsync = createAsyncThunk(
       console.log('Ошибка получения данных пользователя');
       const accessToken = getCookie("accessToken");
       const refreshToken = getCookie("refreshToken");
-
-      console.log("accessToken доступа найден:", accessToken);
-      console.log("refreshToken доступа найден:", refreshToken);
+      // logoutUser(); // Удаление cookie на клиентской стороне
+      // deleteCookie("accessToken");
+      // deleteCookie("refreshToken");
+      console.log("accessToken :", accessToken);
+      console.log("refreshToken :", refreshToken);
       updateUserToken(refreshToken);//токен устарел, пробуем обновить
     }
   }
 );
 
-const updateUserToken = (token) => {
-  return updateToken(token)
-    .then((res) => {
-      if (res.accessToken) {
-        setCookie("accessToken", res.accessToken.replace("Bearer ", ""));
-      }
-      setCookie("refreshToken", res.refreshToken);
-      getUserDataAsync();
-    });
-};
+
 
 const userSlice = createSlice({
   name: 'userActions',
@@ -103,12 +117,19 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(registerUserAsync.pending, (state) => {
+        return { ...state, userInfo: null,  isLogged: false }
+      })
       .addCase(registerUserAsync.fulfilled, (state, action) => {
         state.userInfo = action.payload;
         state.isLogged = true;
       })
       .addCase(registerUserAsync.rejected, (state, action) => {
         console.error(action.error.message);
+        state.isLogged = false;
+      })
+      .addCase(loginUserAsync.pending, (state) => {
+        return { ...state, userInfo: null,  isLogged: false }
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.userInfo = action.payload;
@@ -116,6 +137,11 @@ const userSlice = createSlice({
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         console.error(action.error.message);
+        state.isLogged = false;
+      })
+      .addCase(updateUserDataAsync.pending, (state) => {
+        // state = initialState;
+        return { ...state };
       })
       .addCase(updateUserDataAsync.fulfilled, (state, action) => {
         state.userInfo = action.payload;
@@ -124,11 +150,19 @@ const userSlice = createSlice({
       .addCase(updateUserDataAsync.rejected, (state, action) => {
         console.error(action.error.message);
       })
+      .addCase(logoutUserAsync.pending, (state) => {
+        // state = initialState;
+        return { ...state };
+      })
       .addCase(logoutUserAsync.fulfilled, (state, action) => {
-        return initialState; // Присваиваем начальное состояние для среза пользователя
+        state.userInfo = null;
+        state.isLogged = false;
       })
       .addCase(logoutUserAsync.rejected, (state, action) => {
         console.error(action.error.message);
+      })
+      .addCase(getUserDataAsync.pending, (state) => {
+        return { ...state };
       })
       .addCase(getUserDataAsync.fulfilled, (state, action) => {
         state.userInfo = action.payload;
@@ -136,6 +170,7 @@ const userSlice = createSlice({
       })
       .addCase(getUserDataAsync.rejected, (state, action) => {
         console.error(action.error.message);
+        state.isLogged = false;
       });
   },
 });

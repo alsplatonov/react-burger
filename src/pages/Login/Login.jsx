@@ -8,11 +8,14 @@ import styles from "./Login.module.css";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { userSliceActions } from "../../services/actions/userSlice";
 
   const Login = () => {
     const navigate = useNavigate();
     const dispatchAction = useDispatch();
+    const location = useLocation();
+    const from = location.state?.from;
 
     const openRegisterPage = () => {
       navigate("/register");
@@ -35,7 +38,7 @@ import { userSliceActions } from "../../services/actions/userSlice";
     const onSubmitForm = (event) => {
       event.preventDefault();
       dispatchAction(userSliceActions.loginUserAsync({email, password}));
-      navigate("/");
+      navigate({from});
     };
   
   

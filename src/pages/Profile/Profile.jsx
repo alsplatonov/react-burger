@@ -18,10 +18,13 @@ const Profile = () => {
   const dispatchAction = useDispatch();
   const location = useLocation();
   const pathname = location.pathname;
+  const isLogged = useSelector((store) => store.userActions.isLogged);
 
   const onLogoutUser = () => {
     dispatchAction(userSliceActions.logoutUserAsync());
     navigate("/login", { replace: true });
+   
+    // console.log("isLogged =:", isLogged);
   };
 
   return (

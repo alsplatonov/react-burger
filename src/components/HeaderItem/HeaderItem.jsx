@@ -28,7 +28,7 @@ const HeaderItem = (props) => {
         return '/';
     }
   }
-  console.log(props.text);
+
   return (
     <li className={`text text_type_main-default`}
     >

@@ -28,7 +28,7 @@ export const resetPassword = (email) => {
       email: email,
     }),
   })
-  .then((res) => checkResponse(res));
+    .then((res) => checkResponse(res));
 }
 
 export const setNewPassword = (password, code) => {
@@ -42,7 +42,7 @@ export const setNewPassword = (password, code) => {
       token: code,
     }),
   })
-  .then((res) => checkResponse(res));
+    .then((res) => checkResponse(res));
 }
 
 
@@ -122,15 +122,6 @@ export function updateUserData(credentials) {
     }),
   });
 }
-
-
-
-
-
-
-
-
-
 
 
 

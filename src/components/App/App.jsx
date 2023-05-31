@@ -45,19 +45,20 @@ const App = () => {
       <Routes location={background || location}>
         <Route path="/" element={<HeaderWrapper />}>
           <Route index element={<AppMain />} />
-          <Route path="forgot-password" element={<ProtectedRoute accessIsLogged={false} element={<ForgotPassword />} />} />
-          <Route path="login" element={<ProtectedRoute accessIsLogged={false} element={<Login />} />} />
-          <Route path="register" element={<ProtectedRoute accessIsLogged={false} element={<Register />} />} />
-          <Route path="reset-password" element={<ProtectedRoute accessIsLogged={false} element={<ResetPassword />} />} />
-          <Route path="profile/*" element={<ProtectedRoute accessIsLogged={true} element={<Profile />} />} >
+          <Route path="feed" element={<ProtectedRoute anonymous={false} ><Feed /></ProtectedRoute>} />
+          <Route path="forgot-password" element={<ProtectedRoute anonymous={true} ><ForgotPassword /></ProtectedRoute>} />
+          <Route path="login" element={<ProtectedRoute anonymous={true} ><Login /></ProtectedRoute>} />
+          <Route path="register" element={<ProtectedRoute anonymous={true} ><Register /></ProtectedRoute>} />
+          <Route path="reset-password" element={<ProtectedRoute anonymous={true} ><ResetPassword /></ProtectedRoute>} />
+          <Route path="profile/*" element={<ProtectedRoute anonymous={false} ><Profile /></ProtectedRoute>} >
             <Route index element={<ProfileForm />} />
             <Route path="orders" element={<Orders />} />
           </Route>
-          <Route path="feed" element={<ProtectedRoute accessIsLogged={true} element={<Feed />} />} />
-          <Route path={`/ingredients/:id`} element={<IngredientDetails />} />
-          <Route path="/*" element={<NotFound />} />
         </Route>
-      </Routes>
+        <Route path={`/ingredients/:id`} element={<IngredientDetails />} />
+        <Route path="/*" element={<NotFound />} />
+
+      </Routes >
       {background && (
         <Routes>
           <Route
@@ -67,11 +68,11 @@ const App = () => {
               <Modal onCloseModal={onCloseModal}>
                 <IngredientDetails />
               </Modal>
-
             }
           />
         </Routes>
-      )}
+      )
+      }
     </>
   );
 }

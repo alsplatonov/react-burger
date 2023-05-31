@@ -2,39 +2,48 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import { Navigate, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router";
+import { getCookie } from "../utils/cookie";
 
 import { userSliceActions } from "../services/actions/userSlice";
 
-export const ProtectedRoute = ({ accessIsLogged, element }) => {
+export const ProtectedRoute = ({ children, anonymous = false }) => {
 
-  const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
   const dispatchAction = useDispatch();
 
 
-  useEffect(() => {
-    dispatchAction(userSliceActions.getUserDataAsync());
-  }, []);
-
   const user = useSelector((store) => store.userActions.userInfo);
-  const isLogged = useSelector((store) => store.userActions.isLogged);
-
-  // console.log(from);
-  // console.log(accessIsLogged);
-  // console.log(isLogged);
+  const isLoggedIn = useSelector((store) => store.userActions.isLogged);
 
 
   useEffect(() => {
-    if (isLogged && user && !accessIsLogged) {
-      navigate("/");
-    }
-    if (!isLogged && !user && accessIsLogged) {
-      navigate("/login", { state: { from: location }, replace: true });
+    if (getCookie("accessToken")) {
+      dispatchAction(userSliceActions.getUserDataAsync());
     }
   }, []);
 
-  return isLogged || !accessIsLogged ? element : <Navigate to="/login" />;
-};
+
+
+
+  console.log("isLogged =:", isLoggedIn);
+  console.log("from =:", from);
+  console.log("anonymous =:", anonymous);
+  console.log("user =:", user);
+  // Если разрешен неавторизованный доступ, а пользователь авторизован...
+  if (anonymous && user) {
+    // ...то отправляем его на предыдущую страницу
+    return <Navigate to={from} />;
+  }
+
+  // Если требуется авторизация, а пользователь не авторизован...
+  if (!anonymous && !user) {
+    // ...то отправляем его на страницу логин
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
+
+  // Если все ок, то рендерим внутреннее содержимое
+  return children;
+}
 
 export default ProtectedRoute;
