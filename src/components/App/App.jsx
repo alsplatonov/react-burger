@@ -14,7 +14,6 @@ import Profile from '../../pages/Profile/Profile';
 import ProtectedRoute from '../protectedRoute';
 import NotFound from '../../pages/NotFound/NotFound';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import IngredientDetailsPage from '../../pages/IngredientDetailsPage/IngredientDetailsPage';
 import Modal from '../Modal/Modal';
 import Orders from '../Orders/Orders';
 import ProfileForm from '../ProfileForm/ProfileForm';
@@ -24,22 +23,26 @@ import { modalActions } from '../../services/actions/modal-slice';
 
 const App = () => {
   const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
+  const ingredientDetailsItem = useSelector((state) => state.ingredientDetails.item);
   const dispatchAction = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     dispatchAction(burgerIngredientsActions.fetchIngredientsData());
   }, []);
 
-  
+  const location = useLocation();
+  const background = location.state?.background;
+  console.log(background);
+
   const onCloseModal = () => {
     dispatchAction(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
-    navigate(-1);
+    navigate(-1, { state: { background: null } });
   };
 
   return (
     <>
-      <Routes>
+      <Routes location={background || location}>
         <Route path="/" element={<HeaderWrapper />}>
           <Route index element={<AppMain />} />
           <Route path="forgot-password" element={<ProtectedRoute accessIsLogged={false} element={<ForgotPassword />} />} />
@@ -51,21 +54,24 @@ const App = () => {
             <Route path="orders" element={<Orders />} />
           </Route>
           <Route path="feed" element={<ProtectedRoute accessIsLogged={true} element={<Feed />} />} />
-          <Route
-            path="/ingredients/:id"
-            element={
-              isOpenModal
-                ? (
-                  <Modal onCloseModal={onCloseModal}>
-                    <IngredientDetails />
-                  </Modal>
-                )
-                : <IngredientDetailsPage />
-            }
-          />
+          <Route path={`/ingredients/:id`} element={<IngredientDetails />} />
           <Route path="/*" element={<NotFound />} />
         </Route>
       </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path="ingredients/:id"
+            element={
+              isOpenModal && ingredientDetailsItem !== null &&
+              <Modal onCloseModal={onCloseModal}>
+                <IngredientDetails />
+              </Modal>
+
+            }
+          />
+        </Routes>
+      )}
     </>
   );
 }

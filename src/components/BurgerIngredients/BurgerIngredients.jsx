@@ -103,7 +103,7 @@ const BurgerIngredients = () => {
             <Link
               className={styles['burger-link']}
               to={`ingredients/${item._id}`}
-              // state={{ background: location }}
+              state={{ background: location }}
               key={item._id}
             >
               <Ingredient
@@ -126,7 +126,7 @@ const BurgerIngredients = () => {
             <Link
               className={styles['burger-link']}
               to={`ingredients/${item._id}`}
-              // state={{ background: location }}
+              state={{ background: location }}
               key={item._id}
             >
               <Ingredient
@@ -150,7 +150,7 @@ const BurgerIngredients = () => {
             <Link
               className={styles['burger-link']}
               to={`ingredients/${item._id}`}
-              // state={{ background: location }}
+              state={{ background: location }}
               key={item._id}
             >
               <Ingredient

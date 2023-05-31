@@ -1,13 +1,20 @@
 import styles from "./IngredientDetails.module.css";
 import { useSelector } from 'react-redux';
+import { useParams } from "react-router-dom";
 
 const IngredientDetails = () => {
+  const { id } = useParams(); //id адреса ссылки
+  const ingredients = useSelector((state) => state.ingredients.items);
+  const currentItem = ingredients.find((i) => i._id === id); //получим данные выбранного элемента 
 
-   const currentItem = useSelector((state) => state.ingredientDetails.item);
-   
+  if (!currentItem) {
+    return <div>Загрузка...</div>;
+  }
+
   return (
+
     <div className={`${styles['ingredient-details']} pt-10 pb-15`}>
-      <h1 className={`${styles['ingredient-details__header']} text text_type_main-large`}>Детали ингредиента</h1>
+      <h1 className={`${styles['ingredient-details__header']} text text_type_main-large pb-5`}>Детали ингредиента</h1>
       <img src={currentItem.image_large} alt={currentItem.name} />
       <p className="text text_type_main-medium mb-8 mt-4">{currentItem.name}</p>
       <div className={`${styles['ingredient-details__wrapper']}`}>
@@ -29,6 +36,7 @@ const IngredientDetails = () => {
         </div>
       </div>
     </div>
+
   )
 }
 
