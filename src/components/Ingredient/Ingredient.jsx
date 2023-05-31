@@ -9,6 +9,8 @@ const Ingredient = (props) => {
 
   const ingredient = props;
   const ingredients = useSelector((state) => state.burgerCart.items);
+  const buns = useSelector((state) => state.burgerCart.bun);
+
   const burgerIngredients = ingredients.filter(item => {
     return item._id === props._id;
   });
@@ -37,9 +39,12 @@ const Ingredient = (props) => {
   return (
     <li ref={dragRef} className={styles.ingredient} onClick={props.onOpenModal} style={!isDragging ? { opacity: "1" } : { opacity: "0.4", cursor: "grab" }}>
       <img src={props.image} alt={props.name} />
-      {burgerIngredients.length > 0 && (
-        <Counter count={burgerIngredients[index].counter} size="default" extraClass="m-1" />
-      )}
+
+      {buns._id === props._id ? (<Counter count={2} size="default" extraClass="m-1" />)
+        : (burgerIngredients.length > 0 && (
+          <Counter count={burgerIngredients[index].counter} size="default" extraClass="m-1" />
+        ))}
+
       <div className={`${styles['ingredient-price']}`}>
         <p className={"text text_type_digits-default mt-1 mb-1"}>{props.price}</p>
         <CurrencyIcon type="primary" />
