@@ -13,9 +13,13 @@
     d.setTime(d.getTime() + exp * 1000);
     exp = props.expires = d;
   }
-  if (exp && exp.toUTCString) {
+  // if (exp && exp.toUTCString) {
+  //   props.expires = exp.toUTCString();
+  // }
+  if (exp instanceof Date) {
     props.expires = exp.toUTCString();
   }
+
   value = encodeURIComponent(value);
   let updatedCookie = name + '=' + value;
   for (const propName in props) {

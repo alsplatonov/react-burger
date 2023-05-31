@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { registerUser, loginUser, logoutUser, getUserData, updateToken, updateUserData} from '../../utils/api';
+import { registerUser, loginUser, logoutUser, getUserData, updateToken, updateUserData } from '../../utils/api';
 import { setCookie, getCookie, deleteCookie } from '../../utils/cookie';
 
 const initialState = {
@@ -14,7 +14,9 @@ export const registerUserAsync = createAsyncThunk(
     const response = await registerUser(credentials);
     if (response.ok) {
       const data = await response.json();
-      setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
+      if (data.accessToken) {
+        setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
+      }
       setCookie("refreshToken", data.refreshToken);
       return data;
     } else {
@@ -31,6 +33,12 @@ export const loginUserAsync = createAsyncThunk(
       const data = await response.json();
       setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
       setCookie("refreshToken", data.refreshToken);
+
+      const accessToken = getCookie("accessToken");
+      const refreshToken = getCookie("refreshToken");
+
+      console.log("accessToken доступа найден:", accessToken);
+      console.log("refreshToken доступа найден:", refreshToken);
       return data;
     } else {
       throw new Error('Ошибка авторизации');
@@ -43,7 +51,7 @@ export const updateUserDataAsync = createAsyncThunk(
   async (credentials) => {
     const response = await updateUserData(credentials);
     if (response.ok) {
-      const data = await response.json();     
+      const data = await response.json();
       return data;
     } else {
       throw new Error('Ошибка обновления данных');
@@ -68,7 +76,12 @@ export const getUserDataAsync = createAsyncThunk(
       return data;
     } else {
       console.log('Ошибка получения данных пользователя');
-      updateUserToken(getCookie("refreshToken"));//токен устарел, пробуем обновить
+      const accessToken = getCookie("accessToken");
+      const refreshToken = getCookie("refreshToken");
+
+      console.log("accessToken доступа найден:", accessToken);
+      console.log("refreshToken доступа найден:", refreshToken);
+      updateUserToken(refreshToken);//токен устарел, пробуем обновить
     }
   }
 );
@@ -76,7 +89,9 @@ export const getUserDataAsync = createAsyncThunk(
 const updateUserToken = (token) => {
   return updateToken(token)
     .then((res) => {
-      setCookie("accessToken", res.accessToken.replace("Bearer ", ""));
+      if (res.accessToken) {
+        setCookie("accessToken", res.accessToken.replace("Bearer ", ""));
+      }
       setCookie("refreshToken", res.refreshToken);
       getUserDataAsync();
     });

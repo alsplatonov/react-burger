@@ -21,7 +21,7 @@ const HeaderItem = (props) => {
       case "Конструктор":
         return '/';
       case "Лента заказов":
-        return '/'; //временно так
+        return '/feed'; 
       case "Личный кабинет":
         return '/profile';
       default:

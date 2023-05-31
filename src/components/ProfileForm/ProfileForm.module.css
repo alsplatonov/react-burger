@@ -1,0 +1,54 @@
+
+.profile-wrapper {
+  display: flex;
+  margin-top: 120px;
+  /* margin-left: 20px; */
+}
+
+.profile-links {
+    margin: 0;
+    padding: 0;
+    width: 320px;
+    list-style-type: none;   
+}
+
+.profile-linkItem {
+  height: 64px;
+  display: flex;
+  align-items: center; 
+}
+
+
+.profile-linkStyle {
+  color: #8585ad;
+  cursor: pointer;
+  text-decoration: none;
+  background: transparent;
+}
+
+.profile-linkItem_active {
+  color: #f2f2f3;
+}
+
+.profile-logOut-button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  color: #8585ad;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  padding-left: 60px;
+  align-items: center;
+}
+
+.profile-submit-button {
+  display: flex;
+  width: 480px;
+}
