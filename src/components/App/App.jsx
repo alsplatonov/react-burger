@@ -23,6 +23,7 @@ import { modalActions } from '../../services/actions/modal-slice';
 
 const App = () => {
   const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
+  console.log("isOpenModal =:", isOpenModal);
   const ingredientDetailsItem = useSelector((state) => state.ingredientDetails.item);
   const dispatchAction = useDispatch();
   const navigate = useNavigate();
@@ -61,15 +62,15 @@ const App = () => {
       {background && (
         <Routes>
           <Route path="/" element={<HeaderWrapper />}>
-            <Route
-              path="ingredients/:id"
-              element={
-                isOpenModal && ingredientDetailsItem !== null &&
-                <Modal onCloseModal={onCloseModal}>
-                  <IngredientDetails />
-                </Modal>
-              }
-            />
+          <Route
+            path="ingredients/:id"
+            element={
+              // isOpenModal && ingredientDetailsItem !== null &&
+              <Modal onCloseModal={onCloseModal}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
           </Route>
 
         </Routes>
