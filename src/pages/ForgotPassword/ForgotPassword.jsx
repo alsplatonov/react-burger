@@ -3,7 +3,7 @@ import {
   EmailInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ForgotPassword.module.css";
-import { useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 import { resetPassword } from "../../utils/api";
 import { useState } from "react";
 
@@ -11,18 +11,19 @@ const ForgotPassword = () => {
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
- 
+
 
   const onChangeForm = (event) => {
     const { value, name } = event.target;
-    setEmail(value); 
+    setEmail(value);
   };
-  
+
   const onFormSubmit = (event) => {
     event.preventDefault();
     resetPassword(email)
-      .then((res) => {    
-          navigate("/reset-password"); 
+      .then((res) => {
+        localStorage.setItem("forgot-password", true); //оставим след, что пользователь был на странице forgot-password
+        navigate("/reset-password");
       })
       .catch((err) => {
         console.err(err);
@@ -49,7 +50,7 @@ const ForgotPassword = () => {
         type="primary"
         size="large"
         extraClass={`${styles['forgotPassword__button']} pt-4`}
-        // onClick={openLoginPage}
+      // onClick={openLoginPage}
       >
         Восстановить
       </Button>

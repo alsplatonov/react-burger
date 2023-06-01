@@ -27,9 +27,14 @@ const ResetPassword = () => {
     navigate("/login");
   }
 
+  if (!localStorage.getItem("forgot-password")) { //если перешли не с стр. forgot-password
+    navigate("/forgotpass");
+  }
+
   const onSubmitForm = (event) => {
     event.preventDefault();
     setNewPassword(password, confirmCode);
+    localStorage.removeItem("forgot-password", true); //оставим след, что пользователь был на странице forgot-password
     navigate("/login");
   };
 

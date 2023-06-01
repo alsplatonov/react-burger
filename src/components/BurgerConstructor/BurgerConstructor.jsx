@@ -30,18 +30,6 @@ const BurgerConstructor = () => {
   const totalBurgerIngredients = (ingredients.concat(buns).concat(buns)); //добавим обе булки к общему массиву ингредиентов 
 
 
-  // useEffect(() => {  //булки по-умолчанию
-  //   dispatchAction(burgerConstructorActions.addItem(
-  //     {
-  //       _id: defaultBun[0]._id,
-  //       name: defaultBun[0].name,
-  //       type: defaultBun[0].type,
-  //       price: defaultBun[0].price,
-  //       image: defaultBun[0].image,
-  //       key: uuidv4(),
-  //     }));
-  // }, []);
-
   const [{ isHover }, dropTarget] = useDrop({ //перемещение ингредиентов из списка ингредиентов
     accept: "ingredient",
     drop(item) {
@@ -93,6 +81,7 @@ const BurgerConstructor = () => {
   const onCloseModal = () => {
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
     dispatchAction(orderActions.setOrderNumber(0));
+    dispatchAction(burgerConstructorActions.removeAll()); //очищаем ингредиенты после закрытия
   };
 
   return (

@@ -8,20 +8,25 @@ const initialState = {
   isLogged: false,
 };
 
+const checkResponse = async (response) => {
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    throw new Error('Ошибка при запросе');
+  }
+};
+
 export const registerUserAsync = createAsyncThunk(
   'user/register',
   async (credentials) => {
     const response = await registerUser(credentials);
-    if (response.ok) {
-      const data = await response.json();
-      if (data.accessToken) {
-        setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
-      }
-      setCookie("refreshToken", data.refreshToken);
-      return data;
-    } else {
-      throw new Error('Ошибка регистрации пользователя');
+    const data = await checkResponse(response);
+    if (data.accessToken) {
+      setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
     }
+    setCookie("refreshToken", data.refreshToken);
+    return data;
   }
 );
 
@@ -29,20 +34,16 @@ export const loginUserAsync = createAsyncThunk(
   'user/login',
   async (credentials) => {
     const response = await loginUser(credentials);
-    if (response.ok) {
-      const data = await response.json();
-      setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
-      setCookie("refreshToken", data.refreshToken);
+    const data = await checkResponse(response);
+    setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
+    setCookie("refreshToken", data.refreshToken);
 
-      const accessToken = getCookie("accessToken");
-      const refreshToken = getCookie("refreshToken");
+    const accessToken = getCookie("accessToken");
+    const refreshToken = getCookie("refreshToken");
 
-      console.log("accessToken доступа найден:", accessToken);
-      console.log("refreshToken доступа найден:", refreshToken);
-      return data;
-    } else {
-      throw new Error('Ошибка авторизации');
-    }
+    console.log("accessToken доступа найден:", accessToken);
+    console.log("refreshToken доступа найден:", refreshToken);
+    return data;
   }
 );
 
@@ -50,12 +51,8 @@ export const updateUserDataAsync = createAsyncThunk(
   'user/upddata',
   async (credentials) => {
     const response = await updateUserData(credentials);
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      throw new Error('Ошибка обновления данных');
-    }
+    const data = await checkResponse(response);
+    return data;
   }
 );
 
@@ -77,12 +74,8 @@ const updateUserToken = async (token) => {
     }
     setCookie("refreshToken", res.refreshToken);
     const response = await getUserData(); // заново пытаемся получить пользовательские данные
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      console.log('Ошибка получения данных пользователя2');
-    }
+    const data = await checkResponse(response);
+    return data;
   } catch (error) {
     console.log('Ошибка при обновлении токена:', error);
   }
@@ -92,23 +85,23 @@ export const getUserDataAsync = createAsyncThunk(
   'user/getUserData',
   async () => {
     const response = await getUserData();
-    if (response.ok) {
-      const data = await response.json();
+    try {
+      const data = await checkResponse(response);
       return data;
-    } else {
+    } catch (error) {
       console.log('Ошибка получения данных пользователя');
       const accessToken = getCookie("accessToken");
       const refreshToken = getCookie("refreshToken");
-      // logoutUser(); // Удаление cookie на клиентской стороне
-      // deleteCookie("accessToken");
-      // deleteCookie("refreshToken");
       console.log("accessToken :", accessToken);
       console.log("refreshToken :", refreshToken);
-      updateUserToken(refreshToken);//токен устарел, пробуем обновить
+      if (refreshToken) {
+        return updateUserToken(refreshToken);
+      } else {
+        throw new Error('Нет доступа к данным пользователя');
+      }
     }
   }
 );
-
 
 
 const userSlice = createSlice({

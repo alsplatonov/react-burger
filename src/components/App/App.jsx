@@ -32,7 +32,7 @@ const App = () => {
 
   const location = useLocation();
   const background = location.state?.background;
-  console.log(background);
+  // console.log(background);
 
   const onCloseModal = () => {
     dispatchAction(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
@@ -54,22 +54,24 @@ const App = () => {
             <Route index element={<ProfileForm />} />
             <Route path="orders" element={<Orders />} />
           </Route>
+          <Route path={`/ingredients/:id`} element={<IngredientDetails />} />
+          <Route path="/*" element={<NotFound />} />
         </Route>
-        <Route path={`/ingredients/:id`} element={<IngredientDetails />} />
-        <Route path="/*" element={<NotFound />} />
-
       </Routes >
       {background && (
         <Routes>
-          <Route
-            path="ingredients/:id"
-            element={
-              isOpenModal && ingredientDetailsItem !== null &&
-              <Modal onCloseModal={onCloseModal}>
-                <IngredientDetails />
-              </Modal>
-            }
-          />
+          <Route path="/" element={<HeaderWrapper />}>
+            <Route
+              path="ingredients/:id"
+              element={
+                isOpenModal && ingredientDetailsItem !== null &&
+                <Modal onCloseModal={onCloseModal}>
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
+          </Route>
+
         </Routes>
       )
       }

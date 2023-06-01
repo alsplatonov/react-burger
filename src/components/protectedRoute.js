@@ -23,13 +23,11 @@ export const ProtectedRoute = ({ children, anonymous = false }) => {
     }
   }, []);
 
+  // console.log("isLogged =:", isLoggedIn);
+  // console.log("from =:", from);
+  // console.log("anonymous =:", anonymous);
+  // console.log("user =:", user);
 
-
-
-  console.log("isLogged =:", isLoggedIn);
-  console.log("from =:", from);
-  console.log("anonymous =:", anonymous);
-  console.log("user =:", user);
   // Если разрешен неавторизованный доступ, а пользователь авторизован...
   if (anonymous && user) {
     // ...то отправляем его на предыдущую страницу
