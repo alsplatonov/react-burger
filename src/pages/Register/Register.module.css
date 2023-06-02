@@ -1,0 +1,15 @@
+.register__form {
+  width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 180px; 
+  align-self: center;
+  align-items: center;
+}
+
+.register__button {
+  width: 253px;
+  height: 56px;
+  margin: 0 auto;
+}

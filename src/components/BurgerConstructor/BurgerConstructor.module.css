@@ -46,3 +46,9 @@
   display: flex;
   gap: 8px;
 }
+
+.burger-constructor_empty {
+  display: flex;
+  align-items: center;
+  height: 400px;
+}

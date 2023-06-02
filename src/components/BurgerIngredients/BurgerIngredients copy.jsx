@@ -7,19 +7,14 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '../../services/actions/modal-slice';
 import { ingredientDetailsActions } from '../../services/actions/ingredientDetails-slice';
-import { Link, useLocation } from "react-router-dom";
+
 
 const BurgerIngredients = () => {
-
+ 
 
   const ingredients = useSelector((state) => state.ingredients.items);
   const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
   const ingredientDetailsItem = useSelector((state) => state.ingredientDetails.item);
-
-  const location = useLocation();
-  const background = location.state?.background;
-  console.log(location);
-  console.log(background);
 
   const dispatchAction = useDispatch();
 
@@ -36,7 +31,7 @@ const BurgerIngredients = () => {
   const filteredIngredientsBuns = ingredients.filter((item) => item.type === 'bun');
   const filteredIngredientsSauce = ingredients.filter((item) => item.type === 'sauce');
   const filteredIngredientsMain = ingredients.filter((item) => item.type === 'main');
-
+ 
   const containerRef = useRef(document.querySelector('#customScroll')); // ссылка на элемент контейнера
 
   const [currentMenuType, setCurrentMenuType] = useState("bun"); // состояние активного переключателя на вкладке
@@ -73,15 +68,15 @@ const BurgerIngredients = () => {
       };
     }
   }, []);
-
+  
 
   return (
     <section>
-      {/* {isOpenModal && ingredientDetailsItem !== null &&
+      {isOpenModal && ingredientDetailsItem !== null &&
         <Modal onCloseModal={onCloseModal}>
           <IngredientDetails />
         </Modal>
-      } */}
+      }
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
       <div className={styles.tabs}>
         <Tab value="bun" active={currentMenuType === 'bun'} onClick={() => setCurrentMenuType('bun')}>
@@ -100,22 +95,15 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsBuns.map((item) => (
-            <Link
-              className={styles['burger-link']}
-              to={`ingredients/${item._id}`}
-              state={{ background: location }}
+            <Ingredient
               key={item._id}
-            >
-              <Ingredient
-                key={item._id}
-                _id={item._id}
-                type={item.type}
-                name={item.name}
-                image={item.image}
-                price={item.price}
-                onOpenModal={() => onOpenModal(item)} //открыть модальное окно, передадим анонимную стрелочную функцию
-              />
-            </Link>
+              _id={item._id}
+              type={item.type}
+              name={item.name}
+              image={item.image}
+              price={item.price}
+              onOpenModal={() => onOpenModal(item)} //открыть модальное окно, передадим анонимную стрелочную функцию
+            />
           ))}
         </ul>
         <h2 className="text text_type_main-medium mt-10 mb-6" ref={sauceRef}>
@@ -123,23 +111,15 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsSauce.map((item) => (
-            <Link
-              className={styles['burger-link']}
-              to={`ingredients/${item._id}`}
-              state={{ background: location }}
+            <Ingredient
               key={item._id}
-            >
-              <Ingredient
-                key={item._id}
-                _id={item._id}
-                type={item.type}
-                name={item.name}
-                image={item.image}
-                price={item.price}
-                onOpenModal={() => onOpenModal(item)} //открыть модальное окно
-              />
-            </Link>
-
+              _id={item._id}
+              type={item.type}
+              name={item.name}
+              image={item.image}
+              price={item.price}
+              onOpenModal={() => onOpenModal(item)} //открыть модальное окно
+            />
           ))}
         </ul>
         <h2 className="text text_type_main-medium mt-10 mb-6" ref={mainRef}>
@@ -147,22 +127,15 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles['burger-ingredients__list']}>
           {filteredIngredientsMain.map((item) => (
-            <Link
-              className={styles['burger-link']}
-              to={`ingredients/${item._id}`}
-              state={{ background: location }}
+            <Ingredient
               key={item._id}
-            >
-              <Ingredient
-                key={item._id}
-                _id={item._id}
-                type={item.type}
-                name={item.name}
-                image={item.image}
-                price={item.price}
-                onOpenModal={() => onOpenModal(item)}
-              />
-            </Link>
+              _id={item._id}
+              type={item.type}
+              name={item.name}
+              image={item.image}
+              price={item.price}
+              onOpenModal={() => onOpenModal(item)}
+            />
           ))}
         </ul>
       </div>

@@ -80,6 +80,11 @@ const constructorSlice = createSlice({
       state.items.splice(dragIndex, 1);
       state.items.splice(hoverIndex, 0, dragIngredient);
     },
+    removeAll(state, action) {
+      state.items = [];
+      state.bun = [];
+      state.isCartContentChanged = false;
+    },
   },
 });
 

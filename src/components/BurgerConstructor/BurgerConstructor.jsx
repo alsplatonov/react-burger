@@ -1,5 +1,6 @@
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useEffect } from 'react';
+import { useNavigate } from "react-router";
 import styles from "./BurgerConstructor.module.css";
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
@@ -12,6 +13,8 @@ import { useDrag, useDrop } from "react-dnd";
 import { v4 as uuidv4 } from 'uuid';
 
 const BurgerConstructor = () => {
+  const isLogged = useSelector((store) => store.userActions.isLogged);
+  const navigate = useNavigate();
   const dispatchAction = useDispatch();
   const defaultBuns = useSelector((state) => state.ingredients.items);
   const defaultBun = defaultBuns.filter(item => {
@@ -26,18 +29,6 @@ const BurgerConstructor = () => {
 
   const totalBurgerIngredients = (ingredients.concat(buns).concat(buns)); //добавим обе булки к общему массиву ингредиентов 
 
-
-  useEffect(() => {  //булки по-умолчанию
-    dispatchAction(burgerConstructorActions.addItem(
-      {
-        _id: defaultBun[0]._id,
-        name: defaultBun[0].name,
-        type: defaultBun[0].type,
-        price: defaultBun[0].price,
-        image: defaultBun[0].image,
-        key: uuidv4(),
-      }));
-  }, []);
 
   const [{ isHover }, dropTarget] = useDrop({ //перемещение ингредиентов из списка ингредиентов
     accept: "ingredient",
@@ -77,13 +68,20 @@ const BurgerConstructor = () => {
   );
 
   const OnOpenModal = () => {  //при открытии
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
-    dispatchAction(orderActions.fetchOrderNumber(getIngredientsIds())); //сохранить номе заказа в хранилище
+    if (buns != 0) { //если не добавили булку, не даем создать заказ
+      if (isLogged) {
+        dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
+        dispatchAction(orderActions.fetchOrderNumber(getIngredientsIds())); //сохранить номе заказа в хранилище
+      } else {
+        navigate("/login");
+      }
+    }
   }
 
   const onCloseModal = () => {
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
     dispatchAction(orderActions.setOrderNumber(0));
+    dispatchAction(burgerConstructorActions.removeAll()); //очищаем ингредиенты после закрытия
   };
 
   return (
@@ -95,32 +93,42 @@ const BurgerConstructor = () => {
       }
 
       <div ref={dropTarget} style={isHover ? { opacity: 0.5 } : {}}>
-        {isCartContentChanged && (
+        {isCartContentChanged ? (
           <>
-            <div className={`${styles['burger-constructor__item']} pl-8 mb-4`} >
-              <ConstructorElement
-                type="top"
-                isLocked={true}
-                text={buns.name + '\n(верх)'}
-                price={buns.price}
-                thumbnail={buns.image}
-              />
-            </div>
+            {buns != 0 && (
+              <div className={`${styles['burger-constructor__item']} pl-8 mb-4`} >
+                <ConstructorElement
+                  type="top"
+                  isLocked={true}
+                  text={buns.name + '\n(верх)'}
+                  price={buns.price}
+                  thumbnail={buns.image}
+                />
+              </div>
+            )}
+
 
             <ul className={`${styles["burger-constructor__list"]}`}>
               <SortableConstructor />
             </ul>
-
-            <div className={`${styles['burger-constructor__item']} pl-8 mt-4`}  >
-              <ConstructorElement
-                type="bottom"
-                isLocked={true}
-                text={buns.name + '\n(низ)'}
-                price={buns.price}
-                thumbnail={buns.image}
-              />
-            </div>
+            {buns != 0 && (
+              <div className={`${styles['burger-constructor__item']} pl-8 mt-4`}  >
+                <ConstructorElement
+                  type="bottom"
+                  isLocked={true}
+                  text={buns.name + '\n(низ)'}
+                  price={buns.price}
+                  thumbnail={buns.image}
+                />
+              </div>
+            )}
           </>
+        ) : (
+          <div className={`${styles["burger-constructor_empty"]}`}>
+            <h2 className={`text text_type_main-large mt-10 mb-5`}>
+              Перетаскивайте ингредиенты в эту область
+            </h2>
+          </div>
         )}
       </div>
 

@@ -17,13 +17,11 @@ const AppHeader = () => {
       <nav>
         <ul className={`${styles['app-header__nav-list']} pt-4 pb-4`}>
           <HeaderItem
-            isActive={true}
             text="Конструктор"
           >
             <BurgerIcon />
           </HeaderItem>
           <HeaderItem
-            isActive={false}
             text="Лента заказов"
           >
             <ListIcon type="secondary" />
@@ -32,7 +30,6 @@ const AppHeader = () => {
             <Logo />
           </li>
           <HeaderItem
-            isActive={false}
             text="Личный кабинет"
           >
             <ProfileIcon type="secondary" />
@@ -42,5 +39,10 @@ const AppHeader = () => {
     </header>
   );
 };
+
+
+
+
+
 
 export default AppHeader;
