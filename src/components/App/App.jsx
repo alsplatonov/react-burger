@@ -46,7 +46,7 @@ const App = () => {
       <Routes location={background || location}>
         <Route path="/" element={<HeaderWrapper />}>
           <Route index element={<AppMain />} />
-          <Route path="feed" element={<ProtectedRoute anonymous={false} ><Feed /></ProtectedRoute>} />
+          <Route path="feed" element={<Feed />} />
           <Route path="forgot-password" element={<ProtectedRoute anonymous={true} ><ForgotPassword /></ProtectedRoute>} />
           <Route path="login" element={<ProtectedRoute anonymous={true} ><Login /></ProtectedRoute>} />
           <Route path="register" element={<ProtectedRoute anonymous={true} ><Register /></ProtectedRoute>} />
@@ -74,8 +74,7 @@ const App = () => {
           </Route>
 
         </Routes>
-      )
-      }
+      )}
     </>
   );
 }

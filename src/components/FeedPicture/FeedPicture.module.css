@@ -1,0 +1,32 @@
+.feed-picture {
+  margin: 0;
+  padding: 0;
+  border: 1px solid #801AB2;
+  box-sizing: border-box;
+  position: relative;
+  margin-left: -15px;
+  background-color: #131316;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%; 
+}
+
+.feed-picture__image {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 112px;
+  height: 56px;
+  transform: translate(-50%, -50%);  
+}
+
+.feed-picture__counter {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

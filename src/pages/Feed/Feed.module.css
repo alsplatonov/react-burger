@@ -1,0 +1,11 @@
+.feed {
+  box-sizing: border-box;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+}
+
+.feed-wrapper {
+  width: 608px;
+}
