@@ -1,10 +1,12 @@
 import styles from './Orders.module.css';
-
+import FeedList from '../FeedList/FeedList';
 
 
 export const Orders = () => {
   return (
-    <h1 className="text text_type_main-default">Список заказов</h1>
+    <section className={`ml-4`}>
+      <FeedList />
+    </section>
   )
 }
 

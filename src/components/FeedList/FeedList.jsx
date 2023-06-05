@@ -11,7 +11,9 @@ import FeedPicture from "../FeedPicture/FeedPicture";
 export const FeedList = () => {
 
   const location = useLocation();
-
+  const pathname = location.pathname;
+  console.log("location =:", location);
+  console.log("pathname =:", pathname);
   const orders = [
     {
       ingredients: [
@@ -139,7 +141,7 @@ export const FeedList = () => {
     });
   });
 
-  console.log("currentIngredient =:", feedIngredient);
+  // console.log("currentIngredient =:", feedIngredient);
 
   return (
     <ul className={`${styles['feed-list']}`}>
@@ -148,7 +150,8 @@ export const FeedList = () => {
           <li className={`${styles['feed-item']}`} key={order._id}>
             <Link
               className={`text_color_primary ${styles['feed-item__link']}`}
-              to={`/feed/${order._id}`}
+              // to={`/profile/orders/${order._id}`}
+              to = {pathname === "/profile/orders" ? `/profile/orders/${order._id}` : `/feed/${order._id}`}
               state={{ background: location, order: order }}
             >
               <div className={`${styles['feed-header']}`}>
@@ -173,7 +176,7 @@ export const FeedList = () => {
                   })}
                 </ul>
                 <div className={`${styles['feed-price']} mr-6`}>
-                  <p className={`text text_type_digits-default ${styles['feed-price__text']}`}>
+                  <p className={`text text_type_digits-default mr-2`}>
                     111000
                   </p>
                   <CurrencyIcon />

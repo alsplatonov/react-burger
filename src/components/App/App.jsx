@@ -34,7 +34,7 @@ const App = () => {
   const ingredients = useSelector((state) => state.ingredients.items);
   const location = useLocation();
   const background = location.state?.background;
-  console.log("ingredients =:", ingredients);
+
   const onCloseModal = () => {
     dispatchAction(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
@@ -47,23 +47,28 @@ const App = () => {
         <Route path="/" element={<HeaderWrapper />}>
           <Route index element={<AppMain />} />
           <Route path="feed" element={<Feed />}>
-
-            
           </Route>
           <Route
-              path="/feed/:id"
-              element={<FeedExtension />}
-            />
-
-
+            path="/feed/:id"
+            element={<FeedExtension />}
+          />
           <Route path="forgot-password" element={<ProtectedRoute anonymous={true} ><ForgotPassword /></ProtectedRoute>} />
           <Route path="login" element={<ProtectedRoute anonymous={true} ><Login /></ProtectedRoute>} />
           <Route path="register" element={<ProtectedRoute anonymous={true} ><Register /></ProtectedRoute>} />
           <Route path="reset-password" element={<ProtectedRoute anonymous={true} ><ResetPassword /></ProtectedRoute>} />
           <Route path="profile/*" element={<ProtectedRoute anonymous={false} ><Profile /></ProtectedRoute>} >
             <Route index element={<ProfileForm />} />
-            <Route path="orders" element={<Orders />} />
+            <Route path="orders" element={<Orders />}/>
+         
+
+
           </Route>
+          <Route
+            path="profile/orders/:id"
+            element={<FeedExtension />}
+          />
+
+
           <Route path={`/ingredients/:id`} element={<IngredientDetails />} />
           <Route path="/*" element={<NotFound />} />
         </Route>
@@ -82,6 +87,14 @@ const App = () => {
           </Route>
           <Route
             path="feed/:id"
+            element={
+              <Modal onCloseModal={onCloseModal}>
+                <FeedExtension />
+              </Modal>
+            }
+          />
+          <Route
+            path="profile/orders/:id"
             element={
               <Modal onCloseModal={onCloseModal}>
                 <FeedExtension />

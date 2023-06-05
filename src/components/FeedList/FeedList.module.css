@@ -9,10 +9,12 @@
   overflow-y: scroll;
   min-width: 580px;
   max-height: 852px;
+  padding-right: 8px;
 }
 
 .feed-list::-webkit-scrollbar {
   width: 8px;
+
 }
 
 .feed-list::-webkit-scrollbar-track {
@@ -74,9 +76,5 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-.feed-price__text {
-  margin-right: 8px;
 }
 

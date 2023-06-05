@@ -18,7 +18,7 @@ export const FeedExtensions = () => {
 
   const location = useLocation();
   const background = location.state?.background;
-  console.log("background =:", background);
+  // console.log("background =:", background);
 
   const orders = [
     {
@@ -149,8 +149,8 @@ export const FeedExtensions = () => {
   );
 
 
-  console.log("currentOrder =:", currentOrder);
-  console.log("currentOrderIngredients =:", currentOrderIngredients);
+  // console.log("currentOrder =:", currentOrder);
+  // console.log("currentOrderIngredients =:", currentOrderIngredients);
 
   if (allIngredients.length === 0) {
     return <div>Загрузка...</div>;
@@ -164,7 +164,7 @@ export const FeedExtensions = () => {
     : [];
 
 
-  console.log("uniqueCurrentOrderIngredients =:", uniqueCurrentOrderIngredients);
+  // console.log("uniqueCurrentOrderIngredients =:", uniqueCurrentOrderIngredients);
 
 
   return (
@@ -196,7 +196,7 @@ export const FeedExtensions = () => {
                   <CurrencyIcon />
                 </div>
               </li>
-            );
+            )
           })}
         </ul>
         <div className={`${styles['feed-extensions__footer']} mt-10 mb-10`} >
