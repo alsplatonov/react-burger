@@ -6,7 +6,6 @@ const OrderDetails = () => {
 
   const orderNumber = useSelector((state) => state.order.orderNumber);
   const isPending = useSelector((state) => state.order.isPending);
-  console.log("isPending =:", isPending);
 
 
   return (
@@ -24,11 +23,6 @@ const OrderDetails = () => {
 
 }
 
-
-
-// OrderDetails.propTypes = {
-//   orderNumber: PropTypes.number,
-// }
 
 
 export default OrderDetails;

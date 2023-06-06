@@ -5,11 +5,15 @@ export const socketMiddleware = (wsUrl, wsActions) => {
     return next => action => {
       const { dispatch, getState } = store;
       const { type, payload } = action;
-      const { wsInitialize, wsInitializeCurrentUser, onOpen, onClose, onError, onMessage, wsClose } = wsActions;
+      const { wsInitialize, wsInitializeCurrentUser, onOpen, onClose, onError, onMessage, wsCloseConnect } = wsActions;
  
 
       if (type === wsInitialize) {
         socket = new WebSocket(wsUrl);   // объект класса WebSocket
+      }
+      
+      if (type === wsInitializeCurrentUser) { //если текущий пользователь
+        socket = new WebSocket(payload);
       }
 
       if (socket) {
@@ -33,7 +37,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
           dispatch({ type: onClose });
         };
 
-        if (type === wsClose) {
+        if (type === wsCloseConnect) {  //закрыть соединение
           socket.close();
         }
       }

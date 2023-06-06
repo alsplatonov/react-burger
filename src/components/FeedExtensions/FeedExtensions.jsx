@@ -9,7 +9,7 @@ import { modalActions } from '../../services/actions/modal-slice';
 import { burgerIngredientsActions } from '../../services/actions/ingredients-slice';
 import { useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { wsInitialize, wsClose } from "../../services/actions/webSocket-slice";
+import { wsInitialize, wsCloseConnect } from "../../services/actions/webSocket-slice";
 
 export const FeedExtensions = () => {
 
@@ -19,6 +19,7 @@ export const FeedExtensions = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(wsCloseConnect());
     dispatch(wsInitialize());
   }, []);
 
@@ -29,148 +30,20 @@ export const FeedExtensions = () => {
 
   const location = useLocation();
   const background = location.state?.background;
-  // console.log("background =:", background);
-
-  // const orders = [
-  //   {
-  //     ingredients: [
-  //       "643d69a5c3f7b9001cfa093c",
-  //       "643d69a5c3f7b9001cfa0943",
-  //       "643d69a5c3f7b9001cfa0945",
-  //       "643d69a5c3f7b9001cfa093e",
-  //       "643d69a5c3f7b9001cfa0940",
-  //       "643d69a5c3f7b9001cfa0947",
-  //       "643d69a5c3f7b9001cfa094a"
-  //     ],
-  //     _id: "111",
-  //     status: "done",
-  //     number: 0,
-  //     createdAt: "2021-06-23T14:43:22.587Z",
-  //     updatedAt: "2021-06-23T14:43:22.603Z"
-  //   },
-  //   {
-  //     ingredients: [
-  //       "643d69a5c3f7b9001cfa093c",
-  //       "643d69a5c3f7b9001cfa0943",
-  //       "643d69a5c3f7b9001cfa0945",
-  //       "643d69a5c3f7b9001cfa093e",
-  //       "643d69a5c3f7b9001cfa0940",
-  //       "643d69a5c3f7b9001cfa0947",
-  //       "643d69a5c3f7b9001cfa094a"
-  //     ],
-  //     _id: "222",
-  //     status: "done",
-  //     number: 0,
-  //     createdAt: "2021-06-23T14:43:22.587Z",
-  //     updatedAt: "2021-06-23T14:43:22.603Z"
-  //   },
-  //   {
-  //     ingredients: [
-  //       "643d69a5c3f7b9001cfa093c",
-  //       "643d69a5c3f7b9001cfa0943",
-  //       "643d69a5c3f7b9001cfa0945",
-  //       "643d69a5c3f7b9001cfa093e",
-  //       "643d69a5c3f7b9001cfa0940",
-  //       "643d69a5c3f7b9001cfa0947",
-  //       "643d69a5c3f7b9001cfa094a"
-  //     ],
-  //     _id: "333",
-  //     status: "done",
-  //     number: 0,
-  //     createdAt: "2021-06-23T14:43:22.587Z",
-  //     updatedAt: "2021-06-23T14:43:22.603Z"
-  //   },
-  //   {
-  //     ingredients: [
-  //       "643d69a5c3f7b9001cfa093c",
-  //       "643d69a5c3f7b9001cfa0943",
-  //       "643d69a5c3f7b9001cfa0945",
-  //       "643d69a5c3f7b9001cfa093e",
-  //       "643d69a5c3f7b9001cfa0940",
-  //       "643d69a5c3f7b9001cfa0947",
-  //       "643d69a5c3f7b9001cfa094a"
-  //     ],
-  //     _id: "444",
-  //     status: "done",
-  //     number: 0,
-  //     createdAt: "2021-06-23T14:43:22.587Z",
-  //     updatedAt: "2021-06-23T14:43:22.603Z"
-  //   },
-  //   {
-  //     ingredients: [
-  //       "643d69a5c3f7b9001cfa093c",
-  //       "643d69a5c3f7b9001cfa0943",
-  //       "643d69a5c3f7b9001cfa0945",
-  //       "643d69a5c3f7b9001cfa093e",
-  //       "643d69a5c3f7b9001cfa0940",
-  //       "643d69a5c3f7b9001cfa0947",
-  //       "643d69a5c3f7b9001cfa094a"
-  //     ],
-  //     _id: "555",
-  //     status: "done",
-  //     number: 0,
-  //     createdAt: "2021-06-23T14:43:22.587Z",
-  //     updatedAt: "2021-06-23T14:43:22.603Z"
-  //   },
-  //   {
-  //     ingredients: [
-  //       "643d69a5c3f7b9001cfa093c",
-  //       "643d69a5c3f7b9001cfa0943",
-  //       "643d69a5c3f7b9001cfa0945",
-  //       "643d69a5c3f7b9001cfa093e",
-  //       "643d69a5c3f7b9001cfa0940",
-  //       "643d69a5c3f7b9001cfa0947",
-  //       "643d69a5c3f7b9001cfa094a"
-  //     ],
-  //     _id: "666",
-  //     status: "done",
-  //     number: 0,
-  //     createdAt: "2021-06-23T14:43:22.587Z",
-  //     updatedAt: "2021-06-23T14:43:22.603Z"
-  //   },
-  //   {
-  //     ingredients: [
-  //       "643d69a5c3f7b9001cfa093c",
-  //       "643d69a5c3f7b9001cfa0943",
-  //       "643d69a5c3f7b9001cfa0945",
-  //       "643d69a5c3f7b9001cfa093e",
-  //       "643d69a5c3f7b9001cfa0940",
-  //       "643d69a5c3f7b9001cfa0947",
-  //       "643d69a5c3f7b9001cfa094a"
-  //     ],
-  //     _id: "777",
-  //     status: "done",
-  //     number: 0,
-  //     createdAt: "2021-06-23T14:43:22.587Z",
-  //     updatedAt: "2021-06-23T14:43:22.603Z"
-  //   }
-  // ];
-
-
 
   const onOpenModal = (item) => {
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
   };
-
-
-  console.log("allIngredients =:", allIngredients);
-  console.log("orders =:", orders);
-
-  // console.log("currentOrder =:", currentOrder);
-  // console.log("currentOrderIngredients =:", currentOrderIngredients);
 
   if (allIngredients.length === 0 || orders.length === 0) {
     return <div>Загрузка...</div>;
   }
 
   const currentOrder = orders.find((i) => i._id === id); //получим искомый заказ
-  console.log("currentOrder =:", currentOrder);
 
   const currentOrderIngredients = currentOrder.ingredients.map((ingredient) => //ингредиенты текущего заказа
     allIngredients.find((item) => item._id === ingredient)
   );
-
-  console.log("currentOrderIngredients =:", currentOrderIngredients);
 
   const uniqueCurrentOrderIngredients = [];
   const uniqueIds = {};

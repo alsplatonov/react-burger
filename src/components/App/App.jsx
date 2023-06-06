@@ -31,7 +31,6 @@ const App = () => {
     dispatchAction(burgerIngredientsActions.fetchIngredientsData());
   }, []);
 
-  const ingredients = useSelector((state) => state.ingredients.items);
   const location = useLocation();
   const background = location.state?.background;
 
@@ -58,17 +57,12 @@ const App = () => {
           <Route path="reset-password" element={<ProtectedRoute anonymous={true} ><ResetPassword /></ProtectedRoute>} />
           <Route path="profile/*" element={<ProtectedRoute anonymous={false} ><Profile /></ProtectedRoute>} >
             <Route index element={<ProfileForm />} />
-            <Route path="orders" element={<Orders />}/>
-         
-
-
+            <Route path="orders" element={<Orders />} />
           </Route>
           <Route
             path="profile/orders/:id"
             element={<FeedExtension />}
           />
-
-
           <Route path={`/ingredients/:id`} element={<IngredientDetails />} />
           <Route path="/*" element={<NotFound />} />
         </Route>

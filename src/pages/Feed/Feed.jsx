@@ -4,7 +4,7 @@ import styles from "./Feed.module.css";
 import FeedList from "../../components/FeedList/FeedList";
 import FeedStatistics from "../../components/FeedStatistics/FeedStatistics";
 import { useDispatch, useSelector } from "react-redux";
-import { wsInitialize, wsClose } from "../../services/actions/webSocket-slice";
+import { wsInitialize, wsCloseConnect } from "../../services/actions/webSocket-slice";
 
 const Feed = () => {
 
@@ -15,6 +15,7 @@ const Feed = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(wsCloseConnect());
     dispatch(wsInitialize());
   }, []);
 

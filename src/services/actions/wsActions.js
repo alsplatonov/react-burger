@@ -5,5 +5,5 @@ export const WS_ACTIONS = {
   onClose: "webSocket/onClose",
   onError: "webSocket/onError",
   onMessage: "webSocket/onMessage",
-  wsClose: "webSocket/wsClose",
+  wsCloseConnect: "webSocket/wsCloseConnect",
 };

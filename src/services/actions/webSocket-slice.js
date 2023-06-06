@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
   wsOpen: false,
   wsError: false,
@@ -37,7 +36,7 @@ const webSocketSlice = createSlice({
     onClose(state) {
       state.wsOpen = false;
     },
-    wsClose(state) {
+    wsCloseConnect(state) {
       state.wsOpen = false;
       state.wsError = false;
     },
@@ -51,7 +50,7 @@ export const {
   onClose,
   onError,
   onMessage,
-  wsClose,
+  wsCloseConnect,
 } = webSocketSlice.actions;
 
 export default webSocketSlice;
