@@ -53,7 +53,7 @@ export const FeedList = () => {
   let sortedOrders = [];
   if (sortedArray) {
     sortedOrders = orders.slice().sort(compareCreatedAt);
-    console.log("sortedOrders =:", sortedOrders);
+    // console.log("sortedOrders =:", sortedOrders);
   }
   // Сортировка массива объектов по возрастанию createdAt
 
