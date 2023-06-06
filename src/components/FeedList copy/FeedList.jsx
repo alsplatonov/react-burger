@@ -1,25 +1,21 @@
 import React from "react";
 import styles from "./FeedList.module.css";
 import { useLocation, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import FeedPicture from "../FeedPicture/FeedPicture";
-import FeedDetails from "../FeedDetails/FeedDetails";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { wsInitialize, wsClose } from "../../services/actions/webSocket-slice";
 
 export const FeedList = () => {
-  const dispatchAction = useDispatch();
+
   const location = useLocation();
   const pathname = location.pathname;
   // console.log("location =:", location);
   // console.log("pathname =:", pathname);
   const orders = useSelector((state) => state.webSocket.orders);
   const wsError = useSelector((state) => state.webSocket.wsError);
-
 
   // const orders = [
   //   {
@@ -136,35 +132,61 @@ export const FeedList = () => {
   //   }
   // ];
 
-  const allIngredients = useSelector((state) => state.ingredients.items);
-
-  if (allIngredients.length === 0 || orders.length === 0) {
-    return <div>Загрузка...</div>;
-  }
-
+  const ingredients = useSelector((state) => state.ingredients.items);
 
   //получим ингредиенты заказа
-  // const feedIngredient = [];
-  // orders[0].ingredients.forEach((itemId) => {
-  //   ingredients.forEach((item) => {
-  //     if (item._id === itemId) {
-  //       feedIngredient.push(item);
-  //     }
-  //   });
-  // });
+  const feedIngredient = [];
+  orders[0].ingredients.forEach((itemId) => {
+    ingredients.forEach((item) => {
+      if (item._id === itemId) {
+        feedIngredient.push(item);
+      }
+    });
+  });
 
-  // console.log("feedIngredient =:", feedIngredient);
+  console.log("feedIngredient =:", feedIngredient);
 
   return (
     <ul className={`${styles['feed-list']}`}>
-      {orders.length > 0 &&
+      {feedIngredient.length > 0 &&
         orders.map((order) => (
-          <FeedDetails
-            order={order}
-            key={order.number}
-          />
-        ))
-      }
+          <li className={`${styles['feed-item']}`} key={order.number}>
+            <Link
+              className={`text_color_primary ${styles['feed-item__link']}`}
+              to = {pathname === "/profile/orders" ? `/profile/orders/${order._id}` : `/feed/${order._id}`}
+              state={{ background: location, order: order }}
+            >
+              <div className={`${styles['feed-header']}`}>
+                <p className="text text_type_digits-default mt-6 ml-6">{order.number}</p>
+                <FormattedDate
+                  className="text text_type_main-default text_color_inactive mr-6"
+                  date={new Date(order.createdAt)}
+                />
+              </div>
+              <p className="text text_type_main-medium ml-6">{order.name}</p>
+              <div className={`${styles['feed-ingredients__wrapper']} mb-6`}>
+                <ul className={`${styles['feed-ingredients']} ml-10`}>
+                  {feedIngredient.map((item, index) => {
+                    return (
+                      <FeedPicture
+                        ingredient={item}
+                        elemNumber={index}
+                        key={item._id}
+                        Counter={feedIngredient.length - 6} //передаем оставшееся кол-во ингредиентов
+                      />
+                    );
+                  })}
+                </ul>
+                <div className={`${styles['feed-price']} mr-6`}>
+                  <p className={`text text_type_digits-default mr-2`}>
+                    111000
+                  </p>
+                  <CurrencyIcon />
+                </div>
+              </div>
+            </Link>
+          </li>
+        ))}
     </ul>
   );
 };

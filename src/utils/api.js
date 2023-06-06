@@ -10,7 +10,10 @@ export const getIngredientsData = async () => {
 export const getOrderNumber = (ingredients) => { // POST-запрос для получения номера заказа
   return fetch(`${BASE_URL}/orders`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json', 
+      authorization: "Bearer " + getCookie("accessToken"),
+    },
     body: JSON.stringify({
       "ingredients": ingredients
     })
