@@ -6,7 +6,7 @@ const IngredientDetails = () => {
   const { id } = useParams(); //id адреса ссылки
   const ingredients = useSelector((state) => state.ingredients.items);
   const currentItem = ingredients.find((i) => i._id === id); //получим данные выбранного элемента 
-  console.log("allIngredients =:", ingredients);
+
   if (!currentItem) {
     return <div>Загрузка...</div>;
   }

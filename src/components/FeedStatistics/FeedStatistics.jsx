@@ -10,7 +10,6 @@ import { wsInitialize, wsClose } from "../../services/actions/webSocket-slice";
 export const FeedStatistics = () => {
 
   const orders = useSelector((state) => state.webSocket.orders);
-  const wsError = useSelector((state) => state.webSocket.wsError);
   const total = useSelector((state) => state.webSocket.total);
   const totalToday = useSelector((state) => state.webSocket.totalToday);
 

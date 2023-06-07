@@ -12,11 +12,6 @@ export const FeedDetails = ({ order }) => {
 
   const location = useLocation();
   const pathname = location.pathname;
-  // console.log("order =:", order);
-  // console.log("location =:", location);
-  // console.log("pathname =:", pathname);
-
-
   const ingredients = useSelector((state) => state.ingredients.items);
 
   //получим ингредиенты заказа
@@ -28,8 +23,6 @@ export const FeedDetails = ({ order }) => {
       }
     });
   });
-
-  console.log("feedIngredient =:", feedIngredient);
 
   return (
     <>
@@ -71,12 +64,7 @@ export const FeedDetails = ({ order }) => {
           </Link>
         </li>
       )}
-
-
-
     </>
-
-
   );
 };
 

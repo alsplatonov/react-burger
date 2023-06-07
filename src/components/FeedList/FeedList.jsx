@@ -9,7 +9,7 @@ import FeedPicture from "../FeedPicture/FeedPicture";
 import FeedDetails from "../FeedDetails/FeedDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { wsInitialize, wsInitializeCurrentUser, wsCloseConnect } from "../../services/actions/webSocket-slice";
+import { wsInitialize, wsInitializeCurrentUser, wsCloseConnect, cleanState } from "../../services/actions/webSocket-slice";
 import { getCookie } from "../../utils/cookie";
 
 export const FeedList = () => {
@@ -17,12 +17,12 @@ export const FeedList = () => {
   const location = useLocation();
   const pathname = location.pathname;
   const orders = useSelector((state) => state.webSocket.orders);
-  const wsError = useSelector((state) => state.webSocket.wsError);
-
 
   useEffect(() => {
     if (pathname === '/profile/orders') {
-      dispatch(wsCloseConnect());
+      dispatch(cleanState());
+    }
+    if (pathname.includes('/profile/orders')) {
       dispatch(
         wsInitializeCurrentUser(
           `wss://norma.nomoreparties.space/orders?token=${getCookie(
@@ -30,17 +30,19 @@ export const FeedList = () => {
           )}`
         )
       );
+      return () => {
+        dispatch(wsCloseConnect());
+      };
     }
-  }, []);
 
+  }, [pathname, dispatch]);
 
   let sortedArray = false;
-  if (pathname === '/profile/orders') {
+  if (pathname.includes('/profile/orders')) {
     sortedArray = true;
   }
-  console.log("sortedArray =:", sortedArray);
 
-  // Функция сравнения для сортировки по возрастанию createdAt
+  // Функция сравнения для сортировки по убыванию createdAt
   const compareCreatedAt = (a, b) => {
     if (a.createdAt > b.createdAt) {
       return -1;
@@ -51,14 +53,12 @@ export const FeedList = () => {
     return 0;
   };
   let sortedOrders = [];
-  if (sortedArray) {
+  if (sortedArray && orders && orders.length > 0) {
     sortedOrders = orders.slice().sort(compareCreatedAt);
-    // console.log("sortedOrders =:", sortedOrders);
   }
-  // Сортировка массива объектов по возрастанию createdAt
+
 
   const allIngredients = useSelector((state) => state.ingredients.items);
-
   if (allIngredients.length === 0 || orders.length === 0) {
     return <div>Загрузка...</div>;
   }

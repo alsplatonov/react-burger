@@ -40,6 +40,11 @@ const webSocketSlice = createSlice({
       state.wsOpen = false;
       state.wsError = false;
     },
+    cleanState(state) {
+      state.orders = [];
+      state.total = 0;
+      state.totalToday = 0;
+    },
   },
 });
 
@@ -51,6 +56,7 @@ export const {
   onError,
   onMessage,
   wsCloseConnect,
+  cleanState,
 } = webSocketSlice.actions;
 
 export default webSocketSlice;

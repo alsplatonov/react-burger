@@ -6,30 +6,45 @@ import {
 import { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { modalActions } from '../../services/actions/modal-slice';
-import { burgerIngredientsActions } from '../../services/actions/ingredients-slice';
 import { useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { wsInitialize, wsCloseConnect } from "../../services/actions/webSocket-slice";
+import { wsInitialize, wsInitializeCurrentUser, wsCloseConnect, cleanState } from "../../services/actions/webSocket-slice";
+import { getCookie } from "../../utils/cookie";
 
 export const FeedExtensions = () => {
 
   const orders = useSelector((state) => state.webSocket.orders);
-  const wsError = useSelector((state) => state.webSocket.wsError);
-
+  const location = useLocation();
+  const background = location.state?.background;
+  const pathname = location.pathname;
 
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(wsCloseConnect());
-    dispatch(wsInitialize());
-  }, []);
+    if (pathname.includes('/feed')) {
+      dispatch(wsInitialize());
+    }
+    if (pathname === '/profile/orders') {
+      dispatch(cleanState());
+    }
+    if (pathname.includes('/profile/orders')) {
+      dispatch(
+        wsInitializeCurrentUser(
+          `wss://norma.nomoreparties.space/orders?token=${getCookie(
+            "accessToken"
+          )}`
+        )
+      );
+    }
+    return () => {
+      dispatch(wsCloseConnect());
+    };
+
+  }, [pathname, dispatch]);
 
   const { id } = useParams();
   const dispatchAction = useDispatch();
-  const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
   const allIngredients = useSelector((state) => state.ingredients.items);
-
-  const location = useLocation();
-  const background = location.state?.background;
 
   const onOpenModal = (item) => {
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
@@ -54,8 +69,6 @@ export const FeedExtensions = () => {
       uniqueCurrentOrderIngredients.push(ingredient);
     }
   });
-
-  console.log("uniqueCurrentOrderIngredients =:", uniqueCurrentOrderIngredients);
 
   const orderStat = () => {
     switch (currentOrder.status) {
