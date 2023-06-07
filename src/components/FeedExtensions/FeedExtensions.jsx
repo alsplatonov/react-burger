@@ -50,9 +50,10 @@ export const FeedExtensions = () => {
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
   };
 
-  if (allIngredients.length === 0 || orders.length === 0) {
+  if (allIngredients.length === 0 || !orders || orders.length === 0) {
     return <div>Загрузка...</div>;
   }
+  
 
   const currentOrder = orders.find((i) => i._id === id); //получим искомый заказ
 
