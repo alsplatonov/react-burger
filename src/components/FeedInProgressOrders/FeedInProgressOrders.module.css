@@ -1,0 +1,24 @@
+.orders {
+  width: 100%;
+}
+
+.orders-header__text {
+  margin-top: 0;
+  padding: 0;
+}
+
+.order__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  /* Ограничение в 10 строк */
+  grid-template-rows: repeat(10, minmax(20px, 1fr));
+  grid-auto-flow: column;
+}
+
+.order__list_inProgress {
+  color: #F2F2F3;
+}

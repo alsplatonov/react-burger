@@ -13,24 +13,13 @@ const BurgerIngredients = () => {
 
 
   const ingredients = useSelector((state) => state.ingredients.items);
-  const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
-  const ingredientDetailsItem = useSelector((state) => state.ingredientDetails.item);
-
   const location = useLocation();
-  const background = location.state?.background;
-  console.log(location);
-  console.log(background);
 
   const dispatchAction = useDispatch();
 
   const onOpenModal = (item) => {
     dispatchAction(ingredientDetailsActions.setItem(item));  //устанавливаем текущий ингредиент
     dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
-  };
-
-  const onCloseModal = () => {
-    dispatchAction(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
   };
 
   const filteredIngredientsBuns = ingredients.filter((item) => item.type === 'bun');
@@ -77,11 +66,6 @@ const BurgerIngredients = () => {
 
   return (
     <section>
-      {/* {isOpenModal && ingredientDetailsItem !== null &&
-        <Modal onCloseModal={onCloseModal}>
-          <IngredientDetails />
-        </Modal>
-      } */}
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
       <div className={styles.tabs}>
         <Tab value="bun" active={currentMenuType === 'bun'} onClick={() => setCurrentMenuType('bun')}>

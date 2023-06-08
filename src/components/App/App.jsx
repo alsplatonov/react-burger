@@ -1,3 +1,4 @@
+import React from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import AppMain from '../AppMain/AppMain';
 import { useEffect } from 'react';
@@ -20,20 +21,18 @@ import ProfileForm from '../ProfileForm/ProfileForm';
 import Feed from '../../pages/Feed/Feed';
 import { ingredientDetailsActions } from '../../services/actions/ingredientDetails-slice';
 import { modalActions } from '../../services/actions/modal-slice';
+import FeedExtension from '../FeedExtensions/FeedExtensions';
 
 const App = () => {
-  const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
-  console.log("isOpenModal =:", isOpenModal);
-  const ingredientDetailsItem = useSelector((state) => state.ingredientDetails.item);
   const dispatchAction = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
     dispatchAction(burgerIngredientsActions.fetchIngredientsData());
   }, []);
 
   const location = useLocation();
   const background = location.state?.background;
-  // console.log(background);
 
   const onCloseModal = () => {
     dispatchAction(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
@@ -46,7 +45,12 @@ const App = () => {
       <Routes location={background || location}>
         <Route path="/" element={<HeaderWrapper />}>
           <Route index element={<AppMain />} />
-          <Route path="feed" element={<ProtectedRoute anonymous={false} ><Feed /></ProtectedRoute>} />
+          <Route path="feed" element={<Feed />}>
+          </Route>
+          <Route
+            path="/feed/:id"
+            element={<FeedExtension />}
+          />
           <Route path="forgot-password" element={<ProtectedRoute anonymous={true} ><ForgotPassword /></ProtectedRoute>} />
           <Route path="login" element={<ProtectedRoute anonymous={true} ><Login /></ProtectedRoute>} />
           <Route path="register" element={<ProtectedRoute anonymous={true} ><Register /></ProtectedRoute>} />
@@ -55,6 +59,10 @@ const App = () => {
             <Route index element={<ProfileForm />} />
             <Route path="orders" element={<Orders />} />
           </Route>
+          <Route
+            path="profile/orders/:id"
+            element={<FeedExtension />}
+          />
           <Route path={`/ingredients/:id`} element={<IngredientDetails />} />
           <Route path="/*" element={<NotFound />} />
         </Route>
@@ -62,20 +70,33 @@ const App = () => {
       {background && (
         <Routes>
           <Route path="/" element={<HeaderWrapper />}>
+            <Route
+              path="ingredients/:id"
+              element={
+                <Modal onCloseModal={onCloseModal}>
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
+          </Route>
           <Route
-            path="ingredients/:id"
+            path="feed/:id"
             element={
-              // isOpenModal && ingredientDetailsItem !== null &&
               <Modal onCloseModal={onCloseModal}>
-                <IngredientDetails />
+                <FeedExtension />
               </Modal>
             }
           />
-          </Route>
-
+          <Route
+            path="profile/orders/:id"
+            element={
+              <Modal onCloseModal={onCloseModal}>
+                <FeedExtension />
+              </Modal>
+            }
+          />
         </Routes>
-      )
-      }
+      )}
     </>
   );
 }

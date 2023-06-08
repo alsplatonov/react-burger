@@ -71,7 +71,7 @@ const BurgerConstructor = () => {
     if (buns != 0) { //если не добавили булку, не даем создать заказ
       if (isLogged) {
         dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
-        dispatchAction(orderActions.fetchOrderNumber(getIngredientsIds())); //сохранить номе заказа в хранилище
+        dispatchAction(orderActions.fetchOrderNumber(getIngredientsIds())); //сохранить номер заказа в хранилище
       } else {
         navigate("/login");
       }
