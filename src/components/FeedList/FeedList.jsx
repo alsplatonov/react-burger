@@ -59,9 +59,10 @@ export const FeedList = () => {
 
 
   const allIngredients = useSelector((state) => state.ingredients.items);
-  if (allIngredients.length === 0 || orders.length === 0) {
+  if (allIngredients.length === 0 || !orders || orders.length === 0) {
     return <div>Загрузка...</div>;
   }
+  
 
   return (
     <ul className={`${styles['feed-list']}`}>
