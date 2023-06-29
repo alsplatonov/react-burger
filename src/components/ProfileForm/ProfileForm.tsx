@@ -15,7 +15,7 @@ import { useLocation } from "react-router-dom";
 
 const ProfileForm = () => {
   const navigate = useNavigate();
-  const dispatchAction = useDispatch();
+  const dispatch = useDispatch();
 
   const user = useSelector((store) => store.userActions.userInfo);
 
@@ -58,7 +58,7 @@ const ProfileForm = () => {
 
   const onSubmitForm = (event) => {
     event.preventDefault();
-    dispatchAction(userSliceActions.updateUserDataAsync({ name, email, password }));
+    dispatch(userSliceActions.updateUserDataAsync({ name, email, password }));
     navigate("/profile");
   };
 

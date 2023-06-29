@@ -1,13 +1,19 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getOrderNumber } from '../../utils/api';
 
-const initialState = {
+interface IOrderState {
+  orderNumber: number;
+  orderPrice: number;
+  isPending: boolean;
+}
+
+const initialState: IOrderState = {
   orderNumber: 0,
   orderPrice: 0,
   isPending: false,
 };
 
-export const fetchOrderNumber = createAsyncThunk(
+export const fetchOrderNumber = createAsyncThunk<number, string[]>(
   'order/fetchNumber',
   async (ids) => {
     const response = await getOrderNumber(ids);
@@ -19,17 +25,16 @@ const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    setOrderPrice(state, action) {
+    setOrderPrice(state, action: PayloadAction<number>) {
       state.orderPrice = action.payload;
     },
-    setOrderNumber(state, action) {
+    setOrderNumber(state, action: PayloadAction<number>) {
       state.orderNumber = action.payload;
     },
-
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchOrderNumber.pending, (state, action) => {
+      .addCase(fetchOrderNumber.pending, (state) => {
         state.isPending = true;
       })
       .addCase(fetchOrderNumber.fulfilled, (state, action) => {
@@ -49,4 +54,4 @@ export const orderActions = {
   fetchOrderNumber,
 };
 
-export default orderSlice;
+export default orderSlice.reducer;

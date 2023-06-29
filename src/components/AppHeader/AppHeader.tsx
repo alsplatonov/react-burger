@@ -19,7 +19,7 @@ const AppHeader = () => {
           <HeaderItem
             text="Конструктор"
           >
-            <BurgerIcon />
+            <BurgerIcon type="secondary"/>
           </HeaderItem>
           <HeaderItem
             text="Лента заказов"

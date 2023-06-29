@@ -9,10 +9,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { burgerIngredientsActions } from './services/actions/ingredients-slice';
 
 
-const root = ReactDOM.createRoot(
-  
-  document.getElementById('root')
-);
+
+
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
   <Provider store={store}>

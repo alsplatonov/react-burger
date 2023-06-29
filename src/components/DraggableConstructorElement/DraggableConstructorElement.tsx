@@ -10,9 +10,9 @@ const DraggableConstructorElement = (props) => {
 
   const { ingredient, index, moveIngredient } = props;
 
-  const dispatchAction = useDispatch();
+  const dispatch = useDispatch();
   const removeIngredient = (ingredient, key) => {
-    dispatchAction(burgerConstructorActions.removeItem(ingredient, key));
+    dispatch(burgerConstructorActions.removeItem(ingredient, key));
   };
 
   const [{ isDragging }, dragRef] = useDrag({

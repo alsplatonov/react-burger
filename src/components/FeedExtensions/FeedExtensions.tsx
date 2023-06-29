@@ -43,17 +43,17 @@ export const FeedExtensions = () => {
   }, [pathname, dispatch]);
 
   const { id } = useParams();
-  const dispatchAction = useDispatch();
+  const dispatch = useDispatch();
   const allIngredients = useSelector((state) => state.ingredients.items);
 
   const onOpenModal = (item) => {
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
+    dispatch(modalActions.toggleModal()); //указываем состояние isOpenModal = true
   };
 
   if (allIngredients.length === 0 || !orders || orders.length === 0) {
     return <div>Загрузка...</div>;
   }
-  
+
 
   const currentOrder = orders.find((i) => i._id === id); //получим искомый заказ
 

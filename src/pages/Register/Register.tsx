@@ -16,7 +16,7 @@ const Register = () => {
 
 
   const navigate = useNavigate();
-  const dispatchAction = useDispatch();
+  const dispatch = useDispatch();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -36,7 +36,7 @@ const Register = () => {
 
   const onSubmitForm = (event) => {
     event.preventDefault();
-    dispatchAction(userSliceActions.registerUserAsync({name, email, password}));
+    dispatch(userSliceActions.registerUserAsync({ name, email, password }));
     navigate("/");
   };
 
@@ -80,7 +80,7 @@ const Register = () => {
           extraClass={`${styles['reset__button']}`} >
           Зарегистрироваться
         </Button>
-        <p className="text text_type_main-default text_color_inactive mt-20">Уже зарегистрированы?       
+        <p className="text text_type_main-default text_color_inactive mt-20">Уже зарегистрированы?
           <Button
             htmlType="button"
             type="secondary"

@@ -15,15 +15,15 @@ import { useLocation } from "react-router-dom";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const dispatchAction = useDispatch();
+  const dispatch = useDispatch();
   const location = useLocation();
   const pathname = location.pathname;
   const isLogged = useSelector((store) => store.userActions.isLogged);
 
   const onLogoutUser = () => {
-    dispatchAction(userSliceActions.logoutUserAsync());
+    dispatch(userSliceActions.logoutUserAsync());
     navigate("/login", { replace: true });
-   
+
     // console.log("isLogged =:", isLogged);
   };
 

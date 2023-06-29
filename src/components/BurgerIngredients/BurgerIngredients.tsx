@@ -15,11 +15,11 @@ const BurgerIngredients = () => {
   const ingredients = useSelector((state) => state.ingredients.items);
   const location = useLocation();
 
-  const dispatchAction = useDispatch();
+  const dispatch = useDispatch();
 
   const onOpenModal = (item) => {
-    dispatchAction(ingredientDetailsActions.setItem(item));  //устанавливаем текущий ингредиент
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
+    dispatch(ingredientDetailsActions.setItem(item));  //устанавливаем текущий ингредиент
+    dispatch(modalActions.toggleModal()); //указываем состояние isOpenModal = true
   };
 
   const filteredIngredientsBuns = ingredients.filter((item) => item.type === 'bun');

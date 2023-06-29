@@ -11,37 +11,37 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { userSliceActions } from "../../services/actions/userSlice";
 
-  const Login = () => {
-    const navigate = useNavigate();
-    const dispatchAction = useDispatch();
-    const location = useLocation();
-    const from = location.state?.from;
+const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const from = location.state?.from;
 
-    const openRegisterPage = () => {
-      navigate("/register");
-    }
+  const openRegisterPage = () => {
+    navigate("/register");
+  }
 
-    const openForgotPasswordPage = () => {
-      navigate("/forgot-password");
-    }
-  
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const openForgotPasswordPage = () => {
+    navigate("/forgot-password");
+  }
 
-    const onChangeEmail = (event) => {
-      setEmail(event.target.value);
-    };
-    const onChangePassword = (event) => {
-      setPassword(event.target.value);
-    };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const onSubmitForm = (event) => {
-      event.preventDefault();
-      dispatchAction(userSliceActions.loginUserAsync({email, password}));
-      navigate({from});
-    };
-  
-  
+  const onChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const onSubmitForm = (event) => {
+    event.preventDefault();
+    dispatch(userSliceActions.loginUserAsync({ email, password }));
+    navigate({ from });
+  };
+
+
   return (
     <form className={`${styles['login__form']} `} onSubmit={onSubmitForm}>
       <h1 className="text text_type_main-medium">Вход</h1>
@@ -77,7 +77,7 @@ import { userSliceActions } from "../../services/actions/userSlice";
           Зарегистрироваться
         </Button>
       </p>
-      <p className="text text_type_main-default text_color_inactive">Забыли пароль?        
+      <p className="text text_type_main-default text_color_inactive">Забыли пароль?
         <Button
           htmlType="button"
           type="secondary"

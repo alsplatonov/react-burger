@@ -1,6 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IWsOrder } from "../../utils/interfaces";
 
-const initialState = {
+interface WebSocketState {
+  wsOpen: boolean;
+  wsError: boolean;
+  orders: IWsOrder[]; // Replace 'any[]' with the actual type of 'orders'
+  total: number;
+  totalToday: number;
+}
+
+const initialState: WebSocketState = {
   wsOpen: false,
   wsError: false,
   orders: [],
@@ -12,7 +21,7 @@ const webSocketSlice = createSlice({
   name: "webSocket",
   initialState,
   reducers: {
-    wsInitialize(state) {    
+    wsInitialize(state) {
       state.wsOpen = false;
       state.wsError = false;
     },
@@ -28,7 +37,7 @@ const webSocketSlice = createSlice({
       state.wsOpen = false;
       state.wsError = true;
     },
-    onMessage(state, action) {
+    onMessage(state, action: PayloadAction<{ orders: IWsOrder[]; total: number; totalToday: number }>) {
       state.orders = action.payload.orders;
       state.total = action.payload.total;
       state.totalToday = action.payload.totalToday;
@@ -59,4 +68,4 @@ export const {
   cleanState,
 } = webSocketSlice.actions;
 
-export default webSocketSlice;
+export default webSocketSlice.reducer;

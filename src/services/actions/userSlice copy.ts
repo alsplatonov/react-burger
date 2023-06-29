@@ -66,7 +66,7 @@ export const logoutUserAsync = createAsyncThunk(
   }
 );
 
-const updateUserToken = async (token) => {
+const updateUserToken = async (token:string) => {
   try {
     const res = await updateToken(token);
     if (res.accessToken) {
@@ -111,7 +111,7 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerUserAsync.pending, (state) => {
-        return { ...state, userInfo: null,  isLogged: false }
+        return { ...state, userInfo: null, isLogged: false }
       })
       .addCase(registerUserAsync.fulfilled, (state, action) => {
         state.userInfo = action.payload;
@@ -122,7 +122,7 @@ const userSlice = createSlice({
         state.isLogged = false;
       })
       .addCase(loginUserAsync.pending, (state) => {
-        return { ...state, userInfo: null,  isLogged: false }
+        return { ...state, userInfo: null, isLogged: false }
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.userInfo = action.payload;

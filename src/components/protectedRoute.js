@@ -10,7 +10,7 @@ export const ProtectedRoute = ({ children, anonymous = false }) => {
 
   const location = useLocation();
   const from = location.state?.from || '/';
-  const dispatchAction = useDispatch();
+  const dispatch = useDispatch();
 
 
   const user = useSelector((store) => store.userActions.userInfo);
@@ -19,7 +19,7 @@ export const ProtectedRoute = ({ children, anonymous = false }) => {
 
   useEffect(() => {
     if (getCookie("accessToken")) {
-      dispatchAction(userSliceActions.getUserDataAsync());
+      dispatch(userSliceActions.getUserDataAsync());
     }
   }, []);
 

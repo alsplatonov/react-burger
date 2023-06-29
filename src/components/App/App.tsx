@@ -24,19 +24,19 @@ import { modalActions } from '../../services/actions/modal-slice';
 import FeedExtension from '../FeedExtensions/FeedExtensions';
 
 const App = () => {
-  const dispatchAction = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatchAction(burgerIngredientsActions.fetchIngredientsData());
+    dispatch(burgerIngredientsActions.fetchIngredientsData());
   }, []);
 
   const location = useLocation();
   const background = location.state?.background;
 
   const onCloseModal = () => {
-    dispatchAction(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
+    dispatch(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
+    dispatch(modalActions.toggleModal()); //указываем состояние isOpenModal = false
     navigate(-1, { state: { background: null } });
   };
 

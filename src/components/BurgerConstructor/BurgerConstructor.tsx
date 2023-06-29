@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 const BurgerConstructor = () => {
   const isLogged = useSelector((store) => store.userActions.isLogged);
   const navigate = useNavigate();
-  const dispatchAction = useDispatch();
+  const dispatch = useDispatch();
   const defaultBuns = useSelector((state) => state.ingredients.items);
   const defaultBun = defaultBuns.filter(item => {
     return item.type === "bun";
@@ -38,7 +38,7 @@ const BurgerConstructor = () => {
   });
 
   const onDropHandler = (item) => {
-    dispatchAction(burgerConstructorActions.addItem({
+    dispatch(burgerConstructorActions.addItem({
       _id: item._id,
       name: item.name,
       type: item.type,
@@ -62,7 +62,7 @@ const BurgerConstructor = () => {
     totalBurgerIngredients.forEach(item => {
       price += item.price;
     })
-    dispatchAction(orderActions.setOrderPrice(price));
+    dispatch(orderActions.setOrderPrice(price));
   },
     [totalBurgerIngredients]
   );
@@ -70,8 +70,8 @@ const BurgerConstructor = () => {
   const OnOpenModal = () => {  //при открытии
     if (buns != 0) { //если не добавили булку, не даем создать заказ
       if (isLogged) {
-        dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = true
-        dispatchAction(orderActions.fetchOrderNumber(getIngredientsIds())); //сохранить номер заказа в хранилище
+        dispatch(modalActions.toggleModal()); //указываем состояние isOpenModal = true
+        dispatch(orderActions.fetchOrderNumber(getIngredientsIds())); //сохранить номер заказа в хранилище
       } else {
         navigate("/login");
       }
@@ -79,9 +79,9 @@ const BurgerConstructor = () => {
   }
 
   const onCloseModal = () => {
-    dispatchAction(modalActions.toggleModal()); //указываем состояние isOpenModal = false
-    dispatchAction(orderActions.setOrderNumber(0));
-    dispatchAction(burgerConstructorActions.removeAll()); //очищаем ингредиенты после закрытия
+    dispatch(modalActions.toggleModal()); //указываем состояние isOpenModal = false
+    dispatch(orderActions.setOrderNumber(0));
+    dispatch(burgerConstructorActions.removeAll()); //очищаем ингредиенты после закрытия
   };
 
   return (

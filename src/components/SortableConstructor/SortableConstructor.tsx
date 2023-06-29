@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { burgerConstructorActions } from "../../services/actions/burgerConstructor-slice";
 
 const SortableConstructor = () => {
-  const dispatchAction = useDispatch();
+  const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.burgerCart.items);
 
   const moveIngredient = (dragIndex, hoverIndex) => { //перемещение элементов
     const dragIngredient = ingredients[dragIndex];
-    dispatchAction(burgerConstructorActions.moveItem({ dragIndex, hoverIndex, dragIngredient }));
+    dispatch(burgerConstructorActions.moveItem({ dragIndex, hoverIndex, dragIngredient }));
   };
 
   return (
