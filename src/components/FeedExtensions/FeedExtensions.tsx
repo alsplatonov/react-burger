@@ -10,15 +10,16 @@ import { useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { wsInitialize, wsInitializeCurrentUser, wsCloseConnect, cleanState } from "../../services/actions/webSocket-slice";
 import { getCookie } from "../../utils/cookie";
-
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
+import { IIngredient, IWsOrder } from "../../utils/interfaces";
 export const FeedExtensions = () => {
 
-  const orders = useSelector((state) => state.webSocket.orders);
+  const orders: IWsOrder[] = useAppSelector((state) => state.webSocket.orders);
   const location = useLocation();
   const background = location.state?.background;
   const pathname = location.pathname;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (pathname.includes('/feed')) {
@@ -43,10 +44,10 @@ export const FeedExtensions = () => {
   }, [pathname, dispatch]);
 
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const allIngredients = useSelector((state) => state.ingredients.items);
 
-  const onOpenModal = (item) => {
+  const allIngredients = useAppSelector((state) => state.ingredients.items);
+
+  const onOpenModal = () => {
     dispatch(modalActions.toggleModal()); //указываем состояние isOpenModal = true
   };
 
@@ -55,14 +56,18 @@ export const FeedExtensions = () => {
   }
 
 
-  const currentOrder = orders.find((i) => i._id === id); //получим искомый заказ
+  const currentOrder = orders.find((i) => i._id === id); // получим искомый заказ
+  let currentOrderIngredients: IIngredient[] = [];
+  if (currentOrder) {
+    currentOrderIngredients = currentOrder.ingredients
+      .map((ingredient) => allIngredients.find((item) => item._id === ingredient))
+      .filter((ingredient) => ingredient !== undefined) as IIngredient[];
+  }
 
-  const currentOrderIngredients = currentOrder.ingredients.map((ingredient) => //ингредиенты текущего заказа
-    allIngredients.find((item) => item._id === ingredient)
-  );
 
-  const uniqueCurrentOrderIngredients = [];
-  const uniqueIds = {};
+
+  const uniqueCurrentOrderIngredients: IIngredient[] = [];
+  const uniqueIds: { [key: string]: boolean } = {};
 
   currentOrderIngredients.forEach((ingredient) => {
     if (!uniqueIds[ingredient._id]) {
@@ -71,25 +76,30 @@ export const FeedExtensions = () => {
     }
   });
 
+
   const orderStat = () => {
-    switch (currentOrder.status) {
-      case "done":
-        return "Выполнен";
-      case "pending":
-        return "В работе";
-      case "created":
-        return "создан";
-      default:
-        return '';
+    if (currentOrder) {
+      switch (currentOrder.status) {
+        case "done":
+          return "Выполнен";
+        case "pending":
+          return "В работе";
+        case "created":
+          return "создан";
+        default:
+          return '';
+      }
     }
+    return '';
   }
+
 
   return (
     <>
       <section className={background ? `${styles['feed-extensions_background']}` : `${styles['feed-extensions']}`}>
-        <p className={`text text_type_digits-default mb-10 mt-4 ${styles['feed-extensions__order-number']}`}>#{currentOrder.number}</p>
+        <p className={`text text_type_digits-default mb-10 mt-4 ${styles['feed-extensions__order-number']}`}>#{currentOrder?.number}</p>
 
-        <p className="text text_type_main-medium mb-3">{currentOrder.name}</p>
+        <p className="text text_type_main-medium mb-3">{currentOrder?.name}</p>
         <p className={`text_type_main-small mb-15 ${styles['feed-extensions__order-status']}`}>
           {orderStat()}
         </p>
@@ -113,20 +123,25 @@ export const FeedExtensions = () => {
                     {/* фильтр по id для получения агрегированного кол-ва каждого ингредиента в заказа */}
                     {currentOrderIngredients.filter((ingredient) => ingredient._id === item._id).length} x {item.price}
                   </p>
-                  <CurrencyIcon />
+                  <CurrencyIcon type="primary" />
                 </div>
               </li>
             )
           })}
         </ul>
         <div className={`${styles['feed-extensions__footer']} mt-10 mb-10`} >
-          <FormattedDate
-            className="text text_type_main-default text_color_inactive mr-6"
-            date={new Date(currentOrder.createdAt)}
-          />
+
+          {currentOrder?.createdAt ? (
+            <FormattedDate
+              className="text text_type_main-default text_color_inactive mr-6"
+              date={new Date(currentOrder.createdAt)}
+            />
+          ) : (
+            <span>Неверный формат даты!</span>
+          )}
           <div className={`${styles['feed-extensions__price-ingredient']}`} >
             <p className="text text_type_digits-default mr-2">{currentOrderIngredients.reduce((sum, item) => sum + item.price, 0)}</p>
-            <CurrencyIcon />
+            <CurrencyIcon type="primary" />
           </div>
         </div>
       </section>

@@ -4,16 +4,57 @@ import styles from "./DraggableConstructorElement.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from 'react-redux';
 import { burgerConstructorActions } from "../../services/actions/burgerConstructor-slice";
-import PropTypes from "prop-types";
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
+import { ICartItem } from '../../utils/interfaces';
 
-const DraggableConstructorElement = (props) => {
+interface IDraggableConstructorElement {
+  ingredient: ICartItem;
+  index: number;
+  moveIngredient: (dragIndex: number, hoverIndex: number) => void;
+}
+
+interface IDraggedItem {
+  type: string;
+  ingredient: ICartItem;
+  index: number;
+}
+
+
+const DraggableConstructorElement: React.FC<IDraggableConstructorElement> = (props) => {
 
   const { ingredient, index, moveIngredient } = props;
 
-  const dispatch = useDispatch();
-  const removeIngredient = (ingredient, key) => {
-    dispatch(burgerConstructorActions.removeItem(ingredient, key));
+  const dispatch = useAppDispatch();
+  const removeIngredient = (ingredient:ICartItem, key:number|string) => {
+    // dispatch(burgerConstructorActions.removeItem(ingredient, key));
+    dispatch(burgerConstructorActions.removeItem(ingredient));
   };
+
+  // const [{ isDragging }, dragRef] = useDrag({
+  //   type: "constructorElement",
+  //   item: { ingredient, index },
+  //   collect: (monitor) => ({
+  //     isDragging: monitor.isDragging(),
+  //   }),
+  // });
+
+
+  // const [, dropRef] = useDrop({
+  //   accept: "constructorElement",
+  //   drop(item) {
+  //     onDropHandler(item);
+  //   },
+  // });
+
+  // const onDropHandler = (item) => {
+  //   const dragIndex = item.index;
+  //   const hoverIndex = index;
+  //   if (dragIndex === hoverIndex) {
+  //     return;
+  //   }
+  //   moveIngredient(dragIndex, hoverIndex);
+  //   item.index = hoverIndex;
+  // };
 
   const [{ isDragging }, dragRef] = useDrag({
     type: "constructorElement",
@@ -26,12 +67,13 @@ const DraggableConstructorElement = (props) => {
 
   const [, dropRef] = useDrop({
     accept: "constructorElement",
-    drop(item) {
+    drop(item: IDraggedItem) {
       onDropHandler(item);
     },
   });
+  
 
-  const onDropHandler = (item) => {
+  const onDropHandler = (item: IDraggedItem) => {
     const dragIndex = item.index;
     const hoverIndex = index;
     if (dragIndex === hoverIndex) {
@@ -40,7 +82,7 @@ const DraggableConstructorElement = (props) => {
     moveIngredient(dragIndex, hoverIndex);
     item.index = hoverIndex;
   };
-
+  
 
   const ref = useRef(null);
   dragRef(dropRef(ref));
@@ -65,10 +107,10 @@ const DraggableConstructorElement = (props) => {
 };
 
 
-DraggableConstructorElement.propTypes = {
-  ingredient: PropTypes.object.isRequired,
-  index: PropTypes.number,
-  moveIngredient: PropTypes.func.isRequired,
-}
+// DraggableConstructorElement.propTypes = {
+//   ingredient: PropTypes.object.isRequired,
+//   index: PropTypes.number,
+//   moveIngredient: PropTypes.func.isRequired,
+// }
 
 export default DraggableConstructorElement;

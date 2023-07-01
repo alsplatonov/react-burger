@@ -1,8 +1,13 @@
-
+import React, { FC } from "react";
 import styles from "./FeedDoneOrders.module.css"
 import PropTypes from "prop-types";
+import { IWsOrder } from "../../utils/interfaces";
 
-export const FeedDoneOrders = ({ordersDone}) => {
+interface IFeedDoneOrders {
+  ordersDone: IWsOrder[];
+}
+
+const FeedDoneOrders: FC<IFeedDoneOrders> = ({ ordersDone }) => {
 
   return (
     <div className={styles.orders}>
@@ -23,8 +28,5 @@ export const FeedDoneOrders = ({ordersDone}) => {
   );
 };
 
-FeedDoneOrders.propTypes = {
-  ordersDone: PropTypes.array.isRequired,
-};
 
 export default FeedDoneOrders;

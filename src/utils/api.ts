@@ -1,5 +1,6 @@
 import { BASE_URL } from "./constants";
 import { getCookie } from "./cookie";
+import { IUserData } from "./interfaces";
 
 export const getIngredientsData = async () => {
   return await fetch(`${BASE_URL}/ingredients`)
@@ -7,11 +8,11 @@ export const getIngredientsData = async () => {
 };
 
 
-export const getOrderNumber = (ingredients:string[]) => { // POST-запрос для получения номера заказа
+export const getOrderNumber = (ingredients: string[]) => { // POST-запрос для получения номера заказа
   return fetch(`${BASE_URL}/orders`, {
     method: 'POST',
-    headers: { 
-      'Content-Type': 'application/json', 
+    headers: {
+      'Content-Type': 'application/json',
       authorization: "Bearer " + getCookie("accessToken"),
     },
     body: JSON.stringify({
@@ -21,7 +22,7 @@ export const getOrderNumber = (ingredients:string[]) => { // POST-запрос �
     .then((res) => checkResponse(res));
 }
 
-export const resetPassword = (email) => {
+export const resetPassword = (email: string) => {
   return fetch(`${BASE_URL}/password-reset`, {
     method: "POST",
     headers: {
@@ -34,7 +35,7 @@ export const resetPassword = (email) => {
     .then((res) => checkResponse(res));
 }
 
-export const setNewPassword = (password, code) => {
+export const setNewPassword = (password: string, code: string) => {
   return fetch(`${BASE_URL}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -49,7 +50,7 @@ export const setNewPassword = (password, code) => {
 }
 
 
-export const registerUser = (credentials) => {
+export const registerUser = (credentials: IUserData) => {
   return fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
     headers: {
@@ -63,7 +64,7 @@ export const registerUser = (credentials) => {
   });
 };
 
-export const loginUser = (credentials) => {
+export const loginUser = (credentials: IUserData) => {
   return fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
@@ -98,7 +99,7 @@ export const getUserData = () => {
   });
 }
 
-export const updateToken = (token:string) => {
+export const updateToken = (token: string) => {
   return fetch(`${BASE_URL}/auth/token`, {
     method: "POST",
     headers: {
@@ -111,7 +112,7 @@ export const updateToken = (token:string) => {
 }
 
 
-export function updateUserData(credentials) {
+export function updateUserData(credentials: IUserData) {
   return fetch(`${BASE_URL}/auth/user`, {
     method: "PATCH",
     headers: {
@@ -125,8 +126,6 @@ export function updateUserData(credentials) {
     }),
   });
 }
-
-
 
 
 const checkResponse = (res: Response) => {

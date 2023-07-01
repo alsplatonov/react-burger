@@ -1,8 +1,12 @@
-
+import React, { FC } from "react";
 import styles from "./FeedInProgressOrders.module.css"
 import PropTypes from "prop-types";
+import { IWsOrder } from "../../utils/interfaces";
 
-export const FeedInProgressOrders = ({ordersPending}) => {
+interface IFeedInProgressOrders {
+  ordersPending: IWsOrder[];
+}
+const FeedInProgressOrders: FC<IFeedInProgressOrders> = ({ ordersPending }) => {
 
   return (
     <div className={styles.orders}>

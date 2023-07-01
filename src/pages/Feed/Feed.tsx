@@ -6,15 +6,16 @@ import FeedStatistics from "../../components/FeedStatistics/FeedStatistics";
 import { useDispatch, useSelector } from "react-redux";
 import { wsInitialize, wsInitializeCurrentUser, wsCloseConnect, cleanState } from "../../services/actions/webSocket-slice";
 import { useLocation } from "react-router";
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
 
 const Feed = () => {
 
-  const orders = useSelector((state) => state.webSocket.orders);
-  const wsError = useSelector((state) => state.webSocket.wsError);
+  const orders = useAppSelector(state => state.webSocket.orders);
+  const wsError = useAppSelector(state => state.webSocket.wsError);
   const location = useLocation();
   const pathname = location.pathname;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (pathname.includes('/feed')) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from "./FeedDetails.module.css";
 import { useLocation, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -7,15 +7,21 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import FeedPicture from "../FeedPicture/FeedPicture";
+import { IWsOrder } from "../../utils/interfaces";
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
+import { IIngredient } from "../../utils/interfaces";
 
-export const FeedDetails = ({ order }) => {
+interface IFeedDetailsProps {
+  order: IWsOrder;
+}
+const FeedDetails: FC<IFeedDetailsProps> = ({ order }) => {
 
   const location = useLocation();
   const pathname = location.pathname;
-  const ingredients = useSelector((state) => state.ingredients.items);
+  const ingredients = useAppSelector((state) => state.ingredients.items);
 
   //получим ингредиенты заказа
-  const feedIngredient = [];
+  const feedIngredient: IIngredient[] = [];
   order.ingredients.forEach((itemId) => {
     ingredients.forEach((item) => {
       if (item._id === itemId) {
@@ -56,9 +62,9 @@ export const FeedDetails = ({ order }) => {
               </ul>
               <div className={`${styles['feed-price']} mr-6`}>
                 <p className={`text text_type_digits-default mr-2`}>
-                {feedIngredient.reduce((sum, item) => sum + item.price, 0)}
+                  {feedIngredient.reduce((sum, item) => sum + item.price, 0)}
                 </p>
-                <CurrencyIcon />
+                <CurrencyIcon type="primary" />
               </div>
             </div>
           </Link>

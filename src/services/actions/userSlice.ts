@@ -2,30 +2,20 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { registerUser, loginUser, logoutUser, getUserData, updateToken, updateUserData } from '../../utils/api';
 import { setCookie, getCookie, deleteCookie } from '../../utils/cookie';
 // import { RootState } from '../store';
+import { IUserData, IUserState } from '../../utils/interfaces';
 
-interface UserData {
-  name: string;
-  email: string;
-  password: string;
-  // Add any other user-related data fields here
-}
-
-interface UserState {
-  userInfo: UserData | null;
-  accessToken: string;
-  isLogged: boolean;
-}
-
-const initialState: UserState = {
+const initialState: IUserState = {
   userInfo: null,
-  accessToken: '',
+  // accessToken: '',
+  // refreshToken: '',
   isLogged: false,
 };
 
 const checkResponse = async (response: Response) => {
   if (response.ok) {
     const data = await response.json();
-    return data;
+    // return data.user;
+    return data.user;
   } else {
     throw new Error('Ошибка при запросе');
   }
@@ -33,9 +23,10 @@ const checkResponse = async (response: Response) => {
 
 export const registerUserAsync = createAsyncThunk(
   'user/register',
-  async (credentials: UserData) => {
+  async (credentials: IUserData) => {
     const response = await registerUser(credentials);
     const data = await checkResponse(response);
+    console.log(data);
     if (data.accessToken) {
       setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
     }
@@ -46,9 +37,10 @@ export const registerUserAsync = createAsyncThunk(
 
 export const loginUserAsync = createAsyncThunk(
   'user/login',
-  async (credentials: UserData) => {
+  async (credentials: IUserData) => {
     const response = await loginUser(credentials);
     const data = await checkResponse(response);
+    console.log(data);
     setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
     setCookie("refreshToken", data.refreshToken);
 
@@ -63,7 +55,7 @@ export const loginUserAsync = createAsyncThunk(
 
 export const updateUserDataAsync = createAsyncThunk(
   'user/upddata',
-  async (credentials: UserData) => {
+  async (credentials: IUserData) => {
     const response = await updateUserData(credentials);
     const data = await checkResponse(response);
     return data;
@@ -192,5 +184,5 @@ export const userSliceActions = {
 
 export default userSlice;
 
-  // The rest of the code remains unchanged.
+
 

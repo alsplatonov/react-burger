@@ -8,16 +8,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '../../services/actions/modal-slice';
 import { ingredientDetailsActions } from '../../services/actions/ingredientDetails-slice';
 import { Link, useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
+import { IIngredient } from '../../utils/interfaces';
 
 const BurgerIngredients = () => {
 
 
-  const ingredients = useSelector((state) => state.ingredients.items);
+  const ingredients = useAppSelector((state) => state.ingredients.items);
   const location = useLocation();
 
   const dispatch = useDispatch();
 
-  const onOpenModal = (item) => {
+  const onOpenModal = (item:IIngredient) => {
     dispatch(ingredientDetailsActions.setItem(item));  //устанавливаем текущий ингредиент
     dispatch(modalActions.toggleModal()); //указываем состояние isOpenModal = true
   };
@@ -26,21 +28,21 @@ const BurgerIngredients = () => {
   const filteredIngredientsSauce = ingredients.filter((item) => item.type === 'sauce');
   const filteredIngredientsMain = ingredients.filter((item) => item.type === 'main');
 
-  const containerRef = useRef(document.querySelector('#customScroll')); // ссылка на элемент контейнера
+  const containerRef = useRef<HTMLDivElement>(document.querySelector('#customScroll')); // ссылка на элемент контейнера
 
   const [currentMenuType, setCurrentMenuType] = useState("bun"); // состояние активного переключателя на вкладке
 
   // ссылки на заголовки разделов
-  const bunRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const bunRef = useRef<HTMLHeadingElement>(null);
+  const sauceRef = useRef<HTMLHeadingElement>(null);
+  const mainRef = useRef<HTMLHeadingElement>(null);
 
   // функция, которая устанавливает активный переключатель на вкладке
   const setCurrentMenuTypeByScroll = () => {
-    const containerTop = containerRef.current.getBoundingClientRect().top; // верхняя граница контейнера
-    const bunTop = bunRef.current.getBoundingClientRect().top; // верхняя граница заголовка раздела "Булки"
-    const sauceTop = sauceRef.current.getBoundingClientRect().top; // верхняя граница заголовка раздела "Соусы"
-    const mainTop = mainRef.current.getBoundingClientRect().top; // верхняя граница заголовка раздела "Начинки"
+    const containerTop = containerRef.current?.getBoundingClientRect().top || 0; // верхняя граница контейнера
+    const bunTop = bunRef.current?.getBoundingClientRect().top || 0; // верхняя граница заголовка раздела "Булки"
+    const sauceTop = sauceRef.current?.getBoundingClientRect().top || 0; // верхняя граница заголовка раздела "Соусы"
+    const mainTop = mainRef.current?.getBoundingClientRect().top || 0; // верхняя граница заголовка раздела "Начинки"
 
     if (containerTop <= bunTop && containerTop <= sauceTop && containerTop <= mainTop) {
       setCurrentMenuType("bun");

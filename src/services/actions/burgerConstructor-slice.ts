@@ -1,14 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IIngredient } from '../../utils/interfaces';
+import { ICartItem, IBun } from '../../utils/interfaces';
 
-interface ICartItem extends IIngredient {
-  counter: number;
-  key: number|string;
-}
 
-interface IBun extends IIngredient {
-  counter: number;
-}
+
 
 interface IBurgerCartState {
   items: ICartItem[];

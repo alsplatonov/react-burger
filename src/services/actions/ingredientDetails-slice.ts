@@ -22,4 +22,4 @@ const ingredientDetailsSlice = createSlice({
 
 export const ingredientDetailsActions = ingredientDetailsSlice.actions;
 
-export default ingredientDetailsSlice.reducer;
+export default ingredientDetailsSlice;

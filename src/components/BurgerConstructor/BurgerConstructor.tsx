@@ -9,48 +9,56 @@ import { useDispatch, useSelector } from 'react-redux';
 import { orderActions } from '../../services/actions/order-slice';
 import { modalActions } from '../../services/actions/modal-slice';
 import { burgerConstructorActions } from "../../services/actions/burgerConstructor-slice";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
+import { ICartItem, IBun } from "../../utils/interfaces";
 
 const BurgerConstructor = () => {
-  const isLogged = useSelector((store) => store.userActions.isLogged);
+  const isLogged = useAppSelector((store) => store.userActions.isLogged);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const defaultBuns = useSelector((state) => state.ingredients.items);
-  const defaultBun = defaultBuns.filter(item => {
-    return item.type === "bun";
-  });
-  const ingredients = useSelector((state) => state.burgerCart.items);
-  const isCartContentChanged = useSelector((state) => state.burgerCart.isCartContentChanged);
-  const buns = useSelector((state) => state.burgerCart.bun);
-  const isOpenModal = useSelector((state) => state.modal.IsOpenModal);
-  const orderNumber = useSelector((state) => state.order.orderNumber);
-  const orderPrice = useSelector((state) => state.order.orderPrice);
+  const dispatch = useAppDispatch();
 
-  const totalBurgerIngredients = (ingredients.concat(buns).concat(buns)); //добавим обе булки к общему массиву ингредиентов 
+  const ingredients = useAppSelector((state) => state.burgerCart.items);
+  const isCartContentChanged = useAppSelector((state) => state.burgerCart.isCartContentChanged);
+  const buns = useAppSelector((state) => state.burgerCart.bun);
+  const isOpenModal = useAppSelector((state) => state.modal.IsOpenModal);
+  const orderNumber = useAppSelector((state) => state.order.orderNumber);
+  const orderPrice = useAppSelector((state) => state.order.orderPrice);
 
+  // const totalBurgerIngredients = (ingredients.concat(buns).concat(buns)); //добавим обе булки к общему массиву ингредиентов 
 
-  const [{ isHover }, dropTarget] = useDrop({ //перемещение ингредиентов из списка ингредиентов
-    accept: "ingredient",
-    drop(item) {
-      onDropHandler(item);
+  const bunsArray = buns ? [buns] : [];
+
+  //добавим обе булки к общему массиву ингредиентов 
+  const totalBurgerIngredients = [...ingredients, ...bunsArray, ...bunsArray];
+
+  const [dropResult, dropTarget] = useDrop<{ item: ICartItem }, void, { isHover: boolean }>({
+    accept: 'ingredient',
+    drop: (droppedItem, monitor) => {
+      onDropHandler(droppedItem.item);
     },
+    collect: (monitor) => ({
+      isHover: !!monitor.isOver(),
+    }),
   });
 
-  const onDropHandler = (item) => {
+  const { isHover } = dropResult;
+
+  const onDropHandler = (droppedItem: ICartItem) => {
     dispatch(burgerConstructorActions.addItem({
-      _id: item._id,
-      name: item.name,
-      type: item.type,
-      price: item.price,
-      image: item.image,
+      _id: droppedItem._id,
+      name: droppedItem.name,
+      type: droppedItem.type,
+      price: droppedItem.price,
+      image: droppedItem.image,
       key: uuidv4(),
     }));
   };
 
 
   const getIngredientsIds = () => { //получим id ингредиентов
-    let ingredIds = [];
+    let ingredIds: string[] = [];
     totalBurgerIngredients.forEach(item => {
       ingredIds.unshift(item._id);
     })
@@ -68,7 +76,7 @@ const BurgerConstructor = () => {
   );
 
   const OnOpenModal = () => {  //при открытии
-    if (buns != 0) { //если не добавили булку, не даем создать заказ
+    if (bunsArray.length !== 0) { //если не добавили булку, не даем создать заказ
       if (isLogged) {
         dispatch(modalActions.toggleModal()); //указываем состояние isOpenModal = true
         dispatch(orderActions.fetchOrderNumber(getIngredientsIds())); //сохранить номер заказа в хранилище
@@ -95,14 +103,14 @@ const BurgerConstructor = () => {
       <div ref={dropTarget} style={isHover ? { opacity: 0.5 } : {}}>
         {isCartContentChanged ? (
           <>
-            {buns != 0 && (
+            {(bunsArray.length !== 0) && (
               <div className={`${styles['burger-constructor__item']} pl-8 mb-4`} >
                 <ConstructorElement
                   type="top"
                   isLocked={true}
-                  text={buns.name + '\n(верх)'}
-                  price={buns.price}
-                  thumbnail={buns.image}
+                  text={bunsArray[0].name + '\n(верх)'}
+                  price={bunsArray[0].price}
+                  thumbnail={bunsArray[0].image}
                 />
               </div>
             )}
@@ -111,14 +119,14 @@ const BurgerConstructor = () => {
             <ul className={`${styles["burger-constructor__list"]}`}>
               <SortableConstructor />
             </ul>
-            {buns != 0 && (
+            {(bunsArray.length !== 0) && (
               <div className={`${styles['burger-constructor__item']} pl-8 mt-4`}  >
                 <ConstructorElement
                   type="bottom"
                   isLocked={true}
-                  text={buns.name + '\n(низ)'}
-                  price={buns.price}
-                  thumbnail={buns.image}
+                  text={bunsArray[0].name + '\n(низ)'}
+                  price={bunsArray[0].price}
+                  thumbnail={bunsArray[0].image}
                 />
               </div>
             )}

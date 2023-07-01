@@ -1,10 +1,11 @@
 import styles from "./IngredientDetails.module.css";
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
 
 const IngredientDetails = () => {
   const { id } = useParams(); //id адреса ссылки
-  const ingredients = useSelector((state) => state.ingredients.items);
+  const ingredients = useAppSelector((state) => state.ingredients.items);
   const currentItem = ingredients.find((i) => i._id === id); //получим данные выбранного элемента 
 
   if (!currentItem) {

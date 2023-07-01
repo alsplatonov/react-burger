@@ -25,11 +25,24 @@ export const socketMiddleware = (wsUrl: string, wsActions: IWebSocketActions): M
         socket = new WebSocket(wsUrl);
       }
 
+      // if (type === wsInitializeCurrentUser) {
+      //   if (typeof payload === "string") {
+      //     socket = new WebSocket(payload);
+      //   }
+      // }
+
       if (type === wsInitializeCurrentUser) {
-        if (typeof payload === "string") {
+       
           socket = new WebSocket(payload);
-        }
+        
       }
+
+      // if (type === wsInitializeCurrentUser) {
+      //   if (payload && typeof payload === "object" && payload.url) {
+      //     socket = new WebSocket(payload.url);
+      //   }
+      // }
+
 
       if (socket) {
         socket.onopen = (event) => {

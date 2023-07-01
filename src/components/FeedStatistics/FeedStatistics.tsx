@@ -3,15 +3,13 @@ import styles from "./FeedStatistics.module.css"
 import PropTypes from "prop-types";
 import FeedDoneOrders from "../FeedDoneOrders/FeedDoneOrders";
 import FeedInProgressOrders from "../FeedInProgressOrders/FeedInProgressOrders";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { wsInitialize, wsClose } from "../../services/actions/webSocket-slice";
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
 
 export const FeedStatistics = () => {
 
-  const orders = useSelector((state) => state.webSocket.orders);
-  const total = useSelector((state) => state.webSocket.total);
-  const totalToday = useSelector((state) => state.webSocket.totalToday);
+  const orders = useAppSelector((state) => state.webSocket.orders);
+  const total = useAppSelector((state) => state.webSocket.total);
+  const totalToday = useAppSelector((state) => state.webSocket.totalToday);
 
 
   const ordersDone = orders.filter((item) => item.status === 'done');

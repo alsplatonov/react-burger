@@ -12,13 +12,14 @@ import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { userSliceActions } from "../../services/actions/userSlice";
 import { useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const pathname = location.pathname;
-  const isLogged = useSelector((store) => store.userActions.isLogged);
+
 
   const onLogoutUser = () => {
     dispatch(userSliceActions.logoutUserAsync());

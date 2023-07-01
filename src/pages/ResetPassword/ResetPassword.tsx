@@ -1,3 +1,4 @@
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import {
   PasswordInput,
   Input,
@@ -5,7 +6,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ResetPassword.module.css";
 import { useNavigate } from "react-router";
-import { useState } from "react";
 import { setNewPassword } from "../../utils/api";
 
 const ResetPassword = () => {
@@ -15,11 +15,11 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmCode, setConfirmCode] = useState("");
 
-  const onChangePassword = (event) => {
+  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  const onChangeConfirmCode = (event) => {
+  const onChangeConfirmCode = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmCode(event.target.value);
   };
 
@@ -31,10 +31,11 @@ const ResetPassword = () => {
     navigate("/forgotpass");
   }
 
-  const onSubmitForm = (event) => {
+  const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setNewPassword(password, confirmCode);
-    localStorage.removeItem("forgot-password", true); //оставим след, что пользователь был на странице forgot-password
+    // localStorage.removeItem("forgot-password", true); //оставим след, что пользователь был на странице forgot-password
+    localStorage.removeItem("forgot-password"); //оставим след, что пользователь был на странице forgot-password
     navigate("/login");
   };
 

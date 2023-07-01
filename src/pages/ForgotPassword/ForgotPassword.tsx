@@ -1,3 +1,4 @@
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import {
   Button,
   EmailInput
@@ -5,7 +6,7 @@ import {
 import styles from "./ForgotPassword.module.css";
 import { useNavigate } from "react-router";
 import { resetPassword } from "../../utils/api";
-import { useState } from "react";
+
 
 const ForgotPassword = () => {
 
@@ -13,20 +14,20 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
 
-  const onChangeForm = (event) => {
+  const onChangeForm = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     setEmail(value);
   };
 
-  const onFormSubmit = (event) => {
+  const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     resetPassword(email)
       .then((res) => {
-        localStorage.setItem("forgot-password", true); //оставим след, что пользователь был на странице forgot-password
+        localStorage.setItem("forgot-password", "true"); //оставим след, что пользователь был на странице forgot-password
         navigate("/reset-password");
       })
       .catch((err) => {
-        console.err(err);
+        console.error(err);
       });
   };
 
@@ -50,7 +51,6 @@ const ForgotPassword = () => {
         type="primary"
         size="large"
         extraClass={`${styles['forgotPassword__button']} pt-4`}
-      // onClick={openLoginPage}
       >
         Восстановить
       </Button>

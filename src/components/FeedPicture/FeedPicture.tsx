@@ -1,7 +1,15 @@
 import React from "react";
 import styles from "./FeedPicture.module.css";
 
-export const FeedPicture = ({ ingredient, elemNumber, Counter }) => {
+import { IIngredient } from "../../utils/interfaces";
+
+interface FeedPictureProps {
+  ingredient: IIngredient;
+  elemNumber: number;
+  Counter?: number;
+}
+
+const FeedPicture: React.FC<FeedPictureProps> = ({ ingredient, elemNumber, Counter }) => {
   return (
     <>
       {elemNumber <= 5 && ( //показываем не более 6 элементов

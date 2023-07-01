@@ -4,7 +4,7 @@ import { IWsOrder } from "../../utils/interfaces";
 interface WebSocketState {
   wsOpen: boolean;
   wsError: boolean;
-  orders: IWsOrder[]; // Replace 'any[]' with the actual type of 'orders'
+  orders: IWsOrder[]; 
   total: number;
   totalToday: number;
 }
@@ -25,7 +25,7 @@ const webSocketSlice = createSlice({
       state.wsOpen = false;
       state.wsError = false;
     },
-    wsInitializeCurrentUser(state) {
+    wsInitializeCurrentUser(state, action) {
       state.wsOpen = false;
       state.wsError = false;
     },
@@ -68,4 +68,4 @@ export const {
   cleanState,
 } = webSocketSlice.actions;
 
-export default webSocketSlice.reducer;
+export default webSocketSlice;

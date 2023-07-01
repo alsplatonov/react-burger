@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from "./OrderDetails.module.css";
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
 
 const OrderDetails = () => {
-  const orderNumber = useSelector((state) => state.order.orderNumber);
-  const isPending = useSelector((state) => state.order.isPending);
+  const orderNumber = useAppSelector((state) => state.order.orderNumber);
+  const isPending = useAppSelector((state) => state.order.isPending);
 
   return (
     <>

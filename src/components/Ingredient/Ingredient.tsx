@@ -3,19 +3,24 @@ import styles from './Ingredient.module.css';
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from "react-dnd";
+import { IIngredient, ICartItem } from '../../utils/interfaces';
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
 
+interface IngredientProps extends IIngredient {
+  onOpenModal: () => void;
+}
 
-const Ingredient = (props) => {
+const Ingredient: React.FC<IngredientProps> = (props) => {
 
   const ingredient = props;
-  const ingredients = useSelector((state) => state.burgerCart.items);
-  const buns = useSelector((state) => state.burgerCart.bun);
+  const ingredients = useAppSelector((state) => state.burgerCart.items);
+  const buns = useAppSelector((state) => state.burgerCart.bun);
 
   const burgerIngredients = ingredients.filter(item => {
     return item._id === props._id;
   });
 
-  function compare(a, b) {
+  function compare(a:ICartItem, b:ICartItem) {
     if (a.counter < b.counter) {
       return -1;
     }
@@ -40,7 +45,7 @@ const Ingredient = (props) => {
     <li ref={dragRef} className={styles.ingredient} onClick={props.onOpenModal} style={!isDragging ? { opacity: "1" } : { opacity: "0.4", cursor: "grab" }}>
       <img src={props.image} alt={props.name} />
 
-      {buns._id === props._id ? (<Counter count={2} size="default" extraClass="m-1" />)
+      {buns?._id === props._id ? (<Counter count={2} size="default" extraClass="m-1" />)
         : (burgerIngredients.length > 0 && (
           <Counter count={burgerIngredients[index].counter} size="default" extraClass="m-1" />
         ))}
@@ -54,11 +59,7 @@ const Ingredient = (props) => {
   );
 }
 
-Ingredient.propTypes = {
-  price: PropTypes.number,
-  name: PropTypes.string,
-  onOpenModal: PropTypes.func.isRequired,
-}
+
 
 export default Ingredient;
 

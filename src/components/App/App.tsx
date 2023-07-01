@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import AppMain from '../AppMain/AppMain';
-import { useEffect } from 'react';
 import style from './App.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { burgerIngredientsActions } from '../../services/actions/ingredients-slice';
@@ -22,9 +21,10 @@ import Feed from '../../pages/Feed/Feed';
 import { ingredientDetailsActions } from '../../services/actions/ingredientDetails-slice';
 import { modalActions } from '../../services/actions/modal-slice';
 import FeedExtension from '../FeedExtensions/FeedExtensions';
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
 
 const App = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +37,8 @@ const App = () => {
   const onCloseModal = () => {
     dispatch(ingredientDetailsActions.setItem(null));  //очищаем ингредиент
     dispatch(modalActions.toggleModal()); //указываем состояние isOpenModal = false
-    navigate(-1, { state: { background: null } });
+    // navigate(-1, { state: { background: null } });
+    navigate(-1);
   };
 
   return (

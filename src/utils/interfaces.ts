@@ -4,16 +4,26 @@ export interface IIngredient {
   _id: string;
   name: string;
   type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
+  proteins?: number;
+  fat?: number;
+  carbohydrates?: number;
+  calories?: number;
   price: number;
   image: string;
   image_mobile?: string;
   image_large?: string;
   __v?: number;
 };
+
+export interface IBun extends IIngredient {
+  counter: number;
+}
+
+export interface ICartItem extends IIngredient {
+  counter: number;
+  key: number | string;
+}
+
 
 export interface IWsOrder {
   _id: string;
@@ -35,3 +45,15 @@ export interface IWebSocketActions {
   wsCloseConnect: string;
 }
 
+export interface IUserData {
+  name?: string;
+  email: string;
+  password: string;
+}
+
+export interface IUserState {
+  userInfo: IUserData | null;
+  // accessToken: string;
+  // refreshToken:string;
+  isLogged: boolean;
+}

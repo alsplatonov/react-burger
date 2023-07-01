@@ -3,18 +3,24 @@ import { useEffect } from 'react';
 import { Navigate, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { getCookie } from "../utils/cookie";
-
+import { useAppDispatch, useAppSelector } from "../services/redux-hook";
 import { userSliceActions } from "../services/actions/userSlice";
+import React, { FC, ReactElement, ReactNode } from "react";
 
-export const ProtectedRoute = ({ children, anonymous = false }) => {
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  anonymous?: boolean;
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, anonymous = false }) => {
 
   const location = useLocation();
   const from = location.state?.from || '/';
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-
-  const user = useSelector((store) => store.userActions.userInfo);
-  const isLoggedIn = useSelector((store) => store.userActions.isLogged);
+  const user = useAppSelector((store) => store.userActions.userInfo);
+  const isLoggedIn = useAppSelector((store) => store.userActions.isLogged);
 
 
   useEffect(() => {
@@ -31,17 +37,19 @@ export const ProtectedRoute = ({ children, anonymous = false }) => {
   // Если разрешен неавторизованный доступ, а пользователь авторизован...
   if (anonymous && user) {
     // ...то отправляем его на предыдущую страницу
-    return <Navigate to={from} />;
+    navigate(from);
+    return null; // You can also ret
   }
 
   // Если требуется авторизация, а пользователь не авторизован...
   if (!anonymous && !user) {
     // ...то отправляем его на страницу логин
-    return <Navigate to="/login" state={{ from: location }} />;
+    navigate("/login", { state: { from: location } });
+    return null; // 
   }
 
   // Если все ок, то рендерим внутреннее содержимое
-  return children;
+  return (children as ReactElement);
 }
 
 export default ProtectedRoute;

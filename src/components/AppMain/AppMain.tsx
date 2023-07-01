@@ -5,9 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Profile from '../../pages/Profile/Profile';
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
+
 const AppMain = () => {
 
-  const ingredients = useSelector((state) => state.ingredients.items);
+  const ingredients = useAppSelector((state) => state.ingredients.items);
 
   return (
     <>
@@ -22,9 +24,6 @@ const AppMain = () => {
     </>
   )
 
-  // return (
-  //   <Profile />
-  // )
 }
 
 export default AppMain;

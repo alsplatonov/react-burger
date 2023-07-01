@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import {
   PasswordInput,
   Input,
@@ -10,31 +10,31 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { userSliceActions } from "../../services/actions/userSlice";
 import { getCookie } from "../../utils/cookie";
-
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
 
 const Register = () => {
 
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
 
-  const onChangeName = (event) => {
+  const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
-  const onChangeEmail = (event) => {
+  const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
-  const onChangePassword = (event) => {
+  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
 
-  const onSubmitForm = (event) => {
+  const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(userSliceActions.registerUserAsync({ name, email, password }));
     navigate("/");
@@ -60,7 +60,6 @@ const Register = () => {
         <EmailInput
           onChange={onChangeEmail}
           value={email || ""}
-          type={"email"}
           name={"email"}
           placeholder="E-mail"
           isIcon={false}
@@ -69,7 +68,6 @@ const Register = () => {
         <PasswordInput
           onChange={onChangePassword}
           value={password || ""}
-          type={"password"}
           name={"password"}
           extraClass="mb-6"
         />

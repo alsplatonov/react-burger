@@ -1,3 +1,4 @@
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import {
   PasswordInput,
   Input,
@@ -7,13 +8,13 @@ import {
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { userSliceActions } from "../../services/actions/userSlice";
+import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const from = location.state?.from;
 
@@ -28,17 +29,19 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onChangeEmail = (event) => {
+  const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
-  const onChangePassword = (event) => {
+  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  const onSubmitForm = (event) => {
+  // console
+
+  const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(userSliceActions.loginUserAsync({ email, password }));
-    navigate({ from });
+    navigate(from);
   };
 
 

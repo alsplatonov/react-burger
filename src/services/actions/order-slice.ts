@@ -54,4 +54,4 @@ export const orderActions = {
   fetchOrderNumber,
 };
 
-export default orderSlice.reducer;
+export default orderSlice;

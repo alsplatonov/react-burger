@@ -42,4 +42,4 @@ export const burgerIngredientsActions = {
   fetchIngredientsData,
 };
 
-export default burgerIngredientsSlice.reducer;
+export default burgerIngredientsSlice;
