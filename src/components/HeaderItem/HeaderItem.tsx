@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
 
@@ -43,9 +42,6 @@ const HeaderItem: React.FC<HeaderItemProps> = (props) => {
   );
 };
 
-HeaderItem.propTypes = {
-  text: PropTypes.string.isRequired,
-  children: PropTypes.node,
-};
+
 
 export default HeaderItem;

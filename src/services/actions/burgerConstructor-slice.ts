@@ -3,8 +3,6 @@ import { IIngredient } from '../../utils/interfaces';
 import { ICartItem, IBun } from '../../utils/interfaces';
 
 
-
-
 interface IBurgerCartState {
   items: ICartItem[];
   bun: IBun | null;

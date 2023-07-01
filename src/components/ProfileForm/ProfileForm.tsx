@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router";
 import { userSliceActions } from "../../services/actions/userSlice";
 import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
+import { getCookie } from "../../utils/cookie";
 
 const ProfileForm = () => {
   const navigate = useNavigate();
@@ -16,11 +17,15 @@ const ProfileForm = () => {
 
   const user = useAppSelector((store) => store.userActions.userInfo);
 
-  const [name, setName] = useState(user?.name || "");
-  const [email, setEmail] = useState(user?.email || "");
-  const [password, setPassword] = useState(user?.password || "");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showHiddenButtons, setshowHiddenButtons] = useState(false);
 
+  useEffect(() => {
+    dispatch(userSliceActions.getUserDataAsync());
+  }, []);
+  
   useEffect(() => {
     if (user) {
       if (user.name) {
@@ -30,6 +35,7 @@ const ProfileForm = () => {
       setPassword(user.password);
     }
   }, [user]);
+  
 
 
 
@@ -64,6 +70,7 @@ const ProfileForm = () => {
     event.preventDefault();
     dispatch(userSliceActions.updateUserDataAsync({ name, email, password }));
     navigate("/profile");
+    setshowHiddenButtons(false);
   };
 
   return (
@@ -73,7 +80,7 @@ const ProfileForm = () => {
           type={"text"}
           placeholder={"Имя"}
           onChange={onChangeName}
-          value={name || ""}
+          value={name}
           name={"name"}
           error={false}
           icon="EditIcon"
@@ -81,7 +88,7 @@ const ProfileForm = () => {
         />
         <EmailInput
           onChange={onChangeEmail}
-          value={email || ""}
+          value={email}
           name={"email"}
           placeholder="Логин"
           isIcon={true}

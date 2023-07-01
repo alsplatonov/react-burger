@@ -107,10 +107,4 @@ const DraggableConstructorElement: React.FC<IDraggableConstructorElement> = (pro
 };
 
 
-// DraggableConstructorElement.propTypes = {
-//   ingredient: PropTypes.object.isRequired,
-//   index: PropTypes.number,
-//   moveIngredient: PropTypes.func.isRequired,
-// }
-
 export default DraggableConstructorElement;

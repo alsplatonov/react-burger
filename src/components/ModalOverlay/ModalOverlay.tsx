@@ -1,8 +1,7 @@
 import styles from "./ModalOverlay.module.css";
-import PropTypes from "prop-types";
 
 interface ModalOverlayProps {
-  
+
   onCloseModal: () => void;
 }
 const ModalOverlay: React.FC<ModalOverlayProps> = (props) => {
@@ -12,8 +11,6 @@ const ModalOverlay: React.FC<ModalOverlayProps> = (props) => {
     </div>
   )
 }
-
-
 
 export default ModalOverlay;
 

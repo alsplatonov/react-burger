@@ -15,7 +15,7 @@ const checkResponse = async (response: Response) => {
   if (response.ok) {
     const data = await response.json();
     // return data.user;
-    return data.user;
+    return data;
   } else {
     throw new Error('Ошибка при запросе');
   }
@@ -26,7 +26,6 @@ export const registerUserAsync = createAsyncThunk(
   async (credentials: IUserData) => {
     const response = await registerUser(credentials);
     const data = await checkResponse(response);
-    console.log(data);
     if (data.accessToken) {
       setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
     }
@@ -40,7 +39,7 @@ export const loginUserAsync = createAsyncThunk(
   async (credentials: IUserData) => {
     const response = await loginUser(credentials);
     const data = await checkResponse(response);
-    console.log(data);
+    
     setCookie("accessToken", data.accessToken.replace("Bearer ", ""));
     setCookie("refreshToken", data.refreshToken);
 
@@ -95,7 +94,7 @@ export const getUserDataAsync = createAsyncThunk(
     const response = await getUserData();
     try {
       const data = await checkResponse(response);
-      return data;
+      return data.user;
     } catch (error) {
       console.log('Ошибка получения данных пользователя');
       const accessToken = getCookie("accessToken");

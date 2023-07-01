@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import styles from "./FeedInProgressOrders.module.css"
-import PropTypes from "prop-types";
 import { IWsOrder } from "../../utils/interfaces";
 
 interface IFeedInProgressOrders {
@@ -27,9 +26,5 @@ const FeedInProgressOrders: FC<IFeedInProgressOrders> = ({ ordersPending }) => {
   );
 };
 
-
-FeedInProgressOrders.propTypes = {
-  ordersPending: PropTypes.array.isRequired,
-};
 
 export default FeedInProgressOrders;

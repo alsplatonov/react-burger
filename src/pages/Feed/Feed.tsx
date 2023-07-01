@@ -30,7 +30,7 @@ const Feed = () => {
 
   return (
     <>
-      {orders.length > 0 && !wsError && (
+      {orders && orders.length > 0 && !wsError && (
         <section className={`${styles['feed']} mt-10`}>
           <h1 className="text text_type_main-large mb-5 pr-4">Лента заказов</h1>
           <div className={`${styles['feed-wrapper']}`}>

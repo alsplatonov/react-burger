@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import styles from "./FeedDoneOrders.module.css"
-import PropTypes from "prop-types";
 import { IWsOrder } from "../../utils/interfaces";
 
 interface IFeedDoneOrders {

@@ -1,6 +1,5 @@
 
 import styles from "./FeedStatistics.module.css"
-import PropTypes from "prop-types";
 import FeedDoneOrders from "../FeedDoneOrders/FeedDoneOrders";
 import FeedInProgressOrders from "../FeedInProgressOrders/FeedInProgressOrders";
 import { useAppDispatch, useAppSelector } from '../../services/redux-hook';

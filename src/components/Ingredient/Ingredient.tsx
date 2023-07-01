@@ -1,7 +1,5 @@
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Ingredient.module.css';
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from "react-dnd";
 import { IIngredient, ICartItem } from '../../utils/interfaces';
 import { useAppDispatch, useAppSelector } from '../../services/redux-hook';
@@ -58,7 +56,6 @@ const Ingredient: React.FC<IngredientProps> = (props) => {
     </li>
   );
 }
-
 
 
 export default Ingredient;
