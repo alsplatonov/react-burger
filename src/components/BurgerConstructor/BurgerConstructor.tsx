@@ -33,15 +33,16 @@ const BurgerConstructor = () => {
   //добавим обе булки к общему массиву ингредиентов 
   const totalBurgerIngredients = [...ingredients, ...bunsArray, ...bunsArray];
 
-  const [dropResult, dropTarget] = useDrop<{ item: ICartItem }, void, { isHover: boolean }>({
+  const [dropResult, dropTarget] = useDrop<ICartItem, void, { isHover: boolean }>({
     accept: 'ingredient',
-    drop: (droppedItem, monitor) => {
-      onDropHandler(droppedItem.item);
+    drop: (item, monitor) => {
+      onDropHandler(item);
     },
     collect: (monitor) => ({
       isHover: !!monitor.isOver(),
     }),
   });
+
 
   const { isHover } = dropResult;
 

@@ -24,12 +24,6 @@ const constructorSlice = createSlice({
     addItem(state, action: PayloadAction<IIngredient & { key: number|string }>) {
       const newItem = action.payload;
       state.isCartContentChanged = true;
-      state.items.forEach((item) => {
-        if (item._id === newItem._id) {
-          item.counter++;
-          return;
-        }
-      });
 
       if (newItem.type !== 'bun') {
         const existingItem = state.items.find((item) => item._id === newItem._id);
@@ -37,6 +31,11 @@ const constructorSlice = createSlice({
           state.items.push({
             ...newItem,
             counter: 1,
+          });
+        } else {
+          state.items.push({
+            ...newItem,
+            counter: existingItem.counter++,
           });
         }
       } else {
